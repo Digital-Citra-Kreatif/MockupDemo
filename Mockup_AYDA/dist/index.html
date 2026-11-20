@@ -11,19 +11,19 @@
   <title>AYDA Awards Indonesia — Raising Next Generation of Design Leaders</title>
   <link rel="icon" href="assets/ayda-favicon.png?v=2" type="image/png" sizes="88x96">
   <link rel="preload" href="assets/manrope.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=9">
   <link rel="stylesheet" href="preloader.css">
-  <link rel="stylesheet" href="brief.css?v=2">
+  <link rel="stylesheet" href="brief.css?v=3">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.css">
   <noscript><style>.preloader{display:none}html.is-preloading,html.is-preloading body{overflow:auto}</style></noscript>
   <script src="preloader.js" defer></script>
-  <script src="site.js" defer></script>
+  <script src="site.js?v=2" defer></script>
   <script src="brief.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
-  <script src="motion.js" defer></script>
+  <script src="motion.js?v=3" defer></script>
 </head>
 <body>
   <div class="preloader" id="preloader" role="status" aria-label="Memuat AYDA Awards Indonesia">
@@ -79,7 +79,11 @@
       </div>
       <div class="shell hero-inner">
         <div class="hero-copy">
-          <h1 id="hero-title" lang="en">Raising Next Generation<br class="hero-break"> of Design Leaders</h1>
+          <h1 id="hero-title" lang="en">
+            <span class="hero-mobile-line">Raising Next</span>
+            <span class="hero-mobile-line">Generation<br class="hero-break"> of</span>
+            <span class="hero-mobile-line">Design Leaders</span>
+          </h1>
           <p class="hero-description">Kompetisi arsitektur dan desain interior tingkat nasional untuk mahasiswa Indonesia, sekaligus pintu masuk mewakili Indonesia di kancah desain dunia.</p>
         </div>
         <a class="hero-scroll" href="#tentang" aria-label="Gulir ke bagian Tentang AYDA">
@@ -112,7 +116,7 @@
           </div>
           <figure class="about-figure">
             <div class="about-photo-frame">
-              <img src="assets/about-ayda-portrait.jpg" alt="Dua desainer muda membawa laptop dan tablet di teras gedung" width="1536" height="1024" loading="lazy">
+              <img src="assets/about-ayda-international-summit-2025.jpg" alt="Adelia Meysa menerima piala Designer of the Year kategori Desain Interior di AYDA International Summit 2025" width="1140" height="760" loading="lazy" decoding="async">
             </div>
           </figure>
         </div>
@@ -149,18 +153,22 @@
       <div class="shell">
         <h2 class="section-heading">Kategori kompetisi</h2>
         <div class="category-grid">
-          <a class="category-card" id="arsitektur" href="https://www.ayda-indonesia.com/architecture/" target="_blank" rel="noopener" aria-label="Lihat arsip brief Arsitektur">
-            <div class="reveal-frame">
-              <img src="assets/category-architecture.jpg" alt="Ilustrasi paviliun bambu di lanskap tropis" loading="lazy" width="764" height="508">
-              <span class="category-arrow" aria-hidden="true"><i class="arrow"></i></span>
-              <div><h3>Arsitektur</h3><p>Rancang bangunan dari karakter tapak.</p></div>
+          <a class="category-card" id="arsitektur" href="https://www.ayda-indonesia.com/architecture/" data-category-dialog="architecture-dialog" aria-labelledby="architecture-card-title">
+            <div class="category-clip">
+              <div class="reveal-frame">
+                <img src="assets/category-architecture.jpg" alt="Ilustrasi paviliun bambu di lanskap tropis" loading="lazy" width="764" height="508">
+                <span class="category-arrow" aria-hidden="true"><i class="arrow"></i></span>
+                <div><h3 id="architecture-card-title">Arsitektur</h3><p>Rancang bangunan dari karakter tapak.</p></div>
+              </div>
             </div>
           </a>
-          <a class="category-card" id="desain-interior" href="https://www.ayda-indonesia.com/interior-design/" target="_blank" rel="noopener" aria-label="Lihat arsip brief Desain Interior">
-            <div class="reveal-frame">
-              <img src="assets/category-interior.jpg" alt="Ilustrasi galeri dengan langit-langit kayu dan partisi tanah liat" loading="lazy" width="764" height="508">
-              <span class="category-arrow" aria-hidden="true"><i class="arrow"></i></span>
-              <div><h3>Desain Interior</h3><p>Bentuk pengalaman melalui ruang.</p></div>
+          <a class="category-card" id="desain-interior" href="https://www.ayda-indonesia.com/interior-design/" data-category-dialog="interior-dialog" aria-labelledby="interior-card-title">
+            <div class="category-clip">
+              <div class="reveal-frame">
+                <img src="assets/category-interior.jpg" alt="Ilustrasi galeri dengan langit-langit kayu dan partisi tanah liat" loading="lazy" width="764" height="508">
+                <span class="category-arrow" aria-hidden="true"><i class="arrow"></i></span>
+                <div><h3 id="interior-card-title">Desain Interior</h3><p>Bentuk pengalaman melalui ruang.</p></div>
+              </div>
             </div>
           </a>
         </div>
@@ -311,63 +319,44 @@
       </section>
     </div>
 
-    <section class="section scoring" id="penilaian" aria-labelledby="scoring-title">
-      <div class="shell scoring-grid">
-        <div class="scoring-intro">
-          <h2 id="scoring-title">Bobot penilaian</h2>
-          <p>Berdasarkan Global Entry Kit 2026.</p>
-        </div>
-        <figure class="score-figure">
-          <div class="score-wheel">
-            <svg class="score-chart" viewBox="0 0 360 360" role="group" aria-label="Kriteria dan bobot penilaian" aria-describedby="score-help"></svg>
-            <div class="score-center" aria-hidden="true"><strong>25%</strong><span>Konsep</span></div>
-          </div>
-          <figcaption id="score-help">Arahkan kursor atau pilih segmen untuk membaca kriterianya.</figcaption>
-        </figure>
-        <div class="score-criteria">
-          <div class="score-stories" aria-live="polite" aria-atomic="true">
-            <article class="score-explanation is-active" data-value="25">
-              <h3>Konsep</h3>
-              <p>Juri menilai hubungan gagasan dengan tema, kedalaman riset, dan relevansi solusi bagi pengguna.</p>
-            </article>
-            <article class="score-explanation" data-value="20">
-              <h3>Inovasi</h3>
-              <p>Juri menilai kebaruan ide, kreativitas penerapannya, dan cara teknologi mendukung solusi desain.</p>
-            </article>
-            <article class="score-explanation" data-value="15">
-              <h3>Fungsi &amp; relevansi</h3>
-              <p>Juri menilai kesesuaian tata ruang dengan tapak dan kebutuhan pengguna, serta manfaatnya bagi warga.</p>
-            </article>
-            <article class="score-explanation" data-value="15">
-              <h3>Keberlanjutan</h3>
-              <p>Juri menilai respons terhadap iklim, penggunaan energi dan material, serta dampak selama masa pakai.</p>
-            </article>
-            <article class="score-explanation" data-value="15">
-              <h3>Estetika &amp; warna</h3>
-              <p>Juri menilai bagaimana warna dan material membentuk karakter ruang serta merespons konteks sosial budaya.</p>
-            </article>
-            <article class="score-explanation" data-value="10">
-              <h3>Penyajian</h3>
-              <p>Juri menilai kejelasan alur dari ide ke solusi serta ketepatan gambar dan media yang mendukungnya.</p>
-            </article>
-          </div>
-          <a class="button score-download" href="assets/entry-kit-2026-global.pdf#page=13" target="_blank" rel="noopener"><span class="button-label">Buka PDF kriteria</span><span class="button-icon" aria-hidden="true"><i class="arrow"></i></span></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section entry" id="cara-ikut">
+    <section class="section entry-guide" id="penilaian" aria-labelledby="entry-guide-title" tabindex="-1">
       <div class="shell">
-        <h2 class="section-heading">Empat langkah mengirim karya</h2>
-        <ol class="entry-steps">
-          <li><span aria-hidden="true">01</span><h3>Baca brief &amp; syarat</h3><p>Pilih kategori dan pelajari ketentuannya.</p></li>
-          <li><span aria-hidden="true">02</span><h3>Buat akun peserta</h3><p>Siapkan data diri, kampus, dan kategori pilihanmu.</p></li>
-          <li><span aria-hidden="true">03</span><h3>Siapkan berkas</h3><p>Susun pernyataan konsep, presentation board, dan gambar pendukung sesuai brief nasional.</p></li>
-          <li><span aria-hidden="true">04</span><h3>Unggah karya</h3><p>Kirim berkas melalui portal peserta menjelang tenggat.</p></li>
-        </ol>
-        <div class="entry-status" id="status-pendaftaran">
-          <p><span class="status-dot"></span> Pendaftaran 2027/28 dibuka Februari 2027.</p>
-          <a class="button" href="http://www.ayda-indonesia.com/registration/" target="_blank" rel="noopener"><span class="button-label">Daftar</span><span class="button-icon" aria-hidden="true"><i class="arrow"></i></span></a>
+        <h2 class="section-heading" id="entry-guide-title">Penilaian &amp; pengiriman karya</h2>
+        <div class="entry-layout">
+          <div class="scoring">
+            <h3 id="scoring-title">Bobot penilaian</h3>
+            <ul class="score-criteria" role="list" aria-labelledby="scoring-title">
+              <li><div><h4>Konsep</h4><p>Kaitan dengan tema, kedalaman riset, dan ketepatan solusi.</p></div><strong>25%</strong></li>
+              <li><div><h4>Inovasi</h4><p>Kebaruan ide dan kreativitas dalam menerapkannya.</p></div><strong>20%</strong></li>
+              <li><div><h4>Fungsi &amp; relevansi</h4><p>Kesesuaian dengan tapak dan kebutuhan pengguna.</p></div><strong>15%</strong></li>
+              <li><div><h4>Keberlanjutan</h4><p>Respons terhadap iklim serta penggunaan material dan energi.</p></div><strong>15%</strong></li>
+              <li><div><h4>Estetika &amp; warna</h4><p>Peran warna dan material dalam membentuk karakter ruang.</p></div><strong>15%</strong></li>
+              <li><div><h4>Penyajian</h4><p>Alur gagasan dan ketepatan visual.</p></div><strong>10%</strong></li>
+            </ul>
+            <p class="scoring-source">Rujukan <a href="assets/entry-kit-2026-global.pdf#page=13" target="_blank" rel="noopener">Global Entry Kit 2026 (PDF)</a></p>
+          </div>
+          <div class="entry" id="cara-ikut">
+            <h3 id="entry-steps-title">Empat langkah mengirim karya</h3>
+            <ol class="entry-steps" role="list" aria-labelledby="entry-steps-title">
+              <li><h4>Baca brief &amp; syarat</h4><p>Pilih kategori dan cek ketentuannya.</p></li>
+              <li><h4>Buat akun peserta</h4><p>Isi data diri, kampus, dan kategori.</p></li>
+              <li><h4>Siapkan berkas</h4><p>Susun pernyataan konsep, presentation board, dan gambar pendukung.</p></li>
+              <li><h4>Unggah karya</h4><p>Kirim lewat portal peserta sebelum tenggat.</p></li>
+            </ol>
+            <figure class="entry-example">
+              <img src="assets/board-hanging-garden-of-malioboro.jpg" width="618" height="900" loading="lazy" decoding="async" alt="Board karya Hanging Garden of Malioboro berisi perspektif, denah, dan diagram rancangan">
+              <figcaption>
+                <p>Contoh presentation board</p>
+                <strong lang="en">Hanging Garden of Malioboro</strong>
+                <p>Syaukat Firdausi · Gold 2025</p>
+                <a class="text-link" href="assets/board-hanging-garden-of-malioboro.jpg" target="_blank" rel="noopener" aria-label="Lihat board lengkap Hanging Garden of Malioboro">Lihat board lengkap</a>
+              </figcaption>
+            </figure>
+            <div class="entry-status" id="status-pendaftaran">
+              <p>Pendaftaran 2027/28 dijadwalkan mulai Februari 2027.</p>
+              <a class="text-link" href="https://www.ayda-indonesia.com/registration/" target="_blank" rel="noopener">Buka portal pendaftaran</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -504,8 +493,9 @@
         <path class="guide-marks" d="M136 72H152M144 64V80M1128 72H1144M1136 64V80M136 448H152M144 440V456M1128 448H1144M1136 440V456"/>
       </svg>
       <div class="shell">
-        <h2><span>Siap melangkah</span> <span>ke panggung dunia?</span></h2>
-        <a class="button" href="http://www.ayda-indonesia.com/registration/" target="_blank" rel="noopener"><span class="button-label">Daftar</span><span class="button-icon" aria-hidden="true"><i class="arrow"></i></span></a>
+        <h2>Ruang seperti apa yang ingin kamu rancang?</h2>
+        <p>Bawa gagasanmu ke AYDA Indonesia 2027/28. Pilih kategori Arsitektur atau Desain Interior saat mendaftar.</p>
+        <a class="button" href="https://www.ayda-indonesia.com/registration/" target="_blank" rel="noopener"><span class="button-label">Daftar AYDA</span><span class="button-icon" aria-hidden="true"><i class="arrow"></i></span></a>
       </div>
     </section>
   </main>
@@ -528,8 +518,40 @@
       </div>
     </div>
   </footer>
+  <dialog class="category-dialog" id="architecture-dialog" aria-labelledby="architecture-dialog-title" aria-describedby="architecture-dialog-description" data-lenis-prevent>
+    <div class="category-dialog-scroll">
+      <form method="dialog"><button class="category-dialog-close" type="submit" aria-label="Tutup pop-up Arsitektur" autofocus>×</button></form>
+      <img class="category-dialog-image" src="assets/category-architecture.jpg" alt="" width="764" height="508" loading="lazy">
+      <div class="category-dialog-content">
+        <h2 id="architecture-dialog-title">Arsitektur</h2>
+        <p id="architecture-dialog-description">Kategori ini berfokus pada rancangan bangunan di tapak nyata. Mulai dari persoalan di lokasi dan tunjukkan bagaimana rancanganmu bisa meningkatkan kualitas hidup warga.</p>
+        <ul class="category-dialog-points" role="list">
+          <li><strong>Tapak dan masyarakat.</strong> Jelaskan bagaimana tata letak bangunan dan aksesnya merespons aktivitas warga serta lingkungan sekitar.</li>
+          <li><strong>Iklim dan budaya lokal.</strong> Uraikan bagaimana orientasi bangunan, teknik, atau pilihan material menjawab kondisi setempat.</li>
+        </ul>
+        <a class="category-dialog-link" href="https://www.ayda-indonesia.com/architecture/">Lihat brief Arsitektur</a>
+      </div>
+    </div>
+  </dialog>
+  <dialog class="category-dialog" id="interior-dialog" aria-labelledby="interior-dialog-title" aria-describedby="interior-dialog-description" data-lenis-prevent>
+    <div class="category-dialog-scroll">
+      <form method="dialog"><button class="category-dialog-close" type="submit" aria-label="Tutup pop-up Desain Interior" autofocus>×</button></form>
+      <img class="category-dialog-image" src="assets/category-interior.jpg" alt="" width="764" height="508" loading="lazy">
+      <div class="category-dialog-content">
+        <h2 id="interior-dialog-title">Desain Interior</h2>
+        <p id="interior-dialog-description">Kategori ini berfokus pada cara orang menggunakan dan mengalami ruang. Kamu bisa merancang interior hunian, ruang komersial, hotel, atau fasilitas kelembagaan.</p>
+        <ul class="category-dialog-points" role="list">
+          <li><strong>Fungsi dan alur ruang.</strong> Susun pembagian area dan jalur sirkulasi sesuai aktivitas penggunanya.</li>
+          <li><strong>Suasana dan keberlanjutan.</strong> Jelaskan cara pencahayaan, warna, dan material membentuk pengalaman pengguna serta mengurangi dampak lingkungan.</li>
+        </ul>
+        <a class="category-dialog-link" href="https://www.ayda-indonesia.com/interior-design/">Lihat brief Desain Interior</a>
+      </div>
+    </div>
+  </dialog>
   <button class="brief-fab" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="design-brief">
-    <span class="brief-fab-icon" aria-hidden="true"></span>
+    <svg class="brief-fab-icon" viewBox="0 0 52 52" aria-hidden="true" focusable="false">
+      <path d="m46.2 31.8c-.3.2-.6.5-.7.7l-.3.4c-2.8-3.6-4.7-7.9-5.5-12.3-.2-1.2-.4-2.3-.5-3.6-.2-1.2-.5-2.5-1-3.6-1.1-2.4-2.4-4.6-4.2-6.4-3.5-3.7-8.5-5.8-13.6-5.9-5.1-.1-10.2 2-13.8 5.6-3.6 3.6-5.6 8.8-5.5 13.8 0 2.5.6 5.1 1.6 7.4s2.5 4.4 4.3 6.2c2.8 2.6 6.3 4.3 10 4.9 1.3.2 2.4.3 3.6.5 4.5.8 8.8 2.6 12.3 5.6l-.2.1c-.2.2-.4.3-.6.6s-.4.6-.5.9c-.6 1.3 0 3 1.3 3.7.6.4 1.4.5 2.1.4.4-.1.7-.2 1-.4s.6-.5.8-.6l1.1-1.1c1.3 1 3 1.7 4.7 1.7 2 0 4-.8 5.5-2.2 1.4-1.4 2.3-3.4 2.2-5.5 0-1.7-.6-3.4-1.6-4.7l.9-.9.3-.3.1-.1.2-.2c.2-.3.4-.6.5-1 .2-.7.2-1.5-.1-2.2-.7-1.8-2.9-2.5-4.4-1.5zm-25.3 6.5c-1.2-.3-2.5-.4-3.6-.6-3.5-.7-6.6-2.3-9.1-4.8-1.7-1.6-3-3.6-3.9-5.7-.8-2.1-1.3-4.4-1.3-6.7 0-4.6 1.8-9.2 5.1-12.4 3.2-3.2 7.7-5.1 12.3-5.1s9.1 1.8 12.4 5.1c1.6 1.6 2.9 3.6 3.8 5.7.4 1.1.8 2.2 1 3.3s.4 2.4.7 3.6c1.1 4.6 3.2 9 6.3 12.5l-1.5 1.6c-.7.8-1.4 1.6-2.1 2.4-3.2-3.7-6.6-7.3-9.9-10.9l.6-.7c.3-.3.5-.4.8-.9.3-.4.5-.9.6-1.4.2-1-.1-2.1-.9-2.8-.3-.3-.7-.7-1.2-.8-.5-.2-1-.3-1.5-.2-1 .1-2 .6-2.5 1.5-.5.8-.7 1.9-.3 2.8.2.5.5.9.8 1.2l.8.7.3.3-1.4 1.4-1.2 1.4c-.1-.1-.2-.2-.3-.3l-.7-.8c-.3-.3-.7-.6-1.2-.8-.9-.3-2-.2-2.8.3s-1.4 1.5-1.5 2.5c0 .5 0 1 .2 1.5s.5.9.8 1.2c.7.7 1.8 1 2.8.9.5-.1 1-.3 1.4-.6.5-.4.6-.6.9-.8l.6-.6c3.6 3.4 7.3 6.7 11 10-1.1 1-2.2 1.9-3.4 2.9l-.6.6c-3.3-3.3-7.7-5.5-12.3-6.5zm9.3-10.9c3.6 3.4 7.2 6.7 10.9 9.9-.7.8-1.4 1.6-2.1 2.4-.1.1-.2.2-.4.3-.4.4-.9.7-1.3 1.1-3.3-3.7-6.6-7.4-10-11l1.4-1.4zm-1.7-4.1c-.1-.4-.1-.9.2-1.3.5-.8 1.7-.8 2.3 0 .3.3.4.8.3 1.2-.1.5-.3.7-.9 1.2l-.6.6c-.1-.1-.2-.2-.3-.3l-.7-.8c-.1-.2-.2-.4-.3-.6zm-3.6 6.6-.6.6c-.6.6-.8.8-1.2.9s-.9-.1-1.2-.3c-.8-.6-.7-1.8 0-2.3.4-.3.9-.3 1.3-.2.2.1.4.2.6.4l.8.7c.1 0 .2.1.3.2zm21.8 16.8c-1.1 1.1-2.5 1.7-4.1 1.8-1.2.1-2.5-.2-3.6-.9l.1-.1 4.7-4.6 3.8-3.9c.6 1.1.9 2.3.9 3.5-.1 1.7-.7 3.2-1.8 4.2zm2.4-11.8c-.1.2-.2.3-.3.4l-.1.1c-.1.1-1.7 1.7-1.6 1.6l-4.7 4.6-4.6 4.7-2.3 2.4c-.2.2-.3.3-.4.4s-.3.2-.5.2c-.3.1-.7 0-1-.1-.7-.3-1-1.1-.8-1.9.1-.2.1-.4.3-.5.1-.1.3-.4.5-.6l1.1-1.2c1.4-1.5 2.7-3.1 4-4.6.1-.2.3-.3.4-.5 1.6-1.3 3.2-2.8 4.8-4.2l2.4-2.2c.2-.2.3-.3.5-.4s.3-.2.5-.2c.4-.1.8 0 1.1.2.7.3.9 1.2.7 1.8z"/>
+    </svg>
     <span>Design Brief</span>
   </button>
   <dialog class="brief-dialog" id="design-brief" aria-labelledby="brief-title" data-lenis-prevent>
@@ -543,26 +565,26 @@
     <div class="brief-body">
       <section class="brief-panel" id="brief-panel-1" role="tabpanel" aria-labelledby="brief-tab-1">
         <h2 id="brief-title">Design Brief</h2>
-        <p class="lead">Pembaruan website AYDA Indonesia 2027. Website ini adalah pusat informasi dan pintu utama peserta untuk mengenal program, mendaftar, mengirim karya, dan mengikuti kabar terbaru kompetisi.</p>
+        <p class="lead">Website AYDA Indonesia 2027: pusat informasi dan pintu utama peserta untuk mendaftar dan mengirim karya.</p>
         <div class="brief-pillars">
-          <article class="brief-pillar"><h3>Konsep</h3><p>AYDA adalah kompetisi desain berskala internasional yang sudah 18 tahun menjadi program CSR Nippon Paint. Websitenya harus tampil modern dan profesional, sehingga langsung dipercaya oleh mahasiswa, juri, dan publik.</p><p class="brief-ref"><strong>Poin brief:</strong> Enhance Brand Image</p></article>
-          <article class="brief-pillar"><h3>Eksekusi</h3><p>Desain bersih dengan judul besar, ruang lega, dan foto nyata, mengacu pada key visual ayda-awards.com. Tombol Daftar paling menonjol. Website responsif, cepat dibuka saat periode pendaftaran, aman, dan tema tahunannya mudah diganti tim internal.</p><p class="brief-ref"><strong>Poin brief:</strong> Improve User Experience · Website Performance · Simplify Management · Security &amp; Reliability</p></article>
-          <article class="brief-pillar"><h3>Overall</h3><p>Navigasi disusun linear, dari perkenalan sampai pendaftaran, sehingga peserta tidak melewatkan informasi penting. Setiap section punya satu peran yang jelas dan selalu mengarah ke pendaftaran.</p><p class="brief-ref"><strong>Poin brief:</strong> Linear step-by-step flow · Highlighted Submit / Register CTA</p></article>
+          <article class="brief-pillar"><h3>Konsep</h3><p>Modern dan profesional, sesuai reputasi AYDA sebagai kompetisi internasional 18 tahun.</p><p class="brief-ref">Enhance Brand Image</p></article>
+          <article class="brief-pillar"><h3>Eksekusi</h3><p>Judul besar, ruang lega, foto nyata, tombol Daftar menonjol. Responsif, cepat, aman, dan tema tahunan mudah diganti.</p><p class="brief-ref">User Experience · Performance · Simplify Management · Security</p></article>
+          <article class="brief-pillar"><h3>Overall</h3><p>Alur linear dari perkenalan sampai pendaftaran. Tiap section punya satu peran dan mengarah ke Daftar.</p><p class="brief-ref">Linear Flow · Highlighted Register CTA</p></article>
         </div>
         <div class="brief-block">
           <h3>Alur halaman</h3>
-          <p class="brief-note">Mengikuti 10 tahap navigasi linear pada brief, dari pintu masuk sampai kontak.</p>
+          <p class="brief-note">10 tahap linear sesuai brief, dari pintu masuk sampai kontak.</p>
           <ol class="brief-flow">
-            <li class="brief-step"><h4>Pintu masuk</h4><span class="ref">Brief: Home Page</span><span class="web"><b>Di website</b>Hero, ticker status</span><p><b>Tujuan</b>Memperkenalkan AYDA dan menampilkan tombol Daftar sejak awal.</p><p class="impact"><b>Dampak</b>Pengunjung langsung tahu ini kompetisi apa dan bisa segera mendaftar.</p></li>
-            <li class="brief-step"><h4>Mengenal AYDA</h4><span class="ref">Brief: About AYDA</span><span class="web"><b>Di website</b>Tentang &amp; statistik</span><p><b>Tujuan</b>Menjelaskan misi AYDA dan rekam jejaknya.</p><p class="impact"><b>Dampak</b>Pengunjung paham AYDA adalah program yang sudah mapan.</p></li>
-            <li class="brief-step"><h4>Aturan lomba</h4><span class="ref">Brief: Competition</span><span class="web"><b>Di website</b>Tema Converge, kategori AR / ID</span><p><b>Tujuan</b>Menjelaskan tema, kategori, dan ketentuan lomba.</p><p class="impact"><b>Dampak</b>Peserta tahu apa yang harus dirancang.</p></li>
-            <li class="brief-step"><h4>Motivasi</h4><span class="ref">Brief: Prizes</span><span class="web"><b>Di website</b>Hadiah, jalur ke panggung internasional</span><p><b>Tujuan</b>Menunjukkan hadiah, mentoring, dan peluang ke tingkat Asia.</p><p class="impact"><b>Dampak</b>Peserta punya alasan kuat untuk ikut.</p></li>
-            <li class="brief-step"><h4>Kepercayaan</h4><span class="ref">Brief: Judges Panel</span><span class="web"><b>Di website</b>Dewan juri, bobot penilaian</span><p><b>Tujuan</b>Menampilkan profil juri dan kriteria penilaian.</p><p class="impact"><b>Dampak</b>Peserta yakin karyanya dinilai adil dan profesional.</p></li>
-            <li class="brief-step is-cta"><h4>Pendaftaran</h4><span class="ref">Brief: Submit / Register</span><span class="web"><b>Di website</b>Empat langkah, ajakan penutup</span><p><b>Tujuan</b>Menjelaskan cara mendaftar dan mengirim karya.</p><p class="impact"><b>Dampak</b>Peserta tahu langkah berikutnya dan langsung mendaftar.</p></li>
-            <li class="brief-step"><h4>Kegiatan</h4><span class="ref">Brief: Events &amp; Activities</span><span class="web"><b>Di website</b>Jadwal &amp; roadshow</span><p><b>Tujuan</b>Menampilkan jadwal kompetisi dan kegiatan pendukung.</p><p class="impact"><b>Dampak</b>Peserta bisa merencanakan waktu dan ikut kegiatan.</p></li>
-            <li class="brief-step"><h4>Inspirasi</h4><span class="ref">Brief: Previous Winners</span><span class="web"><b>Di website</b>Karya pemenang</span><p><b>Tujuan</b>Menampilkan karya pemenang tahun sebelumnya.</p><p class="impact"><b>Dampak</b>Peserta punya acuan kualitas karya.</p></li>
-            <li class="brief-step"><h4>Kabar terbaru</h4><span class="ref">Brief: News &amp; Updates</span><span class="web"><b>Di website</b>Kabar AYDA</span><p><b>Tujuan</b>Menyampaikan pengumuman dan berita terbaru.</p><p class="impact"><b>Dampak</b>Peserta selalu mendapat informasi terkini.</p></li>
-            <li class="brief-step"><h4>Kontak</h4><span class="ref">Brief: Contact Us</span><span class="web"><b>Di website</b>Footer</span><p><b>Tujuan</b>Menyediakan kontak dan media sosial AYDA.</p><p class="impact"><b>Dampak</b>Peserta tahu ke mana harus bertanya.</p></li>
+            <li class="brief-step"><h4>Pintu masuk</h4><p>Hero dan tombol Daftar</p></li>
+            <li class="brief-step"><h4>Mengenal AYDA</h4><p>Tentang dan statistik</p></li>
+            <li class="brief-step"><h4>Aturan lomba</h4><p>Tema dan kategori</p></li>
+            <li class="brief-step"><h4>Motivasi</h4><p>Hadiah dan jalur internasional</p></li>
+            <li class="brief-step"><h4>Kepercayaan</h4><p>Dewan juri dan penilaian</p></li>
+            <li class="brief-step is-cta"><h4>Pendaftaran</h4><p>Empat langkah dan CTA</p></li>
+            <li class="brief-step"><h4>Kegiatan</h4><p>Jadwal musim</p></li>
+            <li class="brief-step"><h4>Inspirasi</h4><p>Karya pemenang</p></li>
+            <li class="brief-step"><h4>Kabar terbaru</h4><p>Kabar AYDA</p></li>
+            <li class="brief-step"><h4>Kontak</h4><p>Footer</p></li>
           </ol>
         </div>
       </section>

@@ -23,8 +23,7 @@
   width: 1.2rem;
   height: 1.2rem;
   flex: none;
-  background: var(--bronze);
-  mask: url("assets/bulb_4673018.svg") center / contain no-repeat;
+  fill: var(--bronze);
   transition: transform 280ms var(--ease-out);
 }
 .brief-fab:is(:hover, :focus-visible) { background: #f3ead6; border-color: #b99c68; }
@@ -83,32 +82,28 @@
 .brief-close:hover { background: var(--sand); }
 .brief-close svg { width: 1rem; height: 1rem; }
 
-.brief-body { overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3.5rem); }
-.brief-panel h2 { font-size: clamp(2.2rem, 4.6vw, 3.9rem); }
-.brief-panel > .lead { margin-top: .9rem; max-width: 60ch; }
-.brief-panel h3 { font-size: clamp(1.15rem, 1.6vw, 1.4rem); margin-bottom: 1rem; }
-.brief-block { margin-top: clamp(2rem, 4vw, 3rem); }
-.brief-note { margin: -.6rem 0 1rem; color: var(--muted); font-size: .88rem; }
+.brief-body { overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.25rem, 2.5vw, 2rem) clamp(1.25rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.25rem); }
+.brief-panel h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+.brief-panel > .lead { margin-top: .5rem; max-width: 70ch; font-size: .95rem; line-height: 1.5; color: var(--muted); }
+.brief-panel h3 { font-size: 1.05rem; margin-bottom: .75rem; }
+.brief-block { margin-top: clamp(1.5rem, 2.5vw, 2rem); }
+.brief-note { margin: -.5rem 0 .75rem; color: var(--muted); font-size: .8rem; }
 
-.brief-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2.5vw, 2rem); margin-top: clamp(1.75rem, 3.5vw, 2.75rem); }
-.brief-pillar { padding-top: 1.1rem; border-top: 1px solid var(--gold); }
-.brief-pillar h3 { margin-bottom: .45rem; }
-.brief-pillar p { color: var(--muted); font-size: .94rem; }
-.brief-pillar .brief-ref { margin-top: .7rem; font-size: .84rem; color: var(--bronze); }
+.brief-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2.5vw, 2rem); margin-top: clamp(1.25rem, 2.5vw, 1.75rem); }
+.brief-pillar { padding-top: .8rem; border-top: 1px solid var(--gold); }
+.brief-pillar h3 { margin-bottom: .3rem; }
+.brief-pillar p { color: var(--muted); font-size: .84rem; line-height: 1.5; }
+.brief-pillar .brief-ref { margin-top: .45rem; font-size: .76rem; color: var(--bronze); }
 .brief-ref strong { color: var(--ink); font-weight: 600; }
 
-.brief-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: .85rem; padding: 0; margin: 0; list-style: none; }
-.brief-step { display: flex; flex-direction: column; gap: .55rem; padding: 1.15rem; border-radius: 1rem; background: var(--sand); font-size: .84rem; line-height: 1.55; }
-.brief-step h4 { font-size: 1.08rem; }
-.brief-step .ref { color: var(--bronze); }
-.brief-step .web { color: var(--muted); padding-bottom: .65rem; border-bottom: 1px solid var(--line); }
-.brief-step b { display: block; color: var(--ink); font-weight: 600; }
+.brief-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: .6rem; padding: 0; margin: 0; list-style: none; counter-reset: flow; }
+.brief-step { counter-increment: flow; display: flex; flex-direction: column; gap: .15rem; padding: .7rem .85rem; border-radius: .85rem; background: var(--sand); font-size: .76rem; line-height: 1.4; }
+.brief-step::before { content: counter(flow, decimal-leading-zero); color: var(--bronze); font-size: .7rem; font-weight: 600; }
+.brief-step h4 { font-size: .9rem; }
 .brief-step p { color: var(--muted); }
-.brief-step p.impact { color: var(--ink); }
 .brief-step.is-cta { background: var(--dark); color: var(--white); }
-.brief-step.is-cta .ref { color: var(--gold); }
-.brief-step.is-cta .web, .brief-step.is-cta p { color: #f0d19a; border-color: var(--dark-line); }
-.brief-step.is-cta b, .brief-step.is-cta p.impact { color: var(--white); }
+.brief-step.is-cta::before { color: var(--gold); }
+.brief-step.is-cta p { color: #f0d19a; }
 
 .brief-swatches { display: grid; grid-template-columns: repeat(7, 1fr); gap: .85rem; }
 .brief-swatch span { display: block; height: 4.5rem; border-radius: .75rem; border: 1px solid #00000014; }
@@ -135,7 +130,8 @@
 }
 @media (max-width: 640px) {
   .brief-pillars, .brief-specimen { grid-template-columns: 1fr; }
-  .brief-flow { grid-template-columns: 1fr; }
+  .brief-flow { grid-template-columns: repeat(2, 1fr); }
+  .brief-step { padding: .75rem .8rem; }
   .brief-swatches { grid-template-columns: repeat(2, 1fr); }
   .brief-tab { padding: .5rem .75rem; font-size: .8rem; }
 }

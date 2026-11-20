@@ -158,89 +158,56 @@ tabs.forEach((tab, index) => {
 selectJudgeTab(0);
 mobile.addEventListener("change", updateJudgeLayout);
 
-const scoreWheel = document.querySelector(".score-wheel");
-const scoreChart = scoreWheel.querySelector(".score-chart");
-const scoreLabel = scoreWheel.querySelector(".score-center span");
-const scoreWeight = scoreWheel.querySelector("strong");
-const scoreExplanations = [...document.querySelectorAll(".score-explanation")];
-const scoreColors = ["#c6a15c", "#aa905f", "#ddcca0", "#918d81", "#afaa9d", "#c7c3b7"];
-const svgNamespace = "http://www.w3.org/2000/svg";
+document.querySelectorAll("[data-category-dialog]").forEach((trigger) => {
+  const dialog = document.getElementById(trigger.dataset.categoryDialog);
+  if (typeof dialog?.showModal !== "function") return;
 
-function scorePoint(angle, radius) {
-  const radians = (angle - 90) * Math.PI / 180;
-  return [180 + radius * Math.cos(radians), 180 + radius * Math.sin(radians)];
-}
+  let closing = false;
 
-function scoreArc(start, end, outer, inner) {
-  return [
-    `M ${scorePoint(start, outer)}`,
-    `A ${outer} ${outer} 0 0 1 ${scorePoint(end, outer)}`,
-    `L ${scorePoint(end, inner)}`,
-    `A ${inner} ${inner} 0 0 0 ${scorePoint(start, inner)} Z`,
-  ].join(" ");
-}
-
-let scoreAngle = 0;
-const scoreSegments = scoreExplanations.map((explanation, index) => {
-  const value = Number(explanation.dataset.value);
-  const name = explanation.querySelector("h3").textContent;
-  const nextAngle = scoreAngle + value * 3.6;
-  const group = document.createElementNS(svgNamespace, "g");
-  const arc = document.createElementNS(svgNamespace, "path");
-  const label = document.createElementNS(svgNamespace, "text");
-  const [x, y] = scorePoint((scoreAngle + nextAngle) / 2, 137);
-
-  group.classList.add("score-segment");
-  group.setAttribute("role", "button");
-  group.setAttribute("aria-label", `${name}, ${value}%`);
-  group.style.setProperty("--score-color", scoreColors[index]);
-  arc.setAttribute("d", scoreArc(scoreAngle + .6, nextAngle - .6, 161, 109));
-  label.setAttribute("x", x);
-  label.setAttribute("y", y);
-  label.textContent = `${value}%`;
-  group.append(arc, label);
-  scoreChart.append(group);
-
-  scoreAngle = nextAngle;
-  return group;
-});
-
-let selectedCriterion;
-function selectCriterion(index) {
-  if (selectedCriterion === index) return;
-  selectedCriterion = index;
-  scoreSegments.forEach((segment, position) => {
-    const active = position === index;
-    segment.setAttribute("aria-pressed", String(active));
-    segment.setAttribute("tabindex", active ? "0" : "-1");
-    segment.classList.toggle("is-active", active);
-    scoreExplanations[position].classList.toggle("is-active", active);
-  });
-  const explanation = scoreExplanations[index];
-  scoreWeight.textContent = `${explanation.dataset.value}%`;
-  scoreLabel.textContent = explanation.querySelector("h3").textContent;
-}
-
-scoreSegments.forEach((segment, index) => {
-  const select = () => selectCriterion(index);
-  segment.addEventListener("click", select);
-  segment.addEventListener("pointerenter", (event) => {
-    if (event.pointerType === "mouse") select();
-  });
-  segment.addEventListener("focus", select);
-  segment.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      select();
-      return;
+  async function closeDialog() {
+    if (!dialog.open || closing) return;
+    closing = true;
+    dialog.classList.remove("is-visible");
+    if (!reduceMotion.matches) {
+      const transitions = dialog.getAnimations?.() ?? [];
+      await Promise.allSettled(transitions.map((transition) => transition.finished));
     }
-    const shift = { ArrowUp: -1, ArrowLeft: -1, ArrowDown: 1, ArrowRight: 1 }[event.key];
-    if (shift === undefined) return;
+    dialog.close();
+  }
+
+  trigger.setAttribute("aria-haspopup", "dialog");
+  trigger.setAttribute("aria-controls", dialog.id);
+  trigger.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
-    scoreSegments[(index + shift + scoreSegments.length) % scoreSegments.length].focus();
+    if (dialog.open) return;
+    dialog.showModal();
+    // Establish the initial style after the dialog enters the top layer.
+    dialog.getBoundingClientRect();
+    dialog.classList.add("is-visible");
+  });
+
+  dialog.querySelector('form[method="dialog"]').addEventListener("submit", (event) => {
+    event.preventDefault();
+    closeDialog();
+  });
+  dialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeDialog();
+  });
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) {
+      closeDialog();
+    }
+  });
+  dialog.addEventListener("close", () => {
+    closing = false;
+    dialog.classList.remove("is-visible");
+    trigger.focus({ preventScroll: true });
   });
 });
-selectCriterion(0);
 
 const gallery = document.querySelector(".winner-gallery");
 const controls = document.querySelector(".gallery-controls");
