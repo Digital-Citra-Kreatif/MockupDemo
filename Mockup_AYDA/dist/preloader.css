@@ -1,0 +1,58 @@
+/* AYDA preloader */
+html.is-preloading, html.is-preloading body { overflow: hidden; }
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: var(--sand, #eae6da);
+  transition: opacity 300ms var(--ease-out), visibility 0s linear 300ms;
+}
+.preloader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+.preloader.is-revealing {
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle at var(--iris-x) var(--iris-y), transparent var(--iris-radius), #000 calc(var(--iris-radius) + 1px));
+  mask-image: radial-gradient(circle at var(--iris-x) var(--iris-y), transparent var(--iris-radius), #000 calc(var(--iris-radius) + 1px));
+}
+
+.preloader-art {
+  width: min(78vw, 30rem);
+  height: auto;
+  overflow: visible;
+  transition: transform 300ms var(--ease-out), opacity 300ms var(--ease-out);
+}
+.preloader.is-done .preloader-art { transform: scale(.985); opacity: 0; }
+
+.preloader-art .pl-mark { transform-box: view-box; }
+.preloader-art .pl-dots circle, .preloader-art .pl-core { transform-box: fill-box; transform-origin: center; }
+.preloader-art .pl-core { fill: #2b2a25; opacity: 0; }
+.preloader-art .pl-lines line {
+  stroke-width: 4.2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0; /* sembunyikan ujung bulat garis sebelum digambar */
+}
+.preloader.is-formed .pl-lines line { opacity: 1; }
+
+.preloader-art .pl-word {
+  fill: #4b4b4d;
+  font-family: Manrope, Arial, sans-serif;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateX(-9px);
+  transition: opacity 330ms var(--ease-out), transform 400ms var(--ease-out);
+}
+.preloader-art .pl-word.since { font-weight: 600; transition-delay: 75ms; }
+.preloader.is-formed .pl-word { opacity: 1; transform: none; }
+.preloader.is-closing .pl-word {
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 180ms var(--ease-out), transform 240ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader, .preloader-art, .preloader-art .pl-word { transition: none; }
+}
