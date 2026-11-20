@@ -178,8 +178,8 @@
     /* Judul section: baris demi baris naik dari mask. */
     [
       ".about h2", ".categories .section-heading", "#prizes-title",
-      "#pathway-title", ".judges .section-heading", "#scoring-title", ".entry .section-heading",
-      ".schedule-grid h2", ".gallery-heading h2", "#news-title", ".closing h2",
+      "#pathway-title", ".judges .section-heading", "#entry-guide-title",
+      ".schedule-grid h2", ".gallery-heading h2", "#news-title",
     ].forEach((selector) => splitHeading($(selector)));
 
     /* Tentang */
@@ -211,10 +211,9 @@
 
     /* Kategori */
     $$(".category-card").forEach((card, index) => {
-      const frame = $(".reveal-frame", card);
-      mediaReveal(frame, $("img", card), { trigger: ".category-grid", delay: index * .16 });
+      enter(card, { opacity: 0, duration: .75, delay: index * .12, clearProps: "opacity" }, ".category-grid");
       enter($$(".reveal-frame > div > *, .category-arrow", card), {
-        y: 30, opacity: 0, stagger: .08, delay: .55 + index * .16,
+        y: 16, opacity: 0, stagger: .06, duration: .65, delay: .16 + index * .12,
       }, ".category-grid");
     });
     enter(".section-note", { y: 20, opacity: 0 });
@@ -246,25 +245,6 @@
     });
     $(".judge-tabs")?.addEventListener("click", () => requestAnimationFrame(() => ScrollTrigger.refresh()));
 
-    /* Penilaian */
-    enter(".scoring-intro p", { y: 24, opacity: 0, delay: .3 }, "#scoring-title");
-    const segments = $$(".score-segment");
-    if (segments.length) {
-      gsap.timeline({ scrollTrigger: { trigger: ".score-figure", start: "top 80%", once: true } })
-        .from(segments, {
-          opacity: 0, scale: .55, rotate: -40, svgOrigin: "180 180",
-          duration: 1.1, ease: "back.out(1.5)", stagger: .08, clearProps: "transform,opacity",
-        })
-        .from(".score-center", { opacity: 0, scale: .8, duration: .9, ease: EASE }, .35)
-        .from(".score-figure figcaption", { opacity: 0, y: 14, duration: .8, ease: SOFT }, .6);
-    }
-    enter(".score-criteria > *", { y: 34, opacity: 0, stagger: .14 }, ".score-criteria");
-
-    /* Cara ikut */
-    enter(".entry-steps li", { y: 60, opacity: 0, duration: 1.2, stagger: .12, ease: EASE }, ".entry-steps");
-    enter(".entry-steps li > span", { scale: .4, opacity: 0, duration: 1, stagger: .12, delay: .25, ease: "back.out(2)" }, ".entry-steps");
-    enter(".entry-status", { y: 30, opacity: 0 });
-
     /* Jadwal */
     enter(".schedule-grid .lead", { y: 20, opacity: 0, delay: .3 }, ".schedule-grid h2");
     enter(".schedule-list li", { x: -32, opacity: 0, duration: 1, stagger: .09 }, ".schedule-list");
@@ -292,7 +272,6 @@
         .from(".closing-guides .guide-grid", { scaleX: 0, transformOrigin: "50% 50%", duration: 1.6, ease: "expo.inOut" })
         .from(".closing-guides path:not([class])", { scaleY: 0, transformOrigin: "50% 0%", duration: 1.6, ease: "expo.inOut" }, .15)
         .from(".closing-guides .guide-marks", { opacity: 0, duration: .8 }, 1);
-      enter(".closing .button", { y: 30, opacity: 0, scale: .94, delay: .45 }, ".closing h2");
     }
 
     /* Footer */
