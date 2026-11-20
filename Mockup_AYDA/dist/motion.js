@@ -31,6 +31,10 @@
     });
   }
 
+  function unclipLines(lines) {
+    lines.forEach((line) => line.parentElement.style.removeProperty("overflow"));
+  }
+
   function splitHeading(element, { trigger, start = START, stagger = .11, delay = 0 } = {}) {
     if (!element) return;
     if (!SplitText) {
@@ -43,11 +47,12 @@
       linesClass: "split-line",
       autoSplit: true,
       onSplit: (self) => gsap.from(self.lines, {
-        yPercent: 115,
+        yPercent: 140,
         duration: 1.25,
         ease: EASE,
         stagger,
         delay,
+        onComplete: () => unclipLines(self.lines),
         scrollTrigger: { trigger: trigger || element, start, once: true },
       }),
     });
@@ -119,13 +124,15 @@
     let played = false;
     let heroTl = null;
 
-    const build = (lines) => {
+    const build = (lines, onTitleComplete) => {
       // Saat re-split (font/resize) SplitText memindahkan waktu tween lama ke yang baru,
       // jadi timeline hanya di-pause bila hero belum mulai diputar.
       heroTl?.kill();
       const tl = gsap.timeline({ paused: !played });
-      tl.fromTo(photo, { scale: 1.14 }, { scale: 1, duration: 2.2, ease: "power3.out" }, 0)
-        .from(lines, { yPercent: 115, duration: 1.3, ease: EASE, stagger: .12 }, .15)
+      tl.fromTo(photo, { "--image-zoom": 1.14 }, {
+        "--image-zoom": 1, duration: 2.2, ease: "power3.out", clearProps: "--image-zoom",
+      }, 0)
+        .from(lines, { yPercent: 140, duration: 1.3, ease: EASE, stagger: .12, onComplete: onTitleComplete }, .15)
         .fromTo(description, { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: SOFT }, .45);
       heroTl = tl;
       return tl;
@@ -134,7 +141,7 @@
     if (SplitText) {
       SplitText.create(heroTitle, {
         type: "lines", mask: "lines", linesClass: "split-line", autoSplit: true,
-        onSplit: (self) => build(self.lines),
+        onSplit: (self) => build(self.lines, () => unclipLines(self.lines)),
       });
     } else {
       build(heroTitle);
@@ -170,7 +177,7 @@
   function setupSections() {
     /* Judul section: baris demi baris naik dari mask. */
     [
-      ".about h2", "#theme-title", ".categories .section-heading", ".prizes .section-heading",
+      ".about h2", ".categories .section-heading", "#prizes-title",
       "#pathway-title", ".judges .section-heading", "#scoring-title", ".entry .section-heading",
       ".schedule-grid h2", ".gallery-heading h2", "#news-title", ".closing h2",
     ].forEach((selector) => splitHeading($(selector)));
@@ -198,7 +205,8 @@
         scrollTrigger: { trigger: ".theme-stage", start: "top bottom", end: "bottom top", scrub: true },
       });
     }
-    enter(".theme-context", { y: 24, opacity: 0, delay: .35 }, "#theme-title");
+    enter(".theme-context", { y: 18, opacity: 0 }, "#theme-title");
+    enter("#theme-title > span", { y: 22, opacity: 0, duration: .95, stagger: .1, clearProps: "transform,opacity" }, "#theme-title");
     enter(".theme-info > *", { y: 46, opacity: 0, stagger: .14 }, ".theme-info");
 
     /* Kategori */
@@ -212,23 +220,14 @@
     enter(".section-note", { y: 20, opacity: 0 });
 
     /* Hadiah */
-    const prize = $(".prize-feature");
-    if (prize) {
-      mediaReveal(prize, null, { from: "right" });
-      enter(".gold-prize > *", { y: 34, opacity: 0, stagger: .1, delay: .5 }, prize);
-      const trophy = $(".prize-trophy");
-      gsap.timeline({ scrollTrigger: { trigger: prize, start: START, once: true } })
-        .from(trophy, { yPercent: 18, rotate: -8, opacity: 0, duration: 1.6, ease: EASE, delay: .35 })
-        .to(trophy, { yPercent: -2.5, duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1 });
-    }
-    enter(".prize-list > div", { y: 36, opacity: 0, stagger: .12, delay: .2 }, ".prize-list");
+    enter(".prize-stage", {
+      "--image-zoom": 1.025, opacity: .62, duration: 1.55, ease: "power2.out", clearProps: "--image-zoom,opacity",
+    }, ".prize-feature", "top 88%");
+    enter(".gold-prize > *", { y: 18, opacity: 0, stagger: .08 }, ".gold-prize");
+    enter(".prize-list > div", { y: 24, opacity: 0, stagger: .1 }, ".prize-list");
 
-    /* Pathway: tiap langkah "tergambar" dari kiri ke kanan. */
-    enter(".pathway-steps li", {
-      clipPath: "inset(-1rem 100% -1rem -1rem)",
-      duration: 1.3, ease: "expo.inOut", stagger: .22, clearProps: "clipPath",
-    }, ".pathway-steps");
-    enter(".pathway-steps li > *", { x: -24, opacity: 0, stagger: .1, delay: .3 }, ".pathway-steps");
+    enter(".pathway-steps li", { y: 16, opacity: 0, duration: .85, stagger: .11 }, ".pathway-steps");
+    enter(".pathway-feature", { y: 20, opacity: 0, duration: .9 });
 
     /* Juri: kedua panel dianimasikan bersama agar tab yang tersembunyi tidak tertinggal. */
     enter(".judge-panel-title", { y: 24, opacity: 0, stagger: .1 }, ".judge-panels");
