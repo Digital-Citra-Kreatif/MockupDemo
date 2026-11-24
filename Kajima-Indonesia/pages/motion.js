@@ -66,7 +66,7 @@
   // ---------- 2. reveal on scroll (auto-tagged) ----------
   const GROUPS = ['.head > *', '.facts > div', '.g2 > *', '.g3 > *', '.g4 > *', '.rows > *', '.num > li', '.tl-list > li',
     '.ms > li', '.letters > div', '.acc > details', '.chan > *', '.dl > div', '.prose > *', '.org > .node', '.org .kids > .node',
-    '.split > *', '.tl-era > .era', '.cert', 'main .note', '.ftr .cols > div', '.ftr .base', '.chips', '.tabs', '.ms-ctrl'];
+    '.split > *', '.tl-era > .era', '.cert', 'main .note', '.ftr .cols > div', '.chips', '.tabs', '.ms-ctrl'];
   const skip = el => el.closest('.rv, .hero, .pg-hero, .hdr, .drawer, .works, .m-words') || el.querySelector('.rv') || el.classList.contains('m-words');
   let cands = [...new Set(GROUPS.flatMap(s => $$(s)))].filter(el => !skip(el) && !el.classList.contains('ph'));
   cands = cands.filter(el => !cands.some(c => c !== el && el.contains(c)));   // innermost wins, no double motion
@@ -160,11 +160,12 @@
   // ---------- 7. scroll covers (v2) ----------
   // Hero: the heading stays put while the sky, the skyline and the sections below scroll up over it.
   // Inner pages do the same with their banner title, so every hero behaves alike.
-  const hero = document.querySelector('.hero, .pg-hero'), heroTitle = hero && hero.querySelector('.h-title, .pg-hero > .in');
+  const hero = document.querySelector('.hero, .pg-hero'),   // v13: homepage hero parallax back (feedback)
+        heroTitle = hero && hero.querySelector('.h-title, .pg-hero > .in');
   // CTA + footer slide up over the last section (pages that have the CTA only): the section holds
   // still once its bottom meets the bottom of the screen, and the footer covers it.
   const foot = document.querySelector('body > footer'), main = document.querySelector('main');
-  const under = foot && foot.querySelector('.sky') && main ? [...main.children].filter(el => el.tagName === 'SECTION').pop() : null;
+  const under = null;   // v13: CTA + footer no longer slide over the last section (feedback); Lenis keeps scrolling smooth
   if (heroTitle) hero.classList.add('m-stay');
   if (under) { under.classList.add('m-under'); foot.classList.add('m-over'); }
   const onCover = () => {

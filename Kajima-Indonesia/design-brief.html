@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kajima Indonesia · Design Brief</title>
+<link rel="stylesheet" href="fonts/inter-tight.css">
+<style>
+  :root {
+    --red: #E6002D; --red-dk: #B8001F; --red-50: #FDECEF;
+    --ink: #16181B; --slate: #5B5F66; --line: #E2E2DE; --line-2: #CFCFCA; --mist: #F4F4F2; --white: #FFFFFF;
+    --font: "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --pad: 48px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); font-size: 17px; line-height: 1.6; color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--pad); }
+  .doc { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 64px; max-width: 1280px; margin: 0 auto; padding: 0 var(--pad); }
+
+  /* cover */
+  .cover { border-bottom: 1px solid var(--line); padding: 56px 0 72px; margin-bottom: 24px; }
+  .cover .logo { height: 34px; width: auto; margin-bottom: 72px; }
+  .label { display: block; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--slate); }
+  .cover .label { color: var(--red-dk); margin-bottom: 16px; }
+  .cover h1 { font-weight: 300; font-size: clamp(44px, 6vw, 80px); line-height: 1.02; letter-spacing: -.03em; max-width: 900px; text-wrap: balance; }
+  .cover .lead { font-size: 20px; color: var(--slate); max-width: 760px; margin-top: 24px; text-wrap: pretty; }
+  .meta { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 56px; border-top: 1px solid var(--line); }
+  .meta div { padding: 18px 20px 0 0; font-size: 15px; }
+  .meta div + div { padding-left: 20px; border-left: 1px solid var(--line); }
+  .meta b { display: block; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); margin-bottom: 6px; }
+
+  /* side index */
+  .toc { position: sticky; top: 32px; align-self: start; padding-top: 48px; font-size: 14px; }
+  .toc .label { margin-bottom: 14px; }
+  .toc ol { list-style: none; counter-reset: t; display: grid; gap: 2px; }
+  .toc li { counter-increment: t; }
+  .toc a { display: grid; grid-template-columns: 28px 1fr; padding: 5px 0; text-decoration: none; color: var(--slate); transition: color .2s; }
+  .toc a::before { content: counter(t, decimal-leading-zero); color: var(--red-dk); font-size: 12px; padding-top: 2px; }
+  .toc a:hover { color: var(--ink); }
+
+  /* sections */
+  main section { padding: 56px 0 64px; border-bottom: 1px solid var(--line); }
+  main section:last-child { border-bottom: 0; }
+  .num { color: var(--red-dk); font-size: 13px; font-weight: 500; letter-spacing: .14em; display: block; margin-bottom: 10px; }
+  h2 { font-weight: 300; font-size: clamp(32px, 3.4vw, 46px); line-height: 1.06; letter-spacing: -.025em; margin-bottom: 18px; text-wrap: balance; }
+  h3 { font-weight: 500; font-size: 19px; letter-spacing: -.01em; margin: 36px 0 12px; }
+  p + p { margin-top: 12px; }
+  .intro { font-size: 19px; color: var(--slate); max-width: 760px; margin-bottom: 8px; text-wrap: pretty; }
+  ul.list { padding-left: 20px; display: grid; gap: 6px; }
+  ul.list li::marker { color: var(--red); }
+  .muted { color: var(--slate); }
+  .small { font-size: 14px; }
+
+  /* tables */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 8px; }
+  .tbl th { text-align: left; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--slate); padding: 0 16px 10px 0; border-bottom: 1px solid var(--ink); vertical-align: bottom; }
+  .tbl td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .tbl td:first-child { font-weight: 500; }
+  .scroll { overflow-x: auto; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 2px 8px; white-space: nowrap; }
+  .tag.hi { background: var(--red-50); color: var(--red-dk); }
+  .tag.md { background: #FFF5DC; color: #8A5A00; }
+  .tag.cr { background: var(--red-dk); color: #fff; }
+
+  /* callouts, cards */
+  .note { margin-top: 24px; padding: 20px 24px; background: var(--mist); border-left: 2px solid var(--red); font-size: 15px; }
+  .note b { display: block; margin-bottom: 4px; }
+  .quote { margin: 8px 0 4px; padding: 28px 32px; border: 1px solid var(--line); border-radius: 0 28px 0 0; }
+  .quote .label { margin-bottom: 10px; color: var(--red-dk); }
+  .quote p { font-weight: 300; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.15; letter-spacing: -.02em; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
+  .card { border: 1px solid var(--line); padding: 24px; border-radius: 0 20px 0 0; }
+  .card .label { margin-bottom: 8px; color: var(--red-dk); }
+  .card h4 { font-weight: 400; font-size: 22px; letter-spacing: -.015em; line-height: 1.2; margin-bottom: 8px; }
+  .card p, .card li { font-size: 15px; color: var(--slate); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 16px; }
+  .stats div { padding: 20px 16px 18px 0; }
+  .stats div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+  .stats b { display: block; font-weight: 300; font-size: 40px; line-height: 1; letter-spacing: -.03em; margin-bottom: 6px; }
+  .stats span { font-size: 14px; color: var(--slate); }
+  .flow { display: grid; grid-template-columns: repeat(6, 1fr); border-top: 1px solid var(--line-2); margin-top: 16px; }
+  .flow div { padding: 14px 14px 0 0; font-size: 14px; color: var(--slate); }
+  .flow b { display: block; color: var(--ink); font-weight: 500; font-size: 15px; margin-bottom: 4px; }
+  .flow i { font-style: normal; color: var(--red-dk); font-size: 12px; font-weight: 500; letter-spacing: .1em; }
+  figure { margin-top: 24px; }
+  figure img { border: 1px solid var(--line); border-radius: 0 28px 0 0; }
+  figcaption { font-size: 13px; color: var(--slate); margin-top: 8px; }
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 8px; }
+  .sw i { display: block; height: 56px; border: 1px solid var(--line); margin-bottom: 8px; }
+  .sw b { display: block; font-size: 14px; font-weight: 500; }
+  .sw span { font-size: 12px; color: var(--slate); }
+  .timeline { list-style: none; border-left: 1px solid var(--line-2); margin-top: 12px; }
+  .timeline li { position: relative; padding: 0 0 22px 24px; }
+  .timeline li::before { content: ""; position: absolute; left: -4px; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
+  .timeline time { display: block; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--red-dk); }
+  .timeline b { font-weight: 500; }
+  .timeline span { color: var(--slate); font-size: 15px; }
+  .check { list-style: none; display: grid; gap: 8px; }
+  .check li { position: relative; padding-left: 28px; font-size: 15px; }
+  .check li::before { content: ""; position: absolute; left: 0; top: 5px; width: 14px; height: 14px; border: 1.5px solid var(--red); }
+
+  footer.end { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 13px; color: var(--slate); }
+  footer.end .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 1000px) {
+    .doc { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .toc { position: static; padding-top: 32px; }
+    .toc ol { grid-template-columns: 1fr 1fr; }
+    .grid3 { grid-template-columns: 1fr 1fr; }
+    .flow { grid-template-columns: repeat(3, 1fr); row-gap: 16px; }
+    .swatches { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 720px) {
+    :root { --pad: 20px; }
+    body { font-size: 16px; }
+    .meta, .stats { grid-template-columns: 1fr 1fr; }
+    .meta div:nth-child(3), .stats div:nth-child(3) { padding-left: 0; border-left: 0; }
+    .meta div, .stats div { padding-bottom: 14px; }
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    .toc ol { grid-template-columns: 1fr; }
+    .flow { grid-template-columns: 1fr 1fr; }
+    .tbl { font-size: 14px; }
+    .tbl.wide { min-width: 640px; }
+  }
+  @media print {
+    .toc { display: none; }
+    .doc { grid-template-columns: 1fr; }
+    main section { break-inside: avoid-page; padding: 32px 0; }
+    figure { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap cover">
+  <img class="logo" src="assets/logo-2026.png" alt="Kajima Indonesia">
+  <span class="label">Design brief · Website redesign proposal</span>
+  <h1>PT Kajima Indonesia: a website that helps clients choose Kajima</h1>
+  <p class="lead">This brief records why the redesign exists, who it serves, what we learned from the current site, the strategy and creative direction we chose, and the decisions that shaped the final design. It is the reference for reviewing, approving and building the website.</p>
+  <div class="meta">
+    <div><b>Client</b>PT Kajima Indonesia</div>
+    <div><b>Current site</b><a href="https://www.kajima.co.id/">kajima.co.id</a></div>
+    <div><b>Status</b>Proposal: experience improvement (client has not committed to a full revamp)</div>
+    <div><b>Version · date</b>v1 · 24 Nov 2026</div>
+  </div>
+</header>
+
+<div class="doc">
+  <nav class="toc" aria-label="Contents">
+    <span class="label">Contents</span>
+    <ol>
+      <li><a href="#summary">Summary</a></li>
+      <li><a href="#context">Business context</a></li>
+      <li><a href="#audit">Existing site audit</a></li>
+      <li><a href="#analytics">Existing analytics</a></li>
+      <li><a href="#audience">Audience research</a></li>
+      <li><a href="#strategy">Strategy</a></li>
+      <li><a href="#structure">Journeys &amp; structure</a></li>
+      <li><a href="#direction">Creative direction</a></li>
+      <li><a href="#design">Final design</a></li>
+      <li><a href="#measure">Success measures</a></li>
+      <li><a href="#process">Process &amp; timeline</a></li>
+      <li><a href="#deliverables">Deliverables</a></li>
+      <li><a href="#open">Open items</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <!-- 1 -->
+    <section id="summary">
+      <span class="num">01</span>
+      <h2>Summary</h2>
+      <p class="intro">Kajima Indonesia's website is rarely the first contact with a client. Projects arrive through relationships, Kajima's Japanese head office, industrial estates, consultants and tenders. Visitors come to <b>check</b> Kajima: is it capable, proven, safe and compliant? Today the site does not answer that well.</p>
+      <div class="grid3">
+        <div class="card"><span class="label">Problem</span><h4>The proof is hidden</h4><p>Strong credentials (since 1840 and 1975, ISO and SMK3, Japanese MNC clients) sit deep in inner pages; project pages are dead ends; dated numbers and broken links weaken trust.</p></div>
+        <div class="card"><span class="label">Goal</span><h4>Pass due diligence, then start a conversation</h4><p>Turn a verifying visitor into a project enquiry ("Discuss a Project"), with recruitment and scam verification as clear secondary paths.</p></div>
+        <div class="card"><span class="label">Answer</span><h4>Proof first, in a calm Japanese-corporate voice</h4><p>A homepage ordered like a client's checklist: who Kajima is, what it has built, how it works, why it is safe, and one clear next step.</p></div>
+      </div>
+      <h3>Scope of this work</h3>
+      <ul class="list">
+        <li>Hi-fi homepage, plus an animated version with smooth scrolling and micro-interactions.</li>
+        <li>24 inner pages as low-fidelity wireframes that follow the homepage style (with hi-fi header and footer).</li>
+        <li>A design system (foundations, components, states, do's and don'ts).</li>
+        <li>Planning documents: audit, user research and strategy, journeys, sitemap, references, direction and copy.</li>
+      </ul>
+    </section>
+
+    <!-- 2 -->
+    <section id="context">
+      <span class="num">02</span>
+      <h2>Business context</h2>
+      <p class="intro">PT Kajima Indonesia is a general contractor and design-build company for buildings, part of Kajima Corporation, one of Japan's five "super general contractors".</p>
+      <div class="stats">
+        <div><b>1840</b><span>Kajima Group founded in Tokyo</span></div>
+        <div><b>1975</b><span>In Indonesia since</span></div>
+        <div><b>210+</b><span>Projects completed in Indonesia (to confirm)</span></div>
+        <div><b>19</b><span>Countries in the Kajima network</span></div>
+      </div>
+      <h3>What Kajima Indonesia builds</h3>
+      <ul class="list">
+        <li><b>Factories and warehouses</b> for Japanese manufacturers in the Bekasi, Karawang and Cikarang industrial estates (Mandom, Unicharm, Sumitomo SHI, Takasago, Yamazaki, Ajinomoto, Mitsui).</li>
+        <li><b>Commercial buildings:</b> offices, hotels, apartments and data centres.</li>
+        <li><b>Its own property development</b> (Senayan Square).</li>
+      </ul>
+      <h3>What it offers</h3>
+      <ul class="list">
+        <li>One point of responsibility from design to handover (design-build).</li>
+        <li>Japanese quality and safety standards: KTMS, SQCDE, ANZEN Leaders, ISO 9001, 14001, 45001 and 37001, and SMK3.</li>
+        <li>Group strength: design by Kajima Design Asia (45 architects and engineers), technology from KaTRI, a network in 19 countries.</li>
+        <li>Certainty of time and cost: fast-track starts, reliable cost projection, value engineering.</li>
+        <li>Integrity: anti-bribery certification (ISO 37001), whistle-blowing channels.</li>
+      </ul>
+      <h3>What the website should achieve (in priority order, to confirm with the client)</h3>
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Objective</th><th>Today</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Win project enquiries and tender invitations</td><td>"Contact Now" in the hero; no guided path</td></tr>
+          <tr><td>2</td><td>Recruit experienced engineers and staff</td><td>8 open roles on one long page</td></tr>
+          <tr><td>3</td><td>Protect reputation: official verification against scams, whistle-blowing</td><td>Scam pop-up covers the hero</td></tr>
+          <tr><td>4</td><td>Show the strength of Kajima Group</td><td>Full-screen world map</td></tr>
+        </tbody>
+      </table>
+      <p class="note"><b>The core issue</b>All four objectives get equal weight on the current homepage, and none of them has a complete path.</p>
+    </section>
+
+    <!-- 3 -->
+    <section id="audit">
+      <span class="num">03</span>
+      <h2>Existing site audit</h2>
+      <p class="intro">Audit of kajima.co.id on 26 Oct 2026: every main page on desktop (1440 px) and mobile (390 px), the Kajima group sites (kajima.co.jp, kajima.com.sg) and a social media search.</p>
+      <div class="scroll"><table class="tbl wide">
+        <thead><tr><th>Area</th><th>Finding</th><th>Severity</th></tr></thead>
+        <tbody>
+          <tr><td>Business goal</td><td>The site never says who it is for or what visitors should do. The tagline is generic and grammatically off ("specialist in all kind buildings").</td><td><span class="tag hi">High</span></td></tr>
+          <tr><td>Proof</td><td>Strong evidence exists but is buried in inner pages. Homepage numbers are out of date ("46 years", © 2021).</td><td><span class="tag hi">High</span></td></tr>
+          <tr><td>Conversion</td><td>Project and service pages end with no next step. The contact form looks incomplete. No vendor path, no downloadable company profile.</td><td><span class="tag hi">High</span></td></tr>
+          <tr><td>Rendering</td><td>In automated Chrome tests, the Numbers, Contact, Whistle-blowing and Careers sections rendered empty although the text is in the HTML.</td><td><span class="tag cr">Critical if confirmed</span></td></tr>
+          <tr><td>Interface</td><td>Thin light-grey text (low contrast), stock photos mixed with real projects, a full-screen world map, a scam pop-up that covers the first screen on mobile.</td><td><span class="tag hi">Medium–high</span></td></tr>
+          <tr><td>Technical hygiene</td><td>"Privacy Notice" links to the scam page (no real privacy policy, although Indonesia's PDP law applies and the site collects CVs). Typos, file names as alt text, an outdated CMS (Mollom, discontinued 2018).</td><td><span class="tag md">Medium</span></td></tr>
+          <tr><td>Brand consistency</td><td>Theme assets shared with Kajima Thailand: a "THAI KAJIMA" logo file and a worker photo with a "THAI KAJIMA" vest. "Core Strengths" is filed as a service, although it is a benefit.</td><td><span class="tag md">Medium</span></td></tr>
+        </tbody>
+      </table></div>
+      <h3>Group sites and social media</h3>
+      <ul class="list">
+        <li>All Kajima group sites share the red logo, a formal factual tone, real project photos and visible compliance channels. The redesign should stay recognisably "Kajima Group".</li>
+        <li>No official Kajima Indonesia social accounts were found (only Jobstreet and Jobplanet profiles). The website is the <b>only official source</b>, so its verification role against scams must be strong.</li>
+      </ul>
+      <h3>What the current site does well, and we kept</h3>
+      <ul class="list">
+        <li>Real project photography and the 2026 Kajima red.</li>
+        <li>Character pieces visitors remember: the illustrations in "KAJIMA in numbers" (Fuji, Monas, skyline), the line–dot–line divider, the Kajima mark on the map and the round "play" button, now refined.</li>
+      </ul>
+    </section>
+
+    <!-- 4 -->
+    <section id="analytics">
+      <span class="num">04</span>
+      <h2>Existing analytics</h2>
+      <p class="intro">No analytics, Search Console data, form statistics or visitor surveys were provided for this proposal. We did not invent numbers. The strategy rests on the audit, the client's portfolio, group benchmarks and known patterns in B2B construction buying.</p>
+      <div class="grid2">
+        <div class="card"><span class="label">What we used instead</span>
+          <ul class="list small">
+            <li>Page-by-page content inventory of the current site.</li>
+            <li>Rendering tests on desktop and mobile.</li>
+            <li>Benchmark of Kajima HQ, Kajima Asia Pacific and peers (Takenaka, Obayashi, Shimizu).</li>
+            <li>Ten reference sites of design-build contractors.</li>
+            <li>Search for official social channels and job listings.</li>
+          </ul></div>
+        <div class="card"><span class="label">What we need from the client</span>
+          <ul class="list small">
+            <li>12 months of analytics: top landing pages, traffic sources, device split, bounce on project pages.</li>
+            <li>Search Console queries (for example "kontraktor pabrik", "lowongan Kajima").</li>
+            <li>Monthly volume and source of enquiries (web form, email, phone) and job applications.</li>
+            <li>Number of scam reports received.</li>
+          </ul></div>
+      </div>
+      <p class="note"><b>Why it matters</b>These numbers set the baseline for the success measures in section 10 and confirm or correct the persona priorities in section 5. They should be collected before launch.</p>
+    </section>
+
+    <!-- 5 -->
+    <section id="audience">
+      <span class="num">05</span>
+      <h2>Audience research</h2>
+      <p class="intro">Five audiences, drawn from the portfolio and industry patterns. They are hypotheses to validate with the client and the analytics above.</p>
+      <div class="scroll"><table class="tbl wide">
+        <thead><tr><th>Persona</th><th>Who</th><th>What they need</th><th>How they arrive</th><th>Primary action</th></tr></thead>
+        <tbody>
+          <tr><td>P1 · Expansion lead</td><td>President director or GM of a Japanese manufacturer in Indonesia; facilities team at the Japanese HQ</td><td>A trusted contractor that handles design, permits and construction on schedule; material to share with the decision group (ringi)</td><td>Referral from HQ, industrial estate or consultant; already knows the Kajima name</td><td>Discuss a Project</td></tr>
+          <tr><td>P2 · Pre-qualifier</td><td>Developer, procurement team, PM/QS consultant building a tender list</td><td>Track record by sector, certificates, legal documents, safety statistics</td><td>Google search, desktop, office hours; compares contractors side by side</td><td>Discuss a Project / tender invitation</td></tr>
+          <tr><td>P3 · Engineer</td><td>Civil, M&amp;E, QS, BIM and drafting professionals, 27–45, Jabodetabek</td><td>Clear, current roles; easy mobile application; proof that a job ad is genuine</td><td>Jobstreet, LinkedIn, Google; mobile first. Likely the largest volume</td><td>Apply for a role</td></tr>
+          <tr><td>P4 · Partner</td><td>Subcontractors and suppliers</td><td>Vendor registration; a way to verify requests made in Kajima's name</td><td>Often targeted by scams</td><td>Verify / register</td></tr>
+          <tr><td>P5 · Public</td><td>Regulators, whistle-blowers</td><td>Policies, code of conduct, reporting channels</td><td>Footer, search</td><td>Report</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note"><b>Homepage priority</b>P1 and P2 equally (business), then P3 (recruitment), then P4 and P5 as utility paths always visible in the alert bar and footer.</p>
+    </section>
+
+    <!-- 6 -->
+    <section id="strategy">
+      <span class="num">06</span>
+      <h2>Strategy</h2>
+      <table class="tbl">
+        <tbody>
+          <tr><td>Role of the site</td><td><b>Verification and proof</b>, then a bridge to a project conversation. Second: the official recruitment channel. Third: the official source against scams.</td></tr>
+          <tr><td>Journey stage</td><td>Consideration and conversion, not awareness. Awareness only through sector pages and search.</td></tr>
+          <tr><td>Primary action</td><td><b>Discuss a Project</b>: a short qualifying form (building type, location, size, timing). Supported by a downloadable company profile.</td></tr>
+          <tr><td>Sweet spot</td><td><b>Project certainty</b>: on time, on budget, safe and compliant, with one partner who knows Japanese standards and Indonesian regulation.</td></tr>
+          <tr><td>Structure principle</td><td>Follow the client's due diligence: who is Kajima → have they built something like mine → how do they work → are they safe and compliant → what do I do next.</td></tr>
+        </tbody>
+      </table>
+      <h3>Message</h3>
+      <div class="quote"><span class="label">Hero heading (final)</span><p>Design &amp; Build in Indonesia since 1975</p></div>
+      <p class="muted small">Supported by: "Factories, warehouses, data centers, offices and hotels, designed and built by one accountable team to Japanese standards of safety and quality." The first rounds kept the existing line, "Specialist in all kinds of buildings", as the client had not decided on a revamp. The heading moved to the clearer design-build message on 30 Oct.</p>
+      <h3>Four pillars (Core Strengths, from the existing site)</h3>
+      <div class="grid2">
+        <div class="card"><span class="label">Quality</span><p>Single source responsibility · integrated design-build quality control by ISO 9001</p></div>
+        <div class="card"><span class="label">Technology</span><p>Feedback from construction technology · comprehensive supporting technology</p></div>
+        <div class="card"><span class="label">Delivery</span><p>Fast-track commencement · short construction period, flexibility for changes</p></div>
+        <div class="card"><span class="label">Cost</span><p>Reliable cost projection · optimal method and value engineering for low costs</p></div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="structure">
+      <span class="num">07</span>
+      <h2>Journeys &amp; structure</h2>
+      <p class="intro">The client journey the homepage is built around:</p>
+      <div class="flow">
+        <div><i>1</i><b>Trigger</b>New plant, expansion or tender</div>
+        <div><i>2</i><b>Arrive</b>Referral, estate, consultant, search</div>
+        <div><i>3</i><b>Recognise</b>"Is Kajima Indonesia capable?"</div>
+        <div><i>4</i><b>Prove</b>"Have they built something like mine?"</div>
+        <div><i>5</i><b>Trust</b>"How do they work? Safe? Compliant?"</div>
+        <div><i>6</i><b>Act</b>Discuss a Project</div>
+      </div>
+      <h3>Homepage, as built</h3>
+      <table class="tbl">
+        <thead><tr><th>Section</th><th>Content</th><th>Job</th></tr></thead>
+        <tbody>
+          <tr><td>Alert bar</td><td>"Beware of scams using the Kajima Indonesia name. Verify our official contacts"</td><td>Replaces the pop-up; P4</td></tr>
+          <tr><td>Header</td><td>About Us · Global Network · Projects · Services · Careers · Contact · EN/ID; "Discuss a Project" appears after the hero</td><td>All</td></tr>
+          <tr><td>Hero</td><td>Heading, supporting line, Discuss a Project · View Projects; Jakarta skyline to the ground</td><td>Recognise</td></tr>
+          <tr><td>KAJIMA in numbers + clients</td><td>1840 · 1975 · 210+ with the existing illustrations; client logo marquee</td><td>Fast proof</td></tr>
+          <tr><td>Global Network</td><td>Interactive globe with the Kajima mark on each office; 42 offices outside Japan, 19 countries, 234 group companies</td><td>Group strength</td></tr>
+          <tr><td>Projects by building type</td><td>Tabs: factory, warehouse &amp; logistics, data center, office, hotel, residence; one featured project per type</td><td>Prove</td></tr>
+          <tr><td>Services + Core Strengths</td><td>Design and Construction cards; the four pillars with line icons</td><td>Trust</td></tr>
+          <tr><td>Careers</td><td>Photo, four open roles as cards, View positions, CV email</td><td>P3</td></tr>
+          <tr><td>CTA + footer</td><td>"Together, we build a better Indonesia" + Discuss a Project; offices, contacts, whistle-blowing, copyright</td><td>Act</td></tr>
+        </tbody>
+      </table>
+      <h3>Inner pages (wireframes)</h3>
+      <p>About (Corporate Profile, History timeline, OHSEQ ABMS Policy, Code of Conduct) · Global Network · Projects (list + 11 project details) · Services (Core Strengths, Design, Construction) · Careers · Contact · Alert on Scam. Every inner page uses the same hero layout; the homepage is the style reference. Content matches the current site.</p>
+      <p class="muted small">A broader sitemap (sector landing pages, case studies, vendor registration, verification and privacy pages, bilingual content) is proposed as a next phase if the client approves a full revamp.</p>
+    </section>
+
+    <!-- 8 -->
+    <section id="direction">
+      <span class="num">08</span>
+      <h2>Creative direction</h2>
+      <p class="intro">Three references set the bar: <b>Gray</b> (very large, thin type and colour discipline), <b>Rogers-O'Brien</b> (strong grid, one brand colour, the closing CTA) and <b>Matsuo Komuten</b> (one focus per screen, a calm Japanese rhythm). Two directions were explored; the client chose the second.</p>
+      <div class="grid2">
+        <div class="card"><span class="label">Option A · not chosen</span><h4>Industrial: "Built to last"</h4><p>Charcoal fields, condensed capitals, technical labels. Bold, but further from the Kajima Group identity.</p></div>
+        <div class="card" style="border-color:var(--ink)"><span class="label">Option B · chosen</span><h4>Clean Modern Corporate: "Quiet precision"</h4><p>White space, hairlines, light Inter Tight headings, Kajima red as the only bold colour. Close to Kajima HQ and suited to a conservative audience.</p></div>
+      </div>
+      <h3>Brand character: "The Senior Engineer"</h3>
+      <p>Calm, precise, polite and never exaggerating. One idea per sentence, facts with dates, verbs on buttons (max three words), no new superlatives without proof.</p>
+      <h3>Visual system</h3>
+      <div class="swatches">
+        <div class="sw"><i style="background:#E6002D"></i><b>Kajima Red</b><span>#E6002D · buttons, accents</span></div>
+        <div class="sw"><i style="background:#B8001F"></i><b>Red Deep</b><span>#B8001F · hover, small red text</span></div>
+        <div class="sw"><i style="background:#16181B"></i><b>Ink</b><span>#16181B · text</span></div>
+        <div class="sw"><i style="background:#5B5F66"></i><b>Slate</b><span>#5B5F66 · secondary text</span></div>
+        <div class="sw"><i style="background:#F4F4F2"></i><b>Mist</b><span>#F4F4F2 · alternate sections</span></div>
+        <div class="sw"><i style="background:#E2E2DE"></i><b>Line</b><span>#E2E2DE · hairlines</span></div>
+      </div>
+      <ul class="list" style="margin-top:20px">
+        <li><b>Type:</b> one family, Inter Tight. Light (300) headings with tight spacing; regular body; small uppercase labels.</li>
+        <li><b>Shape:</b> square buttons. Cards and pictures take the logo's rounded top-right corner (the curve of the "n" in the Kajima mark).</li>
+        <li><b>Buttons:</b> red primary; red secondary (outline, or white with a red label on photos); one line arrow. Text links and card buttons use the round ring button with a ↗ arrow.</li>
+        <li><b>Imagery:</b> real Kajima projects and people; Jakarta skyline cut-outs for the hero and closing CTA; illustrations kept from the existing site.</li>
+        <li><b>Motion:</b> calm and one-shot. Smooth scrolling, headlines rising word by word, counters from zero, the hero skyline rising over the heading, small hover animations on icons. Everything switches off for "reduce motion".</li>
+      </ul>
+    </section>
+
+    <!-- 9 -->
+    <section id="design">
+      <span class="num">09</span>
+      <h2>Final design</h2>
+      <p class="intro">Homepage v31 (static) and animated v14, refined through several internal review rounds.</p>
+      <figure><img src="assets/brief/hero.png" alt="Homepage hero: Design & Build in Indonesia since 1975, two buttons, Jakarta skyline" loading="lazy"><figcaption>Hero: the heading, two actions and the Jakarta skyline running to the ground under a soft gradient.</figcaption></figure>
+      <div class="grid2">
+        <figure><img src="assets/brief/projects.png" alt="Projects by building type with a featured factory project" loading="lazy"><figcaption>Projects by building type: tabs on the left, one featured project, "View all projects".</figcaption></figure>
+        <figure><img src="assets/brief/careers.png" alt="Careers section with photo and four job cards" loading="lazy"><figcaption>Careers: contained photo, four open roles as cards, the CV email next to "View positions".</figcaption></figure>
+      </div>
+      <h3>Key decisions from the review rounds</h3>
+      <table class="tbl">
+        <thead><tr><th>Date</th><th>Decision</th></tr></thead>
+        <tbody>
+          <tr><td>26 Oct</td><td>Keep the existing message; present the work as an experience improvement. Option B chosen.</td></tr>
+          <tr><td>27 Oct</td><td>Inner pages share one hero layout and follow the homepage style; content matches the current site; history as one timeline.</td></tr>
+          <tr><td>27 Oct</td><td>Motion: counters from zero, smooth scrolling, the globe pauses while scrolling to stay light.</td></tr>
+          <tr><td>30 Oct</td><td>Projects by building type and the contained Careers layout; bring back the current site's character (illustrations, Kajima mark on the map, round button).</td></tr>
+          <tr><td>30 Oct</td><td>New hero heading "Design &amp; Build in Indonesia since 1975"; process steps replaced by Core Strengths, with all text visible (no hover-to-reveal).</td></tr>
+          <tr><td>2 Nov</td><td>Box buttons keep a plain arrow; the ring button is for links and cards, small inside cards so the title stays dominant.</td></tr>
+          <tr><td>24 Nov</td><td>Ring arrow becomes a line ↗ (it read as a video play button); hero photo runs to the ground with a gradient; red secondary buttons; logo corner on cards and pictures, square buttons; no CTA overlap; copyright always visible.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 10 -->
+    <section id="measure">
+      <span class="num">10</span>
+      <h2>Success measures</h2>
+      <p class="intro">Proposed measures, to be set against the baseline from section 4. Targets are agreed with the client once the baseline is known.</p>
+      <table class="tbl">
+        <thead><tr><th>Goal</th><th>Measure</th><th>How</th></tr></thead>
+        <tbody>
+          <tr><td>Project enquiries</td><td>Qualified "Discuss a Project" submissions per month; share of visitors who start the form</td><td>Form events (GA4), CRM tagging by source</td></tr>
+          <tr><td>Proof reaches visitors</td><td>Visits to project pages; clicks from projects to the enquiry form; scroll depth past the numbers section</td><td>GA4 events and scroll tracking</td></tr>
+          <tr><td>Recruitment</td><td>Applications started and completed, by device</td><td>Form events; HR records</td></tr>
+          <tr><td>Scam protection</td><td>Visits to the verification page; scam reports received</td><td>GA4; reports logged by the team</td></tr>
+          <tr><td>Quality</td><td>Core Web Vitals pass; WCAG AA contrast; no broken links</td><td>Lighthouse, link checker (current build: 0 broken links)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 11 -->
+    <section id="process">
+      <span class="num">11</span>
+      <h2>Process &amp; timeline</h2>
+      <ol class="timeline">
+        <li><time>26 Oct 2026</time><b>1 · Plan</b> <span>Audit, user research and strategy, journeys, sitemap and homepage structure.</span></li>
+        <li><time>26 Oct</time><b>2 · Reference</b> <span>Top 10 references, galleries, group benchmark; three chosen.</span></li>
+        <li><time>26 Oct</time><b>3 · Design direction</b> <span>Two directions with moodboards; Option B chosen.</span></li>
+        <li><time>26 Oct</time><b>4 · Copywriting</b> <span>Homepage copy in English, keeping the existing message.</span></li>
+        <li><time>26 Oct – 24 Nov</time><b>5 · Design</b> <span>Homepage v1–v31 and inner-page wireframes, through each feedback round.</span></li>
+        <li><time>27 Oct – 24 Nov</time><b>6 · Animate</b> <span>Micro-animations, smooth scrolling and performance tuning, v1–v14.</span></li>
+        <li><time>27 Oct – 24 Nov</time><b>7 · Design system</b> <span>v1–v5, kept in step with the final design.</span></li>
+        <li><time>Next</time><b>8 · Audit</b> <span>Final review of the design against the brief, accessibility and consistency, before handover.</span></li>
+      </ol>
+    </section>
+
+    <!-- 12 -->
+    <section id="deliverables">
+      <span class="num">12</span>
+      <h2>Deliverables</h2>
+      <p class="intro">Everything is in the shareable package (<span class="muted">Kajima-Indonesia-Final.zip</span>). It works offline in any modern browser.</p>
+      <table class="tbl">
+        <tbody>
+          <tr><td><a href="index.html">index.html</a></td><td>The website: hi-fi homepage with animation and smooth scrolling</td></tr>
+          <tr><td><a href="pages/index.html">pages/</a></td><td>24 inner pages (low-fi wireframes), all linked from the menus</td></tr>
+          <tr><td><a href="design-system/design-system.html">design-system/</a></td><td>Design system: tokens, components, states, do's and don'ts</td></tr>
+          <tr><td><a href="docs/">docs/</a></td><td>Step documents (audit, research, journeys, references, direction, copy, design and motion notes) and the moodboard</td></tr>
+          <tr><td>design-brief.html</td><td>This brief</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 13 -->
+    <section id="open">
+      <span class="num">13</span>
+      <h2>Open items</h2>
+      <p class="intro">Inputs needed from Kajima Indonesia before the design can be built and published.</p>
+      <div class="grid2">
+        <div>
+          <h3 style="margin-top:0">Decisions</h3>
+          <ul class="check">
+            <li>Go ahead with a full revamp, or improvements in phases.</li>
+            <li>Languages: English and Indonesian, and whether Japanese is needed.</li>
+            <li>Whether property development (Senayan Square) stays a business line on the site.</li>
+            <li>Whether a News section is wanted (only with regular content).</li>
+            <li>Vendor registration process: form, email or portal.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="margin-top:0">Content and assets</h3>
+          <ul class="check">
+            <li>Analytics and enquiry data (section 4).</li>
+            <li>Latest numbers: projects completed (210+), employees, offices.</li>
+            <li>Permission to show client logos (placeholders used now).</li>
+            <li>Project data for 6–10 highlights: size, duration, scope; high-resolution photos or drone video.</li>
+            <li>Safety statistics, business licences (SBU/NIB), company profile PDF.</li>
+            <li>The 2026 logo as a vector file; photos of Kajima Indonesia's own team (replacing the "THAI KAJIMA" assets).</li>
+            <li>A real privacy policy (PDP law), current open roles and their details.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="end"><div class="wrap"><span>PT Kajima Indonesia · Website redesign · Design brief v1 · 24 Nov 2026</span><span>Prepared for review and approval</span></div></footer>
+</body>
+</html>

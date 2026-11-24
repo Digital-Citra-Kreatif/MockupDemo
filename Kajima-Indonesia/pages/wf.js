@@ -23,7 +23,7 @@
   ];
   const b = document.body.dataset;
   const page = b.page || '', sub = b.sub || '', title = b.title || document.title;
-  const ar = '<span class="ar">→</span>';
+  const ar = '<span class="ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 8h8.5M8.5 4l4 4-4 4"/></svg></span>';   // v30: line arrow
 
   const navHtml = nav.map(([k, l, h, kids]) => kids
     ? `<li class="dd"><a href="${h}" class="${k === page ? 'on' : ''}" aria-haspopup="true">${l}<span class="chev" aria-hidden="true"></span></a><ul class="sub">${kids.map(([sk, sl, sh]) => `<li><a href="${sh}" class="${sk === sub ? 'on' : ''}">${sl}</a></li>`).join('')}</ul></li>`

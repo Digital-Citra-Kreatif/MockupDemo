@@ -1,5 +1,5 @@
-/* Kajima Indonesia · Design System v2 · tokens
-   Derived from the final homepage (v1: Step 5 v21; v2: homepage v28, animated v11), then rounded to a standard scale.
+/* Kajima Indonesia · Design System v5 · tokens
+   Derived from the final homepage (v1: Step 5 v21; v2: homepage v28, animated v11; v3: homepage v29, animated v12; v4: homepage v30, animated v13), then rounded to a standard scale.
    Values marked (site) are used as-is on the website; (new) are added by the design system. */
 :root {
   /* ---------- colour: brand ---------- */
@@ -105,4 +105,16 @@
   --d-ring: 700ms;     /* ring closes (stroke-dashoffset) */
   --d-ring-turn: 900ms;/* ring turns half a circle */
   --d-hover-anim: 600ms; /* one-shot hover micro-animations: icons, illustrations (600–1000ms) */
+}
+/* ---------- v3 (24 Nov 2026): service button arrow ---------- */
+:root {
+  --ring-arrow-stroke: 1.5;   /* v4: the ring arrow is as thin as the ring (1.5; 2 in card size) */
+  --hero-photo-ratio: .75;    /* homepage hero: the skyline photo (4:3) runs to the ground, so hero height = photo top + width × .75 */
+}
+/* ---------- v4 (24 Nov 2026): logo corner, box-button arrow ---------- */
+:root {
+  --r-logo-btn: 0;             /* v5: buttons stay square (the logo corner is for cards and pictures) */
+  --r-logo-card: 0 28px 0 0;   /* service cards (job cards 0 20px 0 0) */
+  --r-logo-photo: 0 32px 0 0;  /* pictures and the modal */
+  --arrow-size: 16px;          /* box-button line arrow: same size in primary and secondary, 1.5 stroke */
 }

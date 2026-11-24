@@ -1,4 +1,4 @@
-/* Kajima Indonesia · Design System v2 · components.css
+/* Kajima Indonesia · Design System v5 · components.css
    Load after tokens.css and site.css (the final homepage stylesheet).
    A. Hi-fi versions of the components the inner pages use (they exist only as lo-fi wireframes in Step 5).
    B. States and components that are not on the website yet. */
@@ -14,7 +14,7 @@
 .btn[disabled], .btn.is-disabled { opacity: var(--o-disabled); pointer-events: none; cursor: not-allowed; }
 .btn.is-loading { position: relative; color: transparent !important; pointer-events: none; }
 .btn.is-loading::after { content: ""; position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border: 2px solid rgba(255,255,255,.45); border-top-color: var(--c-white); border-radius: 50%; animation: ds-spin .8s linear infinite; }
-.btn.line.is-loading::after { border-color: rgba(22,24,27,.2); border-top-color: var(--c-ink); }
+.btn.line.is-loading::after { border-color: rgba(230,0,45,.2); border-top-color: var(--c-red); }
 @keyframes ds-spin { to { transform: rotate(360deg); } }
 /* round icon button (card arrow, slider arrows) */
 .icon-btn { width: 44px; height: 44px; border: 1px solid var(--c-line); border-radius: var(--r-round); display: inline-grid; place-items: center; color: var(--c-ink); background: var(--c-white); transition: background var(--d-hover) var(--m-std), border-color var(--d-hover) var(--m-std), color var(--d-hover) var(--m-std), transform .3s var(--m-out); }
@@ -220,11 +220,13 @@
 .link-play.xs { gap: 10px; font-size: 11px; }
 .link-play.xs .ring { width: var(--ring-xs); height: var(--ring-xs); }
 .link-play.xs circle { stroke-width: 2; }
+.link-play.xs .tri { stroke-width: 2; }
 /* forced states, for static examples only */
 .link-play.is-hover .o1 { stroke-dashoffset: 94.25; transform: rotate(160deg); }
 .link-play.is-hover .o2 { stroke-dashoffset: 94.25; transform: rotate(340deg); }
-.link-play.is-hover .tri { transform: translateX(3px); }
+.link-play.is-hover .tri { transform: translate(2px, -2px); }
 .link-play.is-hover .tx::after { transform: scaleX(1); }
 .link-play.is-focus { outline: var(--focus); outline-offset: var(--focus-offset); }
 .link-play.is-disabled { opacity: var(--o-disabled); pointer-events: none; }
-.link-play:focus-visible { outline: var(--focus); outline-offset: var(--focus-offset); }
+.link-play:focus-visible { outline: var(--focus); outline-offset: var(--focus-offset); }/* v4: Light is now a white button, so its loading spinner is red */
+.btn.light.is-loading::after { border-color: rgba(230,0,45,.2); border-top-color: var(--c-red); }

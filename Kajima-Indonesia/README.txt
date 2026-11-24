@@ -1,4 +1,4 @@
-PT KAJIMA INDONESIA · WEBSITE REDESIGN · FINAL (updated 2 Nov 2026)
+PT KAJIMA INDONESIA · WEBSITE REDESIGN · FINAL (updated 24 Nov 2026)
 
 HOW TO OPEN
 1. Unzip / copy the whole "Kajima-Indonesia-Final" folder (keep the folders together).
@@ -8,8 +8,9 @@ HOW TO OPEN
 WHAT IS INSIDE
 index.html                        THE WEBSITE: final homepage (hi-fi, animated, smooth scrolling)
 pages/                            Inner pages (low-fi wireframes); pages/index.html lists all 24
+design-brief.html                 Design brief: context, audit, research, strategy, direction, decisions, open items
 overview.html                     Overview with links to the website, the design system and the documents
-design-system/design-system.html  Design system v2: foundations, components, states, do & don't
+design-system/design-system.html  Design system v5: foundations, components, states, do & don't
 docs/                             Step documents (Markdown text) and the moodboard image
 assets/ fonts/ vendor/            Files the website needs (do not move or rename)
 
