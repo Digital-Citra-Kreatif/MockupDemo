@@ -1,0 +1,166 @@
+/* Kajima Indonesia · Step 6 Animate v1 — micro animation layer
+   Shared by the homepage (index.html) and every inner page.
+   v2: hero heading stays while the sky/skyline/sections cover it; CTA + footer slide up over the last section.
+   v3: smooth scrolling (Lenis, see motion.js) and GPU layers for the large images.
+   Everything is scoped to html.motion (added by motion.js only when the visitor has not asked for reduced motion),
+   so without JS, or with "reduce motion", the page renders exactly as the Step 5 design.
+   Only transform / opacity / clip-path are animated. */
+:root {
+  --m-out: cubic-bezier(.2,.8,.2,1);   /* reveals, entrances */
+  --m-std: cubic-bezier(.4,0,.2,1);    /* hover, UI state */
+  --m-pop: cubic-bezier(.34,1.4,.64,1);/* small pops: dots, diagram circles */
+  --m-reveal: .9s;
+  --m-ui: .45s;
+  --m-hover: .25s;
+}
+
+/* ---------- header: slides in once on load ---------- */
+.motion .hdr { animation: m-hdr .8s var(--m-out) both; }
+@keyframes m-hdr { from { transform: translateY(-100%); opacity: 0; } }
+
+/* dropdown items cascade in */
+.motion .nav .dd:hover .sub li, .motion .nav .dd:focus-within .sub li { animation: m-fade-up .4s var(--m-out) both; }
+.motion .nav .sub li:nth-child(2) { animation-delay: .04s !important; }
+.motion .nav .sub li:nth-child(3) { animation-delay: .08s !important; }
+.motion .nav .sub li:nth-child(4) { animation-delay: .12s !important; }
+
+/* mobile drawer links cascade in */
+.motion .drawer.open > * { animation: m-fade-up .5s var(--m-out) both; animation-delay: calc(.12s + var(--i, 0) * .04s); }
+
+/* ---------- words: headline rises line by line from behind a mask ---------- */
+.motion .m-words .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.motion .m-words .w > span { display: inline-block; transform: translateY(105%); transition: transform 1s var(--m-out); transition-delay: calc(var(--d0, 0s) + var(--i, 0) * 55ms); }
+.motion .m-words.m-in .w > span { transform: none; }
+
+/* ---------- generic reveal (auto-tagged by motion.js) ---------- */
+.motion .m-up { opacity: 0; transform: translateY(28px); transition: opacity var(--m-reveal) var(--m-out), transform var(--m-reveal) var(--m-out); transition-delay: calc(var(--i, 0) * 75ms); }
+.motion .m-up.m-in { opacity: 1; transform: none; }
+.motion .m-fade { opacity: 0; transition: opacity 1.1s var(--m-std); transition-delay: calc(var(--i, 0) * 75ms); }
+.motion .m-fade.m-in { opacity: 1; }
+
+/* image placeholders / photos uncover from the bottom */
+.motion .m-clip { clip-path: inset(100% 0 0 0); transition: clip-path 1.1s var(--m-out); transition-delay: calc(var(--i, 0) * 75ms); }
+.motion .m-clip.m-in { clip-path: inset(0 0 0 0); }
+
+@keyframes m-fade-up { from { opacity: 0; transform: translateY(14px); } }
+@keyframes m-pop { from { opacity: 0; transform: scale(.4); } }
+
+/* ---------- homepage hero (no scroll parallax: one-time intro only) ---------- */
+.motion .hero .h-sky { animation: m-sky 2.4s var(--m-out) both; }
+@keyframes m-sky { from { transform: scale(1.08); } }
+.motion .hero .h-city { animation: m-city 1.6s .25s var(--m-out) both; }
+@keyframes m-city { from { opacity: 0; transform: translateX(-50%) translateY(48px); } }
+
+/* v2 hero cover: the skyline sits above the heading (heading is translated by motion.js to stay put),
+   so the buildings, then the sections below, scroll up over it. Clicks pass through the image. */
+.motion .hero.m-stay .h-title { z-index: 1; will-change: transform; }
+.motion .hero.m-stay .h-city { z-index: 2; pointer-events: none; }
+/* v3: keep the big masked images on their own GPU layers so scrolling never repaints them */
+.motion .hero .h-sky, .motion .hero .h-city, .motion .sky .photo, .motion .career > img { will-change: transform; backface-visibility: hidden; }
+.motion .hero.m-stay .h-title, .motion .pg-hero > .in { backface-visibility: hidden; }
+
+/* v2 footer cover: the last section holds still (motion.js) while the CTA + footer slide over it */
+.motion .m-under { position: relative; z-index: 0; will-change: transform; }
+.motion .m-over { position: relative; z-index: 5; box-shadow: 0 -40px 80px -40px rgba(14,16,18,.45); }
+
+/* inner page hero: banner settles, text follows the headline */
+.motion .pg-hero > .ph { animation: m-sky 1.8s var(--m-out) both; }
+.motion .pg-hero .crumbs, .motion .pg-hero .intro { animation: m-fade-up .9s var(--m-out) both; }
+.motion .pg-hero .crumbs { animation-delay: .15s; }
+.motion .pg-hero .intro { animation-delay: .55s; }
+.motion .subnav { animation: m-fade-up .7s .7s var(--m-out) both; }
+
+/* sub-nav underline grows from the left */
+.motion .subnav a { position: relative; border-bottom-color: transparent !important; }
+.motion .subnav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--m-out); }
+.motion .subnav a:hover::after { transform: scaleX(.35); }
+.motion .subnav a.on::after { transform: scaleX(1); }
+
+/* ---------- homepage sections ---------- */
+/* careers photo and CTA skyline settle once when they come into view (not tied to scroll) */
+.motion .career > img { transform: scale(1.08); transition: transform 2s var(--m-out); }
+.motion .career.m-in > img { transform: none; }
+.motion .sky .photo { opacity: 0; transform: translateY(56px); transition: opacity 1.4s var(--m-std), transform 1.6s var(--m-out); }
+.motion .sky.m-in .photo { opacity: 1; transform: none; }
+
+/* client logos: marquee pauses under the cursor */
+.motion .marquee:hover .track { animation-play-state: paused; }
+
+/* projects counter rolls when the project changes */
+.motion #wIdx.m-roll { display: inline-block; animation: m-roll .5s var(--m-out); }
+@keyframes m-roll { from { opacity: 0; transform: translateY(60%); } }
+
+/* process steps: the top rule draws across, then each step appears */
+.motion .steps.m-line { position: relative; border-top-color: transparent; }
+.motion .steps.m-line::after { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: #CFCFCA; transform: scaleX(0); transform-origin: left; transition: transform 1.4s var(--m-out); }
+.motion .steps.m-line.m-in::after { transform: scaleX(1); }
+
+/* footer links nudge right */
+.motion .ftr ul a, .motion .ftr ul button { display: inline-block; transition: transform var(--m-hover) var(--m-std), color var(--m-hover) var(--m-std); }
+.motion .ftr ul a:hover, .motion .ftr ul button:hover { transform: translateX(3px); }
+
+/* ---------- inner page components ---------- */
+/* big numbers: rule under the row draws in */
+.motion .facts.m-line { position: relative; border-top-color: transparent; }
+.motion .facts.m-line::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--line); transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--m-out); }
+.motion .facts.m-line.m-in::before { transform: scaleX(1); }
+
+/* vertical timeline: the line draws as you scroll, dots pop as entries arrive */
+.motion .tl-list::before { transform-origin: top; transform: scaleY(var(--p, 0)); background: var(--ink); opacity: .35; }
+.motion .tl-list > li::before { transition: transform .5s var(--m-pop), background .3s; transform: scale(0); }
+.motion .tl-list > li.m-in::before { transform: none; }
+
+/* milestones track: connector draws, year dot pops */
+.motion .ms > li::before { transform: scaleX(0); transform-origin: left; transition: transform .9s var(--m-out); transition-delay: calc(var(--i, 0) * 75ms + .2s); }
+.motion .ms > li::after { transform: scale(0); transition: transform .5s var(--m-pop); transition-delay: calc(var(--i, 0) * 75ms); }
+.motion .ms > li.m-in::before, .motion .ms > li.m-in::after { transform: none; }
+
+/* big letters (C-O-M-M-I-T, S-Q-C-D-E) slide in ahead of their text */
+.motion .letters > div .L { display: inline-block; opacity: 0; transform: translateX(-24px); transition: opacity .8s var(--m-out), transform .8s var(--m-out); }
+.motion .letters > div.m-in .L { opacity: 1; transform: none; }
+
+/* design coordinator: centre first, then the five disciplines pop around it */
+.motion .coord::before { transform: scale(.85); opacity: 0; transition: transform 1.2s var(--m-out), opacity 1s var(--m-std); }
+.motion .coord.m-in::before { transform: none; opacity: .5; }
+.motion .coord .c, .motion .coord .o { opacity: 0; scale: .5; transition: opacity .6s var(--m-std), scale .7s var(--m-pop); }
+.motion .coord.m-in .c { opacity: 1; scale: 1; }
+.motion .coord.m-in .o { opacity: 1; scale: 1; }
+.motion .coord .o:nth-of-type(2) { transition-delay: .35s; } .motion .coord .o:nth-of-type(3) { transition-delay: .45s; }
+.motion .coord .o:nth-of-type(4) { transition-delay: .55s; } .motion .coord .o:nth-of-type(5) { transition-delay: .65s; }
+.motion .coord .o:nth-of-type(6) { transition-delay: .75s; }
+.motion .coord .o:hover { scale: 1.06; transition-delay: 0s; }
+
+/* org chart: connectors draw top-down */
+.motion .org .v, .motion .org .kids::before, .motion .org .kids .node::before { transition: transform .6s var(--m-out); }
+.motion .org .v { transform: scaleY(0); transform-origin: top; transition-delay: .2s; }
+.motion .org .kids::before { transform: scaleX(0); transition-delay: .6s; }
+.motion .org .kids .node::before { transform: scaleY(0); transform-origin: top; transition-delay: .8s; }
+.motion .org.m-in .v, .motion .org.m-in .kids::before, .motion .org.m-in .kids .node::before { transform: none; }
+
+/* cards: placeholder / photo zooms a touch on hover */
+.motion a.card > .ph { transition: background-size .6s var(--m-out); }
+.motion a.card:hover > .ph { background-size: 104% 104%; }
+
+/* tab / filter changes: new content fades up, cards cascade */
+.motion .m-swap { animation: m-fade-up .55s var(--m-out) both; }
+.motion .m-swap-i { animation: m-fade-up .55s var(--m-out) both; animation-delay: calc(var(--i, 0) * 55ms); }
+
+/* accordion body (careers) is animated in JS; chevron stays as designed */
+.motion .acc details .body { overflow: hidden; }
+
+/* chips + tabs: pressed feedback */
+.motion .chip, .motion .tabs button { transition: transform .15s var(--m-std), background .2s, color .2s, border-color .2s; }
+.motion .chip:active, .motion .tabs button:active { transform: scale(.96); }
+
+/* v6: "KAJIMA in numbers" counter: illustrations rise in one after another, then the line-dot-line draws */
+.motion .proof .il { opacity: 0; transform: translateY(18px); transition: opacity .9s var(--m-std), transform 1.1s var(--m-out); }
+.motion .proof .row > div:nth-child(2) .il { transition-delay: .12s; }
+.motion .proof .row > div:nth-child(3) .il { transition-delay: .24s; }
+.motion .proof.m-in .il { opacity: 1; transform: none; }
+.motion .proof .lb::before { transform: scaleX(0); transition: transform 1s var(--m-out) .35s; }
+.motion .proof .lb::after { transform: scale(0); transition: transform .5s var(--m-pop) .75s; }
+.motion .proof.m-in .lb::before, .motion .proof.m-in .lb::after { transform: none; }
+
+/* v9 core strengths: line icons draw in when their cell appears */
+.motion .cs-grid .ic * { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.4s var(--m-out) .3s; }
+.motion .cs-grid .in .ic * { stroke-dashoffset: 0; }

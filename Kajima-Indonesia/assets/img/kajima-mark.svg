@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="55px" height="56px" viewBox="0 0 55 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>Group 7</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0.29055 0.081 33.5325 0.081 33.5325 54.9998 0.29055 54.9998"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-7">
+            <polygon id="Fill-1" fill="#E6002D" points="0 12.9255 12.526 12.9255 12.526 0.4995 0 0.4995"></polygon>
+            <polygon id="Fill-2" fill="#E6002D" points="0 55.419 12.526 55.419 12.526 21.695 0 21.695"></polygon>
+            <polygon id="Fill-3" fill="#E6002D" points="21.3895 55.419 33.916 55.419 33.916 21.695 21.3895 21.695"></polygon>
+            <g id="Group-6" transform="translate(21.000000, 0.419000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-5"></g>
+                <path d="M0.29055,0.0808 L0.29055,12.5068 L16.96105,12.5068 C16.96105,12.5068 21.19805,12.0288 21.19805,16.8453 L21.19805,54.9998 L33.5327819,54.9998 L33.5327819,9.2368 C33.5327819,9.2368 33.72605,0.0808 22.93355,0.0808 L0.29055,0.0808 Z" id="Fill-4" fill="#E6002D" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

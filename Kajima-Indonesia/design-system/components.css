@@ -1,0 +1,230 @@
+/* Kajima Indonesia · Design System v2 · components.css
+   Load after tokens.css and site.css (the final homepage stylesheet).
+   A. Hi-fi versions of the components the inner pages use (they exist only as lo-fi wireframes in Step 5).
+   B. States and components that are not on the website yet. */
+
+/* =========================================================
+   B1. Buttons: extra variants and states
+   (site.css has .btn primary red, .btn.line, .btn.light)
+   ========================================================= */
+.btn.dark { background: var(--c-ink); border-color: var(--c-ink); }
+.btn.dark:hover { background: #000; border-color: #000; }
+.btn.sm { min-height: 40px; padding: 8px 18px; font-size: 14px; }
+.btn.is-focus { outline: var(--focus); outline-offset: var(--focus-offset); }
+.btn[disabled], .btn.is-disabled { opacity: var(--o-disabled); pointer-events: none; cursor: not-allowed; }
+.btn.is-loading { position: relative; color: transparent !important; pointer-events: none; }
+.btn.is-loading::after { content: ""; position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border: 2px solid rgba(255,255,255,.45); border-top-color: var(--c-white); border-radius: 50%; animation: ds-spin .8s linear infinite; }
+.btn.line.is-loading::after { border-color: rgba(22,24,27,.2); border-top-color: var(--c-ink); }
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+/* round icon button (card arrow, slider arrows) */
+.icon-btn { width: 44px; height: 44px; border: 1px solid var(--c-line); border-radius: var(--r-round); display: inline-grid; place-items: center; color: var(--c-ink); background: var(--c-white); transition: background var(--d-hover) var(--m-std), border-color var(--d-hover) var(--m-std), color var(--d-hover) var(--m-std), transform .3s var(--m-out); }
+.icon-btn:hover { background: var(--c-ink); border-color: var(--c-ink); color: var(--c-white); }
+.icon-btn svg { width: 18px; height: 18px; }
+.icon-btn.sm { width: 36px; height: 36px; }
+
+/* =========================================================
+   B2. Tag + badge
+   ========================================================= */
+.tag { display: inline-block; font-size: var(--fs-tag); font-weight: 500; letter-spacing: var(--ls-tag); text-transform: uppercase; color: var(--c-red-dk); }
+.tag.muted { color: var(--c-slate); }
+.badge { display: inline-flex; align-items: center; gap: 8px; height: 26px; padding: 0 12px; border-radius: var(--r-pill); font-size: 12px; font-weight: 500; background: var(--c-mist); color: var(--c-ink); }
+.badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.badge.success { background: var(--c-success-bg); color: var(--c-success); }
+.badge.warning { background: var(--c-warning-bg); color: var(--c-warning); }
+.badge.warning::before { background: var(--c-warning-mark); }
+.badge.error { background: var(--c-error-bg); color: var(--c-error); }
+.badge.info { background: var(--c-info-bg); color: var(--c-info); }
+
+/* =========================================================
+   B3. Form fields: helper text, success, disabled, hover, custom select
+   (site.css has .fld label + input/select/textarea + .bad error state)
+   ========================================================= */
+.fld .help { display: block; font-size: 13px; color: var(--c-slate); margin-top: 6px; }
+.fld.bad .help { display: none; }
+.fld input:hover, .fld select:hover, .fld textarea:hover { border-color: var(--c-line-2); }
+.fld.ok input, .fld.ok select, .fld.ok textarea { border-color: var(--c-success); }
+.fld.ok .help { color: var(--c-success); }
+.fld.is-disabled label { color: var(--c-slate); }
+.fld input:disabled, .fld select:disabled, .fld textarea:disabled { background: var(--c-mist); color: var(--c-slate); cursor: not-allowed; }
+.fld select { appearance: none; -webkit-appearance: none; padding-right: 44px; background: var(--c-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2316181B' stroke-width='1.5'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 16px center; }
+.fld .file { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 16px; border: 1px dashed var(--c-line-2); color: var(--c-slate); font-size: 15px; border-radius: var(--r-1); }
+.fld .req { color: var(--c-red-dk); }
+
+/* =========================================================
+   B4. Checkbox, radio, switch (custom, 44px touch target)
+   ========================================================= */
+.fld label.ds-check, .fld label.ds-radio, .fld label.switch { display: inline-flex; font-size: 15px; font-weight: 400; margin: 0; color: var(--c-slate); }
+.ds-check, .ds-radio, .switch { position: relative; display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 15px; cursor: pointer; user-select: none; }
+.ds-check input, .ds-radio input, .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.ds-check i, .ds-radio i { flex: none; width: 20px; height: 20px; border: 1px solid var(--c-line-2); background: var(--c-white); display: grid; place-items: center; transition: background .2s var(--m-std), border-color .2s var(--m-std); }
+.ds-check i { border-radius: var(--r-1); }
+.ds-check i::after { content: ""; width: 10px; height: 5px; border-left: 2px solid var(--c-white); border-bottom: 2px solid var(--c-white); transform: translateY(-1px) rotate(-45deg) scale(0); transition: transform .25s var(--m-pop); }
+.ds-check input:checked + i { background: var(--c-ink); border-color: var(--c-ink); }
+.ds-check input:checked + i::after { transform: translateY(-1px) rotate(-45deg) scale(1); }
+.ds-radio i { border-radius: 50%; }
+.ds-radio i::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c-ink); transform: scale(0); transition: transform .25s var(--m-pop); }
+.ds-radio input:checked + i { border-color: var(--c-ink); }
+.ds-radio input:checked + i::after { transform: scale(1); }
+.switch i { flex: none; position: relative; width: 44px; height: 24px; border-radius: var(--r-pill); background: var(--c-line-2); transition: background .25s var(--m-std); }
+.switch i::after { content: ""; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--c-white); box-shadow: var(--sh-1); transition: transform .3s var(--m-out); }
+.switch input:checked + i { background: var(--c-ink); }
+.switch input:checked + i::after { transform: translateX(20px); }
+.ds-check input:focus-visible + i, .ds-radio input:focus-visible + i, .switch input:focus-visible + i { outline: var(--focus); outline-offset: 2px; }
+.ds-check input:disabled + i, .ds-radio input:disabled + i, .switch input:disabled + i { opacity: var(--o-disabled); }
+.ds-check:has(input:disabled), .ds-radio:has(input:disabled), .switch:has(input:disabled) { color: var(--c-slate); cursor: not-allowed; }
+
+/* =========================================================
+   B5. Notice (inline alert) + toast
+   ========================================================= */
+.notice { display: grid; grid-template-columns: 24px 1fr; gap: 12px; padding: 16px 20px; border-left: 2px solid currentColor; background: var(--c-mist); font-size: 15px; color: var(--c-ink); }
+.notice svg { width: 22px; height: 22px; margin-top: 1px; }
+.notice b { font-weight: 600; }
+.notice p { color: var(--c-ink); }
+.notice.success { background: var(--c-success-bg); border-color: var(--c-success); } .notice.success svg { color: var(--c-success); }
+.notice.warning { background: var(--c-warning-bg); border-color: var(--c-warning-mark); } .notice.warning svg { color: var(--c-warning); }
+.notice.error { background: var(--c-error-bg); border-color: var(--c-error); } .notice.error svg { color: var(--c-error); }
+.notice.info { background: var(--c-info-bg); border-color: var(--c-info); } .notice.info svg { color: var(--c-info); }
+.toast { display: inline-flex; align-items: center; gap: 14px; padding: 14px 16px 14px 20px; background: var(--c-ink); color: var(--c-white); font-size: 15px; box-shadow: var(--sh-3); max-width: 440px; }
+.toast svg { width: 20px; height: 20px; flex: none; color: #7FD3A8; }
+.toast button { margin-left: 8px; width: 32px; height: 32px; color: rgba(255,255,255,.7); }
+
+/* =========================================================
+   B6. Standalone dropdown menu (same look as the header dropdown)
+   ========================================================= */
+.menu { list-style: none; min-width: 260px; background: var(--c-white); border: 1px solid var(--c-line); padding: 12px 0; box-shadow: var(--sh-3); }
+.menu a, .menu button { display: block; width: 100%; text-align: left; padding: 10px 24px; font-size: 15px; transition: color .2s var(--m-std); }
+.menu a:hover, .menu a.on, .menu button:hover { color: var(--c-red-dk); }
+.menu hr { border: 0; border-top: 1px solid var(--c-line); margin: 8px 0; }
+
+/* =========================================================
+   A1. Page hero (one layout for every inner page)
+   ========================================================= */
+.pg-hero { position: relative; margin-top: -81px; height: 68vh; min-height: 560px; max-height: 760px; overflow: hidden; color: var(--c-white); background: var(--c-ink-2); }
+.pg-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pg-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,16,18,.45) 0%, rgba(14,16,18,0) 35%, rgba(14,16,18,.15) 60%, rgba(14,16,18,.6) 100%); }
+.pg-hero .in { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: 72px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; }
+.pg-hero h1 { font-weight: 300; font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); }
+.pg-hero .intro { font-size: 18px; color: rgba(255,255,255,var(--o-text-dark)); max-width: 520px; }
+
+/* breadcrumb (on photos and on light backgrounds) */
+.crumbs { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: rgba(255,255,255,var(--o-text-dark-2)); margin-bottom: 20px; }
+.crumbs a:hover { color: var(--c-white); text-decoration: underline; text-underline-offset: 3px; }
+.crumbs.on-light { color: var(--c-slate); }
+.crumbs.on-light a:hover { color: var(--c-ink); }
+
+/* sub-navigation under the page hero (About us / Services siblings) */
+.subnav { border-bottom: 1px solid var(--c-line); background: var(--c-white); }
+.subnav ul { display: flex; gap: 40px; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.subnav a { position: relative; display: block; padding: 20px 0 19px; font-size: 15px; color: var(--c-slate); white-space: nowrap; transition: color .2s var(--m-std); }
+.subnav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-red); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--m-out); }
+.subnav a:hover { color: var(--c-ink); }
+.subnav a.on { color: var(--c-ink); }
+.subnav a.on::after { transform: scaleX(1); }
+
+/* =========================================================
+   A2. Tabs + filter chips
+   ========================================================= */
+.tabs { display: flex; gap: 32px; border-bottom: 1px solid var(--c-line); overflow-x: auto; scrollbar-width: none; }
+.tabs button { position: relative; padding: 0 0 14px; font-size: 16px; color: var(--c-slate); white-space: nowrap; transition: color .2s var(--m-std); }
+.tabs button::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-ink); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--m-out); }
+.tabs button:hover { color: var(--c-ink); }
+.tabs button.on { color: var(--c-ink); }
+.tabs button.on::after { transform: scaleX(1); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 40px; padding: 8px 18px; border: 1px solid var(--c-line); border-radius: var(--r-pill); font-size: 14px; color: var(--c-slate); background: var(--c-white); transition: border-color .2s var(--m-std), color .2s var(--m-std), background .2s var(--m-std), transform .15s var(--m-std); }
+.chip:hover { border-color: var(--c-ink); color: var(--c-ink); }
+.chip:active { transform: scale(.96); }
+.chip.on { background: var(--c-ink); border-color: var(--c-ink); color: var(--c-white); }
+
+/* =========================================================
+   A3. Accordion (careers vacancies)
+   ========================================================= */
+.acc { border-top: 1px solid var(--c-ink); }
+.acc details { border-bottom: 1px solid var(--c-line); }
+.acc summary { list-style: none; display: grid; grid-template-columns: 1fr auto 40px; gap: 24px; align-items: center; padding: 24px 0; cursor: pointer; }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary .t { font-size: var(--fs-h4); font-weight: 400; letter-spacing: var(--ls-h4); transition: color .2s var(--m-std); }
+.acc summary:hover .t { color: var(--c-red-dk); }
+.acc summary .m { font-size: 14px; color: var(--c-slate); }
+.acc summary i { position: relative; width: 40px; height: 40px; border: 1px solid var(--c-line); border-radius: 50%; }
+.acc summary i::before, .acc summary i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.25px; background: var(--c-ink); transform: translate(-50%, -50%); }
+.acc summary i::after { transform: translate(-50%, -50%) rotate(90deg); transition: transform .3s var(--m-out); }
+.acc details[open] summary i::after { transform: translate(-50%, -50%); }
+.acc .body { padding: 0 0 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.acc .body ul { list-style: none; display: grid; gap: 10px; }
+.acc .body li { position: relative; padding-left: 22px; color: var(--c-slate); font-size: 16px; }
+.acc .body li::before { content: ""; position: absolute; left: 0; top: .8em; width: 10px; height: 1px; background: var(--c-ink); }
+
+/* =========================================================
+   A4. Stats row (same as the homepage counter, any number of columns)
+   ========================================================= */
+.facts { display: grid; grid-template-columns: repeat(var(--n, 3), 1fr); border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
+.facts > div { padding: 28px 32px 30px 0; }
+.facts > div + div { padding-left: 32px; border-left: 1px solid var(--c-line); }
+.facts b { display: block; font-weight: 300; font-size: var(--fs-stat); line-height: var(--lh-stat); letter-spacing: var(--ls-stat); margin-bottom: 8px; }
+.facts b sup { color: inherit; font-size: 24px; vertical-align: top; position: relative; top: 4px; }
+.facts span { font-size: 14px; color: var(--c-slate); }
+
+/* =========================================================
+   A5. Timeline (History, Corporate Profile)
+   ========================================================= */
+.tl-list { list-style: none; position: relative; }
+.tl-list::before { content: ""; position: absolute; left: 7px; top: 10px; bottom: 10px; width: 1px; background: var(--c-line-2); }
+.tl-list > li { position: relative; display: grid; grid-template-columns: 96px 1fr; gap: 24px; padding: 0 0 36px 40px; }
+.tl-list > li:last-child { padding-bottom: 0; }
+.tl-list > li::before { content: ""; position: absolute; left: 0; top: 8px; width: 15px; height: 15px; border-radius: 50%; background: var(--c-white); border: 1px solid var(--c-ink); }
+.tl-list > li.key::before { background: var(--c-red); border-color: var(--c-red); }
+.tl-list .y { font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.3; }
+.tl-list .tx b { display: block; font-weight: 400; font-size: var(--fs-h5); letter-spacing: var(--ls-h5); line-height: var(--lh-h5); }
+.tl-list .tx .tag { display: block; margin-bottom: 6px; }
+.tl-list .tx p { color: var(--c-slate); font-size: 15px; margin-top: 6px; }
+
+/* =========================================================
+   A6. Project card (list + related projects): photo, tag, title, meta, arrow
+   ========================================================= */
+.pcard { display: flex; flex-direction: column; border: 1px solid var(--c-line); background: var(--c-white); transition: border-color .3s var(--m-std), transform .4s var(--m-out), box-shadow .4s var(--m-out); }
+.pcard:hover { border-color: var(--c-ink); transform: translateY(-4px); box-shadow: var(--sh-2); }
+.pcard .ph { aspect-ratio: 4 / 3; overflow: hidden; }
+.pcard .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--m-out); }
+.pcard:hover .ph img { transform: scale(1.04); }
+.pcard .bd { padding: 24px 24px 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.pcard h3 { font-weight: 400; font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: var(--ls-h4); }
+.pcard .foot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px; color: var(--c-slate); }
+.pcard:hover .icon-btn { background: var(--c-ink); border-color: var(--c-ink); color: var(--c-white); }
+
+/* =========================================================
+   Responsive (homepage breakpoints)
+   ========================================================= */
+@media (max-width: 1080px) {
+  .pg-hero .in { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (max-width: 720px) {
+  .pg-hero { margin-top: -69px; height: auto; min-height: 520px; max-height: none; }
+  .pg-hero .in { position: relative; padding-top: 220px; padding-bottom: 48px; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .facts > div, .facts > div + div { padding: 20px 12px 20px 0; border-left: 0; border-bottom: 1px solid var(--c-line); }
+  .facts > div:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--c-line); }
+  .facts b { font-size: 38px; }
+  .acc .body { grid-template-columns: 1fr; }
+  .acc summary { grid-template-columns: 1fr 40px; }
+  .acc summary .m { grid-row: 2; }
+  .acc summary i { grid-column: 2; grid-row: 1 / span 2; }
+  .tl-list > li { grid-template-columns: 1fr; gap: 2px; padding-left: 32px; }
+  .subnav ul { gap: 28px; }
+}
+
+/* ==========================================================================
+   C. v2 (2 Nov 2026): service button sizes and forced states for documentation
+   ========================================================================== */
+/* card size (36px): the size used inside small cards, e.g. career cards (.jobs .link-play on the site) */
+.link-play.xs { gap: 10px; font-size: 11px; }
+.link-play.xs .ring { width: var(--ring-xs); height: var(--ring-xs); }
+.link-play.xs circle { stroke-width: 2; }
+/* forced states, for static examples only */
+.link-play.is-hover .o1 { stroke-dashoffset: 94.25; transform: rotate(160deg); }
+.link-play.is-hover .o2 { stroke-dashoffset: 94.25; transform: rotate(340deg); }
+.link-play.is-hover .tri { transform: translateX(3px); }
+.link-play.is-hover .tx::after { transform: scaleX(1); }
+.link-play.is-focus { outline: var(--focus); outline-offset: var(--focus-offset); }
+.link-play.is-disabled { opacity: var(--o-disabled); pointer-events: none; }
+.link-play:focus-visible { outline: var(--focus); outline-offset: var(--focus-offset); }

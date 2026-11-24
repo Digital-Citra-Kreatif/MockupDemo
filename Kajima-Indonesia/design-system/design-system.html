@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kajima Indonesia · Design System v2</title>
+<link rel="stylesheet" href="../fonts/inter-tight.css">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="components.css">
+<style>
+  /* documentation layout only (ds-*) */
+  body { background: var(--c-white); }
+  .ds { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+  .ds-side { position: sticky; top: 0; height: 100vh; overflow-y: auto; border-right: 1px solid var(--c-line); padding: 32px 24px; font-size: 14px; background: var(--c-white); z-index: 10; }
+  .ds-side img { height: 30px; width: auto; margin-bottom: 8px; }
+  .ds-side .v { font-size: 12px; color: var(--c-slate); margin-bottom: 28px; display: block; }
+  .ds-side h6 { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--c-slate); margin: 24px 0 8px; }
+  .ds-side a { display: block; padding: 5px 0; color: var(--c-ink); }
+  .ds-side a:hover { color: var(--c-red-dk); }
+  .ds-main { min-width: 0; }
+  .ds-new { display: inline-block; margin-left: 8px; padding: 2px 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; vertical-align: middle; color: var(--c-white); background: var(--c-ink); }
+  .ds-csicons .cs-grid { grid-template-columns: repeat(4, 1fr); }
+  .ds-csicons .cs-grid > div, .ds-csicons .cs-grid > div:nth-child(odd) { padding: 24px; border: 1px solid var(--c-line) !important; margin: -1px 0 0 -1px; text-align: center; }
+  .ds-csicons .cs .ic { margin: 0 auto 12px; }
+  .ds-csicons .cs b { font-size: 17px; }
+  .ds-ills { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--c-line); }
+  .ds-ills > div { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 12px; padding: 28px 16px 20px; border-left: 1px solid var(--c-line); font-size: 13px; color: var(--c-slate); }
+  .ds-ills > div:first-child { border-left: 0; }
+  .ds-ills img { height: 64px; width: auto; }
+  .ds-ills .mk { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; border: 1.5px solid var(--c-red); }
+  .ds-ills .mk img { height: 20px; }
+  .ds-g2 > div > .jobs { max-width: 420px; }
+  .ds-table .link-play { white-space: nowrap; }
+  @media (max-width: 720px) { .ds-csicons .cs-grid, .ds-ills { grid-template-columns: 1fr 1fr; } }
+  .ds-top { padding: 96px 64px 64px; border-bottom: 1px solid var(--c-line); }
+  .ds-top h1 { font-weight: 300; font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); max-width: 900px; }
+  .ds-top p { color: var(--c-slate); max-width: 720px; margin-top: 20px; }
+  .ds-files { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .ds-sec { padding: 96px 64px; border-bottom: 1px solid var(--c-line); }
+  .ds-sec > h2 { font-weight: 300; font-size: clamp(36px, 3.6vw, 52px); letter-spacing: -.025em; line-height: 1.05; margin-bottom: 12px; }
+  .ds-sec > p.ds-lead { color: var(--c-slate); max-width: 760px; margin-bottom: 48px; }
+  .ds-sub { margin-top: 72px; }
+  .ds-sub:first-of-type { margin-top: 0; }
+  .ds-sub > h3 { font-size: 22px; font-weight: 400; letter-spacing: -.01em; margin-bottom: 6px; }
+  .ds-sub > p { color: var(--c-slate); font-size: 15px; margin-bottom: 24px; max-width: 760px; }
+  .ds-k { font: 500 11px/1 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--c-slate); display: block; margin-bottom: 12px; }
+  .ds-code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12.5px; color: var(--c-slate); }
+  .ds-box { border: 1px solid var(--c-line); padding: 32px; background: var(--c-white); }
+  .ds-box.mist { background: var(--c-mist); }
+  .ds-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .ds-g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .ds-g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .ds-g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .ds-frame { position: relative; border: 1px solid var(--c-line); overflow: hidden; }
+  .ds-cap { font-size: 13px; color: var(--c-slate); margin-top: 10px; }
+  .ds-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .ds-table th, .ds-table td { text-align: left; padding: 12px 16px 12px 0; border-bottom: 1px solid var(--c-line); vertical-align: top; }
+  .ds-table th { font-weight: 500; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-slate); }
+  /* colour */
+  .sw { border: 1px solid var(--c-line); }
+  .sw .chip-c { height: 96px; border-bottom: 1px solid var(--c-line); }
+  .sw .meta { padding: 14px 16px 16px; font-size: 13px; }
+  .sw .meta b { display: block; font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+  .sw .meta span { color: var(--c-slate); display: block; }
+  .pass { color: var(--c-success); font-weight: 600; } .fail { color: var(--c-error); font-weight: 600; }
+  /* type */
+  .ty { display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding: 28px 0; border-bottom: 1px solid var(--c-line); align-items: baseline; }
+  .ty:first-child { border-top: 1px solid var(--c-line); }
+  .ty .spec { font-size: 13px; color: var(--c-slate); }
+  .ty .spec b { display: block; color: var(--c-ink); font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  /* spacing */
+  .sp { display: grid; grid-template-columns: 90px 70px 1fr; gap: 16px; align-items: center; padding: 6px 0; font-size: 13px; }
+  .sp i { display: block; height: 12px; background: var(--c-red); opacity: .85; }
+  /* grid demo */
+  .gridd { position: relative; height: 160px; display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); }
+  .gridd span { background: rgba(230,0,45,.08); border-left: 1px solid rgba(230,0,45,.3); border-right: 1px solid rgba(230,0,45,.3); }
+  .ratio { background: var(--c-mist); border: 1px solid var(--c-line); display: grid; place-items: center; font-size: 13px; color: var(--c-slate); }
+  /* effects */
+  .fx { height: 120px; display: grid; place-items: center; background: var(--c-white); border: 1px solid var(--c-line); font-size: 13px; color: var(--c-slate); text-align: center; }
+  /* icons */
+  .ic { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .ico { border: 1px solid var(--c-line); padding: 22px 12px 14px; text-align: center; font-size: 12px; color: var(--c-slate); }
+  .ico .ic { display: block; margin: 0 auto 12px; color: var(--c-ink); }
+  /* motion demo */
+  .mv { height: 72px; width: 72px; background: var(--c-ink); }
+  .mv-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--c-line); }
+  .mv-track { position: relative; height: 72px; background: var(--c-mist); }
+  .mv-track .mv { position: absolute; left: 0; top: 0; }
+  .mv-track.go .mv { left: calc(100% - 72px); }
+  /* demo overrides so site components sit inside frames */
+  .ds-frame .hdr { position: relative; }
+  .ds-frame .nav { gap: 28px; }
+  .lang { white-space: nowrap; }
+  .ds-photo { background: url("../assets/img/hero-sky-sunset.jpg") 50% 40% / cover; }
+  .ds-open .sub { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+  .ds-frame .drawer { position: relative; inset: auto; transform: none; visibility: visible; padding: 32px 24px; height: auto; }
+  .ds-frame .modal { position: relative; display: flex; inset: auto; padding: 48px 24px; }
+  .ds-frame .modal .bk { position: absolute; animation: none; }
+  .ds-frame .modal .box { animation: none; }
+  .ds-frame .pg-hero { margin-top: 0; height: 480px; min-height: 0; }
+  .ds-frame .sky { min-height: 560px; }
+  .ds-frame .career { max-height: none; }
+  .ds-do { border-top: 3px solid var(--c-success); padding-top: 16px; }
+  .ds-dont { border-top: 3px solid var(--c-error); padding-top: 16px; }
+  .ds-do h4, .ds-dont h4 { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+  .ds-do h4 { color: var(--c-success); } .ds-dont h4 { color: var(--c-error); }
+  .ds-do ul, .ds-dont ul { padding-left: 18px; font-size: 15px; color: var(--c-slate); display: grid; gap: 6px; }
+  @media (max-width: 1080px) {
+    .ds { grid-template-columns: minmax(0, 1fr); }
+    .ds-side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--c-line); }
+    .ds-top, .ds-sec { padding-left: 24px; padding-right: 24px; }
+    .ds-g3, .ds-g4 { grid-template-columns: 1fr 1fr; }
+    .ty { grid-template-columns: 1fr; gap: 8px; }
+  }
+  @media (max-width: 720px) {
+    .ds-g2, .ds-g3, .ds-g4 { grid-template-columns: 1fr; }
+    .mv-row { grid-template-columns: 1fr; }
+    .ds-table { display: block; overflow-x: auto; white-space: nowrap; }
+    .gridd { gap: 6px; height: 100px; }
+    .ratio { max-width: 100%; }
+    .ds-box { padding: 20px; }
+    .ds-main { overflow-x: clip; }
+  }
+</style>
+</head>
+<body>
+
+<!-- icon sprite (24px grid, 1.5px stroke, round caps) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M20 12H4M10 6l-6 6 6 6"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5M12 17.5v.01"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V6l8-3v18M12 21V9l8 3v9M2 21h20M7 9h2M7 13h2M7 17h2M15 15h2M15 18h2"/></symbol>
+</svg>
+
+<div class="ds">
+  <nav class="ds-side" aria-label="Design system">
+    <img src="../assets/logo-2026.png" alt="Kajima Indonesia">
+    <span class="v">Design System v2 · 2 Nov 2026</span>
+    <h6>Foundations</h6>
+    <a href="#color">Colour</a><a href="#type">Typography</a><a href="#space">Spacing &amp; grid</a><a href="#effects">Radius, shadow, opacity</a><a href="#icons">Icons</a><a href="#motion">Motion</a>
+    <h6>Components</h6>
+    <a href="#atoms">Atoms</a><a href="#molecules">Molecules</a><a href="#organisms">Organisms</a><a href="#interactive">Interactive</a>
+    <h6>Guidance</h6>
+    <a href="#rules">Do &amp; don't</a>
+  </nav>
+
+  <main class="ds-main">
+    <header class="ds-top">
+      <span class="label eyebrow">PT Kajima Indonesia · Step 7</span>
+      <h1>Design System</h1>
+      <p>v2, rebuilt from the final design: homepage v28, animated v11 (the website in the Final package). Every example on this page uses the website's own CSS (<span class="ds-code">site.css</span>), the tokens (<span class="ds-code">tokens.css</span>) and the standardised components (<span class="ds-code">components.css</span>), so it renders exactly as on the site.</p>
+      <p><b>New in v2:</b> the service button (ring + play) in three sizes and the button hierarchy, illustrated counter, Kajima mark as map hotspot, Core Strengths line icons, Projects by building type, the Careers section with job cards, and hover micro-animations. Items marked <span class="ds-new">V2</span> are new or changed.</p>
+      <div class="ds-files"><a class="btn line sm" href="tokens.css">tokens.css</a><a class="btn line sm" href="components.css">components.css</a><a class="btn line sm" href="site.css">site.css</a><a class="btn sm" href="../index.html">Open the website <span class="ar">→</span></a></div>
+    </header>
+
+    <!-- =================== COLOUR =================== -->
+    <section class="ds-sec" id="color">
+      <span class="ds-k">Foundations · 01</span>
+      <h2>Colour</h2>
+      <p class="ds-lead">A light, restrained palette: white space and hairlines carry the layout, Ink carries the text, and Kajima Red is kept for the main action and small accents, never large fills. Photography (sky, skyline, people on site) brings the warmth.</p>
+      <div class="ds-sub"><h3>Brand: primary &amp; accent</h3><p>Kajima Red is the primary colour (main buttons, active lines, service-button rings, map highlights). Red Deep is its hover and the only red allowed for small text.</p><div class="ds-g4" data-sw="brand"></div></div>
+      <div class="ds-sub"><h3>Secondary &amp; neutrals</h3><p>Ink is the secondary colour: text, dark buttons, active tabs and chips. Slate is for secondary text; Stone is only for inactive markers and icons.</p><div class="ds-g4" data-sw="neutral"></div></div>
+      <div class="ds-sub"><h3>Photo accents</h3><p>Only used as overlays and fallbacks behind photography, never for UI.</p><div class="ds-g4" data-sw="photo"></div></div>
+      <div class="ds-sub"><h3>Status (new)</h3><p>For form validation, notices and toasts. Error shares the Red Deep hue, so an error is always shown with an icon and a message, never by colour alone.</p><div class="ds-g4" data-sw="status"></div></div>
+      <div class="ds-sub"><h3>Contrast</h3><p>Calculated live from the token values (WCAG 2.2). AA needs 4.5:1 for body text and 3:1 for large text (24px+, or 19px+ bold).</p>
+        <table class="ds-table" id="contrast"><thead><tr><th>Text</th><th>Background</th><th>Sample</th><th>Ratio</th><th>Result</th><th>Use</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <!-- =================== TYPOGRAPHY =================== -->
+    <section class="ds-sec" id="type">
+      <span class="ds-k">Foundations · 02</span>
+      <h2>Typography</h2>
+      <p class="ds-lead">One family, Inter Tight. Headings are large and Light (300) with tight tracking, so they read calm and precise. Body is Regular (400) at 17px, labels are small uppercase Medium (500) with wide tracking.</p>
+      <div class="ds-sub">
+        <div class="ty"><div class="spec"><b>Display</b>clamp(48 → 84px) · 300 · 1.02 · −0.025em<br>Hero H1, CTA</div><div style="font-weight:300;font-size:var(--fs-display);line-height:var(--lh-display);letter-spacing:var(--ls-display)">Specialist in all kinds of buildings</div></div>
+        <div class="ty"><div class="spec"><b>H1 · page</b>clamp(44 → 80px) · 300 · 1.04 · −0.025em</div><div style="font-weight:300;font-size:var(--fs-h1);line-height:var(--lh-h1);letter-spacing:var(--ls-h1)">Corporate Profile</div></div>
+        <div class="ty"><div class="spec"><b>H2 · section</b>clamp(40 → 60px) · 300 · 1.04 · −0.025em</div><div style="font-weight:300;font-size:var(--fs-h2);line-height:var(--lh-h2);letter-spacing:var(--ls-h2)">Part of Kajima Group, since 1840</div></div>
+        <div class="ty"><div class="spec"><b>H3 · card</b>32px · 300 · 1.1 · −0.02em</div><div style="font-weight:300;font-size:var(--fs-h3);line-height:var(--lh-h3);letter-spacing:var(--ls-h3)">Construction</div></div>
+        <div class="ty"><div class="spec"><b>H4 · row / small card</b>24px · 400 · 1.2 · −0.015em</div><div style="font-weight:400;font-size:var(--fs-h4);line-height:var(--lh-h4);letter-spacing:var(--ls-h4)">Fairmont Hotel Senayan</div></div>
+        <div class="ty"><div class="spec"><b>H5</b>20px · 400 · 1.3 · −0.01em</div><div style="font-weight:400;font-size:var(--fs-h5);line-height:var(--lh-h5);letter-spacing:var(--ls-h5)">PT KAJIMA INDONESIA established</div></div>
+        <div class="ty"><div class="spec"><b>Lead</b>20px · 300–400 · 1.5</div><div style="font-size:var(--fs-lead);line-height:var(--lh-lead)">Providing world-class services, we are a leading international contractor and developer.</div></div>
+        <div class="ty"><div class="spec"><b>Body</b>17px (16px mobile) · 400 · 1.6 · max ±70 characters per line</div><div style="max-width:640px">45 in-house architects and engineers at Kajima Design Asia coordinate architectural, structural, civil, mechanical and electrical design.</div></div>
+        <div class="ty"><div class="spec"><b>Body S</b>15px · 400–500 · 1.55<br>Buttons, links, footer</div><div style="font-size:var(--fs-body-s)">Sentral Senayan I, 4th Floor · Jl. Asia Afrika No. 8, Jakarta 10270</div></div>
+        <div class="ty"><div class="spec"><b>Small / caption</b>14px · 13px</div><div style="font-size:var(--fs-small);color:var(--c-slate)">Projects completed in Indonesia</div></div>
+        <div class="ty"><div class="spec"><b>Eyebrow</b>12px · 500 · uppercase · +0.16em</div><div><span class="label">Global Network</span></div></div>
+        <div class="ty"><div class="spec"><b>Tag</b>11px · 500 · uppercase · +0.14em · Red Deep</div><div><span class="tag">Industrial</span></div></div>
+        <div class="ty"><div class="spec"><b>Stat</b>48px · 300 · 1 · −0.03em</div><div class="facts" style="--n:1;border:0"><div style="padding:0"><b>210<sup>+</sup></b><span>Projects completed in Indonesia</span></div></div></div>
+      </div>
+      <div class="ds-sub"><h3>Rules</h3><p>Headings have no full stop, use <span class="ds-code">text-wrap: balance</span>, and stay within 2–3 lines; a long heading spans the full width with its text underneath. Section intro paragraphs stay within 2 lines. Short copy on photos stays within 3 lines. No serif and no second family.</p></div>
+    </section>
+
+    <!-- =================== SPACING & GRID =================== -->
+    <section class="ds-sec" id="space">
+      <span class="ds-k">Foundations · 03</span>
+      <h2>Spacing &amp; grid</h2>
+      <p class="ds-lead">An 8-point scale with 4-point half steps. Generous section spacing (128px) is part of the clean look; inside components the steps are smaller.</p>
+      <div class="ds-g2">
+        <div class="ds-sub" id="spacing"><h3>Spacing scale</h3><p>Token · value · bar</p></div>
+        <div class="ds-sub"><h3>Layout values</h3>
+          <table class="ds-table">
+            <tr><td>Container</td><td>1280px max (incl. side padding)</td></tr>
+            <tr><td>Side padding</td><td>48px desktop · 32px tablet · 20px mobile</td></tr>
+            <tr><td>Columns</td><td>12, gutter 32px (cards 24–32px)</td></tr>
+            <tr><td>Section padding</td><td>128px desktop · 88px mobile</td></tr>
+            <tr><td>Section head → content</td><td>64px (40px mobile)</td></tr>
+            <tr><td>Breakpoints</td><td>&gt; 1080 desktop · 721–1080 tablet · ≤ 720 mobile</td></tr>
+          </table></div>
+      </div>
+      <div class="ds-sub"><h3>12-column grid</h3><p>Section head: heading on columns 1–6, intro text on 7–12. Text + photo blocks split 6 / 6 or 5 / 7.</p><div class="gridd" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+      <div class="ds-sub"><h3>Layout ratios</h3><p>Photo ratios used across the site.</p>
+        <div class="ds-row" style="align-items:flex-end">
+          <div class="ratio" style="width:240px;aspect-ratio:16/9">16:9 · service card</div>
+          <div class="ratio" style="width:180px;aspect-ratio:4/3">4:3 · project card</div>
+          <div class="ratio" style="width:140px;aspect-ratio:4/5">4:5 · pinned works</div>
+          <div class="ratio" style="width:260px;aspect-ratio:2/1">2:1 · globe</div>
+          <div class="ratio" style="width:260px;aspect-ratio:1440/722">2:1 · careers band</div>
+          <div class="ratio" style="width:220px;aspect-ratio:1030/608">17:10 · CTA</div>
+        </div></div>
+    </section>
+
+    <!-- =================== EFFECTS =================== -->
+    <section class="ds-sec" id="effects">
+      <span class="ds-k">Foundations · 04</span>
+      <h2>Radius, shadow, opacity</h2>
+      <p class="ds-lead">Sharp corners and hairlines give the precise, engineered feel. Shadows are soft and appear only when something lifts (hover, menu, modal); resting cards use a 1px line.</p>
+      <div class="ds-sub"><h3>Radius</h3><div class="ds-g4">
+        <div class="fx" style="border-radius:0">0<br><span class="ds-code">--r-0</span><br>buttons, cards, photos, modal</div>
+        <div class="fx" style="border-radius:2px">2px<br><span class="ds-code">--r-1</span><br>form fields</div>
+        <div class="fx" style="border-radius:999px">999px<br><span class="ds-code">--r-pill</span><br>chips, badges, switch</div>
+        <div class="fx" style="border-radius:50%;width:120px;justify-self:center">50%<br><span class="ds-code">--r-round</span></div></div></div>
+      <div class="ds-sub"><h3>Shadow</h3><div class="ds-g4">
+        <div class="fx" style="box-shadow:var(--sh-1)">sh-1<br>switch thumb</div>
+        <div class="fx" style="box-shadow:var(--sh-2);border-color:var(--c-ink)">sh-2<br>card hover</div>
+        <div class="fx" style="box-shadow:var(--sh-3)">sh-3<br>dropdown, toast</div>
+        <div class="fx" style="box-shadow:var(--sh-4)">sh-4<br>floating photo, modal</div></div></div>
+      <div class="ds-sub"><h3>Opacity</h3><div class="ds-g4">
+        <div class="fx ds-photo" style="color:rgba(255,255,255,.92);border:0">92% · text on photos</div>
+        <div class="fx ds-photo" style="color:rgba(255,255,255,.75);border:0">75% · secondary on photos</div>
+        <div class="fx ds-photo" style="border:0;box-shadow:inset 0 -1px 0 rgba(255,255,255,.22);color:#fff">22% · hairline on photos</div>
+        <div class="fx" style="background:rgba(22,24,27,.55);color:#fff;border:0">55% · modal scrim (+ blur 4px)</div>
+        <div class="fx"><img src="../assets/logoipsum/logo-3.svg" alt="" style="height:28px;filter:grayscale(1) brightness(0);opacity:.38"><br>38% · client logos</div>
+        <div class="fx" style="background:rgba(255,255,255,.92);backdrop-filter:blur(12px)">92% · sticky header (+ blur 12px)</div>
+        <div class="fx"><span class="btn is-disabled" style="opacity:.4">Disabled</span>40% · disabled</div>
+        <div class="fx">Focus<br><span class="btn line is-focus" style="margin-top:8px">2px Red, offset 3px</span></div></div></div>
+    </section>
+
+    <!-- =================== ICONS =================== -->
+    <section class="ds-sec" id="icons">
+      <span class="ds-k">Foundations · 05</span>
+      <h2>Icons</h2>
+      <p class="ds-lead">Line icons on a 24px grid, 1.5px stroke, round caps, drawn in currentColor. Icons support a label; they never replace one. Projects and people are always shown with photography, and process steps with numbers.</p>
+      <div class="ds-g4" id="iconGrid" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))"></div>
+      <div class="ds-sub"><h3>Core Strengths icons <span class="ds-new">V2</span></h3><p>44px line icons drawn in Kajima Red (1.5px stroke, round caps), one per strength. They follow the existing site's 2×2 icon grid. Hover each one: every icon has its own one-shot micro-animation (badge sways and the check redraws · the chip core turns and the pins redraw · the clock hand sweeps · the coins hop).</p>
+        <div class="ds-csicons"><div class="cs" style="display:block;margin:0;padding:0;border:0"><div class="cs-grid"><div><svg class="ic q" viewBox="0 0 44 44" aria-hidden="true"><circle pathLength="1" cx="22" cy="18" r="11"/><path class="k" pathLength="1" d="M17 18l3.5 3.5 7-7"/><path pathLength="1" d="M15.5 27.5 13 39l9-4 9 4-2.5-11.5"/></svg><b>Quality</b></div><div><svg class="ic" viewBox="0 0 44 44" aria-hidden="true"><rect pathLength="1" x="12" y="12" width="20" height="20" rx="2"/><rect class="core" pathLength="1" x="18" y="18" width="8" height="8"/><path class="pins" pathLength="1" d="M18 5v7M26 5v7M18 32v7M26 32v7M5 18h7M5 26h7M32 18h7M32 26h7"/></svg><b>Technology</b></div><div><svg class="ic" viewBox="0 0 44 44" aria-hidden="true"><circle pathLength="1" cx="25" cy="22" r="14"/><path class="hand" pathLength="1" d="M25 14v8l5.5 3.5"/><path class="spd" pathLength="1" d="M3 16h6M2 22h5M3 28h6"/></svg><b>Delivery</b></div><div><svg class="ic" viewBox="0 0 44 44" aria-hidden="true"><ellipse class="c1" pathLength="1" cx="22" cy="11" rx="12" ry="4.5"/><path class="c1" pathLength="1" d="M10 11v7c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5v-7"/><path class="c2" pathLength="1" d="M10 18v7c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5v-7"/><path class="c3" pathLength="1" d="M10 25v7c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5v-7"/></svg><b>Cost</b></div></div></div></div></div>
+      <div class="ds-sub"><h3>Illustrations &amp; map hotspot <span class="ds-new">V2</span></h3><p>The character pieces kept from kajima.co.id, recoloured to the brand tokens: three counter illustrations (Fuji + rising sun, Monas, skyline with the K) and the Kajima mark used as the hotspot on the globe (white disc, red ring when active). Illustrations always sit above a number, never alone.</p>
+        <div class="ds-ills"><div><img src="../assets/img/numbers-fuji.svg" alt="">Founded in Tokyo</div><div><img src="../assets/img/numbers-indonesia.png" alt="">In Indonesia</div><div><img src="../assets/img/numbers-corporate.svg" alt="">Projects</div><div><span class="mk"><img src="../assets/img/kajima-mark.svg" alt=""></span>Map hotspot</div></div></div>
+    </section>
+
+    <!-- =================== MOTION =================== -->
+    <section class="ds-sec" id="motion">
+      <span class="ds-k">Foundations · 06</span>
+      <h2>Motion</h2>
+      <p class="ds-lead">From Step 6 v4. Calm and functional: things settle into place, never bounce around. Only transform, opacity and clip-path are animated, every entrance runs once, and everything switches off for "reduce motion".</p>
+      <div class="ds-sub"><h3>Easing &amp; duration</h3><p>Select "Play" to compare the curves (900ms).</p>
+        <div class="mv-row"><div class="spec"><b>--m-out</b><span class="ds-code">cubic-bezier(.2,.8,.2,1)</span><br><span class="ds-cap">entrances, reveals, headline words</span></div><div class="mv-track" data-ease="var(--m-out)"><i class="mv"></i></div></div>
+        <div class="mv-row"><div class="spec"><b>--m-std</b><span class="ds-code">cubic-bezier(.4,0,.2,1)</span><br><span class="ds-cap">hover, state changes</span></div><div class="mv-track" data-ease="var(--m-std)"><i class="mv"></i></div></div>
+        <div class="mv-row"><div class="spec"><b>--m-pop</b><span class="ds-code">cubic-bezier(.34,1.4,.64,1)</span><br><span class="ds-cap">timeline dots, diagram circles</span></div><div class="mv-track" data-ease="var(--m-pop)"><i class="mv"></i></div></div>
+        <button class="btn dark sm" type="button" id="playMv" style="margin-top:20px">Play</button>
+        <table class="ds-table" style="margin-top:40px">
+          <tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+          <tr><td>--d-hover</td><td>250ms</td><td>Colour, underline, arrow nudge</td></tr>
+          <tr><td>--d-ui</td><td>450ms</td><td>Tabs, accordion, dropdown</td></tr>
+          <tr><td>--d-reveal</td><td>900ms</td><td>Fade-up 28px on scroll</td></tr>
+          <tr><td>--d-photo</td><td>1.6–2.4s</td><td>Hero sky settles, skyline rises, careers photo</td></tr>
+          <tr><td>Stagger</td><td>55ms word · 75ms item</td><td>Headlines rise word by word; cards, rows</td></tr>
+          <tr><td>Scroll</td><td>Lenis, lerp .085</td><td>Smooth scrolling; hero and CTA "cover" effects, timeline line</td></tr>
+          <tr><td>Counters</td><td>1.5–1.8s, ease-out cubic</td><td>Every number counts up from 0, years included</td></tr>
+        </table></div>
+      <div class="ds-sub"><h3>Hover micro-animations <span class="ds-new">V2</span></h3><p>One-shot keyframes that end where they start, so leaving early never snaps. All of them sit inside <span class="ds-code">@media (prefers-reduced-motion: no-preference)</span>.</p>
+        <table class="ds-table">
+          <tr><th>Element</th><th>On hover</th><th>Timing</th></tr>
+          <tr><td>Service button (all sizes)</td><td>The two arcs close into a full ring and turn half a circle; the play triangle nudges 3px; the label underlines. Inside a card, hovering the card triggers it.</td><td>700ms dashoffset · 900ms turn · --ease</td></tr>
+          <tr><td>Box buttons</td><td>Fill darkens (Primary) or turns white (Line, Light); the arrow nudges 4px. No ring.</td><td>250ms</td></tr>
+          <tr><td>Counter cell</td><td>Illustration floats up 8px, the line widens, the red dot pops.</td><td>900ms · 600ms dot</td></tr>
+          <tr><td>Core Strengths icons</td><td>Quality: badge sways, check redraws · Technology: core turns 90°, pins redraw · Delivery: hand sweeps 360°, speed lines rush · Cost: coins hop one after another (70ms stagger).</td><td>600–1000ms</td></tr>
+          <tr><td>Cards (service, job)</td><td>Lift 4px, border turns Ink, soft shadow (sh-2).</td><td>400ms</td></tr>
+          <tr><td>Globe hotspots (Step 6)</td><td>Each Kajima mark fades and grows in when its arc lands; on hover it eases to the larger size with the red ring, pulse and label fading in. The globe draws at full frame rate only while a mark is easing.</td><td>τ 150ms appear · τ 80ms hover</td></tr>
+        </table></div>
+    </section>
+
+    <!-- =================== ATOMS =================== -->
+    <section class="ds-sec" id="atoms">
+      <span class="ds-k">Components · 01</span>
+      <h2>Atoms</h2>
+      <p class="ds-lead">The smallest pieces. They are combined into everything else.</p>
+      <div class="ds-g3">
+        <div class="ds-box"><span class="ds-k">Eyebrow label</span><span class="label">Our Projects</span></div>
+        <div class="ds-box"><span class="ds-k">Tag</span><div class="ds-row"><span class="tag">Industrial</span><span class="tag muted">Construction</span></div></div>
+        <div class="ds-box"><span class="ds-k">Badge (new)</span><div class="ds-row"><span class="badge">Open</span><span class="badge success">Sent</span><span class="badge warning">Pending</span><span class="badge error">Closed</span><span class="badge info">New</span></div></div>
+        <div class="ds-box"><span class="ds-k">Service button · large (64px) <span class="ds-new">V2</span></span><a class="link-play" href="#atoms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">Explore Design</span></a><p class="ds-cap">Service cards.</p></div>
+        <div class="ds-box"><span class="ds-k">Service button · small (44px) <span class="ds-new">V2</span></span><a class="link-play sm" href="#atoms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></a><p class="ds-cap">Replaces the arrow text link on the homepage.</p></div>
+        <div class="ds-box"><span class="ds-k">Service button · card (36px) <span class="ds-new">V2</span></span><a class="link-play xs" href="#atoms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></a><p class="ds-cap">Inside small cards; always smaller than the card title.</p></div>
+        <div class="ds-box"><span class="ds-k">Text link (inner pages)</span><a class="link" href="#atoms">Explore more work <span class="ar">→</span></a><p class="ds-cap">Inline links, back links and "↗" external links.</p></div>
+        <div class="ds-box"><span class="ds-k">Box button: plain arrow, never a ring</span><div class="ds-row"><a class="btn" href="#atoms">Discuss a Project <span class="ar">→</span></a></div></div>
+        <div class="ds-box"><span class="ds-k">Icon button</span><div class="ds-row"><button class="icon-btn" type="button" aria-label="Next"><svg class="ic"><use href="#i-arrow-right"/></svg></button><button class="icon-btn sm" type="button" aria-label="Open"><svg class="ic"><use href="#i-arrow-right"/></svg></button><button class="icon-btn" type="button" aria-label="Previous"><svg class="ic"><use href="#i-arrow-left"/></svg></button></div></div>
+        <div class="ds-box"><span class="ds-k">Input</span><div class="fld"><input aria-label="Example input" placeholder="e.g. Cikarang, West Java"></div></div>
+        <div class="ds-box"><span class="ds-k">Select</span><div class="fld"><select aria-label="Example select"><option>Factory</option><option>Warehouse / Logistics</option></select></div></div>
+        <div class="ds-box"><span class="ds-k">Textarea</span><div class="fld"><textarea aria-label="Example textarea" style="min-height:72px">Schedule, scope or anything we should know</textarea></div></div>
+        <div class="ds-box"><span class="ds-k">Chip</span><div class="ds-row"><button class="chip on" type="button">All</button><button class="chip" type="button">Industrial</button></div></div>
+        <div class="ds-box"><span class="ds-k">Stat number</span><div class="facts" style="--n:1;border:0"><div style="padding:0"><b>1975</b><span>In Indonesia since</span></div></div></div>
+        <div class="ds-box"><span class="ds-k">Divider</span><hr style="border:0;border-top:1px solid var(--c-line);margin:16px 0"><hr style="border:0;border-top:1px solid var(--c-ink)"><p class="ds-cap">Line (default) · Ink (top of lists and accordions)</p></div>
+        <div class="ds-box"><span class="ds-k">Logo · on light</span><img src="../assets/logo-2026.png" alt="Kajima Indonesia" style="height:34px"></div>
+        <div class="ds-box ds-photo"><span class="ds-k" style="color:#fff">Logo · on photo / dark</span><img src="../assets/logo-2026-white.png" alt="Kajima Indonesia" style="height:34px"></div>
+        <div class="ds-box" style="background:var(--c-red)"><span class="ds-k" style="color:#fff">Logo · on red</span><img src="../assets/logo-2026-allwhite.png" alt="Kajima Indonesia" style="height:34px"></div>
+      </div>
+    </section>
+
+    <!-- =================== MOLECULES =================== -->
+    <section class="ds-sec" id="molecules">
+      <span class="ds-k">Components · 02</span>
+      <h2>Molecules</h2>
+      <p class="ds-lead">Atoms combined into a single job.</p>
+
+      <div class="ds-sub"><h3>Form field: label + input + helper text</h3><p>Four states. Error and success always come with a message.</p>
+        <div class="ds-g4">
+          <div class="fld"><label for="m1">Project location <span class="req">*</span></label><input id="m1" placeholder="e.g. Cikarang, West Java"><span class="help">City and province</span></div>
+          <div class="fld bad"><label for="m2">Email <span class="req">*</span></label><input id="m2" value="name@company" aria-invalid="true"><span class="err">Please add a valid email.</span></div>
+          <div class="fld ok"><label for="m3">Phone <span class="req">*</span></label><input id="m3" value="+62 812 0000 0000"><span class="help">Looks good</span></div>
+          <div class="fld is-disabled"><label for="m4">Company</label><input id="m4" value="PT Example" disabled><span class="help">Filled from your profile</span></div>
+        </div></div>
+
+      <div class="ds-sub"><h3>Section head</h3><p>Eyebrow + heading on the left, intro (max 2 lines) on the right, aligned to the bottom of the heading.</p>
+        <div class="ds-box"><div class="head" style="margin:0"><div><span class="label eyebrow">Our Services</span><h2 class="disp">From first sketch to handover</h2></div><p>We help clients reach their building goals, with design, engineering and construction under one accountable team.</p></div></div></div>
+
+      <div class="ds-g2 ds-sub">
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Breadcrumb</h3><div class="ds-box ds-photo" style="padding:24px 32px 8px"><nav class="crumbs" aria-label="Breadcrumb example"><a href="#molecules">Home</a><span aria-hidden="true">/</span><a href="#molecules">About us</a><span aria-hidden="true">/</span><span>History</span></nav></div>
+          <div class="ds-box" style="padding:24px 32px 8px;border-top:0"><nav class="crumbs on-light" aria-label="Breadcrumb example light"><a href="#molecules">Home</a><span aria-hidden="true">/</span><a href="#molecules">Projects</a><span aria-hidden="true">/</span><span>Fairmont Hotel Senayan</span></nav></div></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Sub-navigation</h3><div class="ds-box" style="padding:0 32px"><nav class="subnav" aria-label="Sub-navigation example" style="border:0"><ul><li><a href="#molecules">Corporate Profile</a></li><li><a class="on" href="#molecules">History</a></li><li><a href="#molecules">OHSEQ ABMS Policy</a></li><li><a href="#molecules">Code of Conduct</a></li></ul></nav></div></div>
+      </div>
+
+      <div class="ds-g2 ds-sub">
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Tabs</h3><div class="ds-box"><div class="tabs" data-demo-tabs><button class="on" type="button">Singapore</button><button type="button">Malaysia</button><button type="button">Hong Kong</button><button type="button">Vietnam</button></div></div></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Filter chips</h3><div class="ds-box"><div class="chips" data-demo-chips><button class="chip on" type="button">All</button><button class="chip" type="button">Office</button><button class="chip" type="button">Industrial</button><button class="chip" type="button">Residence</button><button class="chip" type="button">Hotel / Dormitory</button><button class="chip" type="button">Logistics</button></div></div></div>
+      </div>
+
+      <div class="ds-sub"><h3>Notice (new)</h3><p>Inline messages. Info is also used for the scam warning text block.</p>
+        <div class="ds-g2">
+          <div class="notice info"><svg class="ic"><use href="#i-info"/></svg><p><b>Official emails always end in @kajima.co.id.</b> Verify any request made in our name.</p></div>
+          <div class="notice success"><svg class="ic"><use href="#i-check"/></svg><p><b>Enquiry sent.</b> Our marketing team will contact you within two working days.</p></div>
+          <div class="notice warning"><svg class="ic"><use href="#i-alert"/></svg><p><b>Large file.</b> CVs over 5 MB may take a moment to upload.</p></div>
+          <div class="notice error"><svg class="ic"><use href="#i-alert"/></svg><p><b>Message not sent.</b> Check your connection and try again.</p></div>
+        </div></div>
+
+      <div class="ds-g2 ds-sub">
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Toast (new)</h3><div class="ds-box mist"><div class="toast"><svg class="ic"><use href="#i-check"/></svg>Application submitted<button type="button" aria-label="Dismiss"><svg class="ic" style="width:18px;height:18px"><use href="#i-close"/></svg></button></div></div></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Alert bar</h3><div class="ds-frame"><div class="alert" style="position:relative">Beware of scams using the Kajima Indonesia name. <a href="#molecules">Verify our official contacts</a><button class="x" type="button" aria-label="Close alert">×</button></div></div></div>
+      </div>
+
+      <div class="ds-sub"><h3>Stats row</h3><p>Big numbers with a hairline between them; every number, the "+" included, is the same Ink (v2). Numbers count up from 0 when they come into view.</p>
+        <div class="facts" style="--n:4"><div><b>1840</b><span>Kajima Group, founded in Tokyo</span></div><div><b>1975</b><span>In Indonesia since</span></div><div><b>210<sup>+</sup></b><span>Projects completed in Indonesia</span></div><div><b>42</b><span>Offices outside Japan</span></div></div></div>
+
+      <div class="ds-g2 ds-sub">
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Job card <span class="ds-new">V2</span></h3><p class="ds-cap" style="margin:-8px 0 16px">Location as a red tag, the role as the title, and the card-size service button. The whole card is the link; hover the card to close the ring.</p><ul class="jobs" style="grid-template-columns:1fr"><li><a href="#organisms"><span class="m">Site Project</span><span class="t">Project Manager</span><span class="link-play"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></a></li></ul></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Timeline entry</h3><p class="ds-cap" style="margin:-8px 0 16px">Key milestones (established) use a red dot.</p><ol class="tl-list"><li><span class="y">1973</span><div class="tx"><span class="tag">Construction</span><b>Wisma Nusantara</b></div></li><li class="key"><span class="y">1975</span><div class="tx"><span class="tag">Established</span><b>PT WASKITA KAJIMA CORPORATION INDONESIA</b><p>Established in 1975</p></div></li></ol></div>
+      </div>
+
+      <div class="ds-sub"><h3>Core Strengths grid <span class="ds-new">V2</span></h3><p>Replaces the process steps under the service cards. Intro on the left; on the right the existing site's 2×2 grid: line icon, title and the two points from kajima.co.id, all text always visible (no hover-to-reveal). Hover a cell for its icon animation.</p>
+      <div class="cs">
+        <div class="cs-in"><span class="label eyebrow">Core Strengths</span><h3>Strength of our design&#8209;build</h3><a class="link-play sm" href="#organisms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">Explore Core Strengths</span></a></div>
+        <div class="cs-grid">
+          <div><svg class="ic q" viewBox="0 0 44 44" aria-hidden="true"><circle pathLength="1" cx="22" cy="18" r="11"/><path class="k" pathLength="1" d="M17 18l3.5 3.5 7-7"/><path pathLength="1" d="M15.5 27.5 13 39l9-4 9 4-2.5-11.5"/></svg><b>Quality</b><ul><li>Single source responsibility</li><li>Integrated design-build quality control by ISO&nbsp;9001</li></ul></div>
+          <div><svg class="ic" viewBox="0 0 44 44" aria-hidden="true"><rect pathLength="1" x="12" y="12" width="20" height="20" rx="2"/><rect class="core" pathLength="1" x="18" y="18" width="8" height="8"/><path class="pins" pathLength="1" d="M18 5v7M26 5v7M18 32v7M26 32v7M5 18h7M5 26h7M32 18h7M32 26h7"/></svg><b>Technology</b><ul><li>Feedback from construction technology</li><li>Comprehensive supporting technology</li></ul></div>
+          <div><svg class="ic" viewBox="0 0 44 44" aria-hidden="true"><circle pathLength="1" cx="25" cy="22" r="14"/><path class="hand" pathLength="1" d="M25 14v8l5.5 3.5"/><path class="spd" pathLength="1" d="M3 16h6M2 22h5M3 28h6"/></svg><b>Delivery</b><ul><li>Fast-track commencement</li><li>Short construction period, flexibility for changes</li></ul></div>
+          <div><svg class="ic" viewBox="0 0 44 44" aria-hidden="true"><ellipse class="c1" pathLength="1" cx="22" cy="11" rx="12" ry="4.5"/><path class="c1" pathLength="1" d="M10 11v7c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5v-7"/><path class="c2" pathLength="1" d="M10 18v7c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5v-7"/><path class="c3" pathLength="1" d="M10 25v7c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5v-7"/></svg><b>Cost</b><ul><li>Reliable cost projection</li><li>Optimal method and value engineering for low costs</li></ul></div>
+        </div>
+      </div>
+      </div>
+      <div class="ds-sub"><h3>Accordion item</h3><p>Closed rows show the key fact (placement); the + turns into − when open.</p>
+        <div class="acc"><details open><summary><span class="t">Project Manager</span><span class="m">Site Project</span><i aria-hidden="true"></i></summary><div class="body"><div><span class="label eyebrow" style="margin-bottom:14px">Responsibilities</span><ul><li>Overseeing all aspects of projects, from planning and budgeting to execution and completion.</li><li>Managing project timelines, resources and budgets to achieve set objectives.</li></ul></div><div><span class="label eyebrow" style="margin-bottom:14px">Qualifications</span><ul><li>Bachelor's degree in civil engineering.</li><li>Having min. 10 years or more experience on Construction Project across Industrial, Commercial or Residential Sectors.</li></ul><a class="btn dark sm" href="#molecules" style="margin-top:24px">Apply now <span class="ar">→</span></a></div></div></details><details><summary><span class="t">Senior Drafter</span><span class="m">Jakarta / Cikarang Office</span><i aria-hidden="true"></i></summary><div class="body"><p class="muted">…</p></div></details></div></div>
+    </section>
+
+    <!-- =================== ORGANISMS =================== -->
+    <section class="ds-sec" id="organisms">
+      <span class="ds-k">Components · 03</span>
+      <h2>Organisms</h2>
+      <p class="ds-lead">Complete parts of the interface, shown as they appear on the site.</p>
+
+      <div class="ds-sub"><h3>Header: over a photo, and solid (sticky) with a dropdown open</h3><p>Transparent with white logo over the hero; turns solid white (92% + blur) after 60px of scroll. "Discuss a Project" appears only after the hero. Menu centred, underline grows in Kajima Red.</p>
+        <div class="ds-frame ds-photo" style="height:120px"><header class="hdr"><div class="in">
+          <a class="logo" href="#organisms"><img class="on-light" src="../assets/logo-2026.png" alt="Kajima Indonesia" width="128" height="34"><img class="on-dark" src="../assets/logo-2026-white.png" alt="" width="128" height="34"></a>
+          <nav aria-label="Example"><ul class="nav"><li class="dd"><a href="#organisms">About Us<span class="chev" aria-hidden="true"></span></a></li><li><a href="#organisms">Global Network</a></li><li><a href="#organisms">Projects</a></li><li class="dd"><a href="#organisms">Services<span class="chev" aria-hidden="true"></span></a></li><li><a href="#organisms">Careers</a></li><li><a href="#organisms">Contact</a></li></ul></nav>
+          <div class="hdr-r"><span class="lang"><b>EN</b> / ID</span></div></div></header></div>
+        <div class="ds-frame" style="height:330px;margin-top:16px;background:var(--c-mist)"><header class="hdr solid past-hero"><div class="in">
+          <a class="logo" href="#organisms"><img class="on-light" src="../assets/logo-2026.png" alt="Kajima Indonesia" width="128" height="34"><img class="on-dark" src="../assets/logo-2026-white.png" alt="" width="128" height="34"></a>
+          <nav aria-label="Example solid"><ul class="nav"><li class="dd ds-open"><a href="#organisms">About Us<span class="chev" aria-hidden="true"></span></a><ul class="sub"><li><a href="#organisms">Corporate Profile</a></li><li><a href="#organisms">History</a></li><li><a href="#organisms">OHSEQ ABMS Policy</a></li><li><a href="#organisms">Code of Conduct</a></li></ul></li><li><a href="#organisms">Global Network</a></li><li><a href="#organisms">Projects</a></li><li class="dd"><a href="#organisms">Services<span class="chev" aria-hidden="true"></span></a></li><li><a href="#organisms">Careers</a></li><li><a href="#organisms">Contact</a></li></ul></nav>
+          <div class="hdr-r"><span class="lang"><b>EN</b> / ID</span><a class="btn" href="#organisms">Discuss a Project <span class="ar">→</span></a></div></div></header></div></div>
+
+      <div class="ds-g2 ds-sub">
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Mobile drawer</h3><div class="ds-frame" style="max-width:390px"><div class="drawer open"><a class="d-link" href="#organisms">About Us</a><div class="d-sub"><a href="#organisms">Corporate Profile</a><a href="#organisms">History</a><a href="#organisms">OHSEQ ABMS Policy</a><a href="#organisms">Code of Conduct</a></div><a class="d-link" href="#organisms">Global Network</a><a class="d-link" href="#organisms">Projects</a><a class="d-link" href="#organisms">Services</a><a class="d-link" href="#organisms">Careers</a><a class="d-link" href="#organisms">Contact</a><a class="btn" href="#organisms">Discuss a Project <span class="ar">→</span></a></div></div></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:16px">Service card <span class="ds-new">V2</span></h3><article class="svc-card">
+          <div class="ph"><img src="../assets/img/proyek-sumitomo-factory.jpg" alt="Sumitomo SHI factory built by Kajima" loading="lazy"></div>
+          <div class="bd">
+            <span class="label">Premium Quality Work · Perfect Resolution · High Safety</span>
+            <h3>Construction</h3>
+            <p>Experienced site teams, reliable subcontractors and licensed ANZEN Leaders deliver quality work on schedule, safely.</p>
+            <a class="link-play" href="#organisms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">Explore Construction</span></a>
+          </div>
+        </article></div>
+      </div>
+
+      <div class="ds-sub"><h3>Project card (new hi-fi)</h3><p>Photo 4:3, category tag, name, location · year, and a small arrow on the right. The whole card is the link.</p>
+        <div class="ds-g3">
+          <a class="pcard" href="#organisms"><div class="ph"><img src="../assets/img/proyek-fairmont-hotel.jpg" alt=""></div><div class="bd"><span class="tag">Hotel / Dormitory</span><h3>Fairmont Hotel Senayan</h3><div class="foot"><span>Senayan, Jakarta · 2015</span><span class="icon-btn sm" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></div></div></a>
+          <a class="pcard" href="#organisms"><div class="ph"><img src="../assets/img/proyek-data-center-gtn.jpg" alt=""></div><div class="bd"><span class="tag">Industrial</span><h3>Data Center Graha Teknologi Nusantara</h3><div class="foot"><span>Cikarang, Jawa Barat · 2016</span><span class="icon-btn sm" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></div></div></a>
+          <a class="pcard" href="#organisms"><div class="ph"><img src="../assets/img/proyek-unicharm-3rd-factory.jpg" alt=""></div><div class="bd"><span class="tag">Industrial</span><h3>Unicharm Indonesia 3rd Factory</h3><div class="foot"><span>Ngoro Industrial Park, Mojokerto · 2013</span><span class="icon-btn sm" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></div></div></a>
+        </div></div>
+
+      <div class="ds-sub"><h3>Projects by building type <span class="ds-new">V2</span></h3><p>Full-width heading (max 2 lines, no intro), building-type tabs on the left, one featured project on the right with the small service button and "Also" links, and a red box button "View all projects" under the tabs. Select a tab to switch.</p>
+        <div class="ds-frame">  <section class="sec mist" aria-label="Projects by building type">
+    <div class="wrap">
+      <div class="head solo">
+        <div><span class="label eyebrow">Our Projects</span><h2 class="disp">From factories to hotels, 210+ projects in Indonesia</h2></div>
+      </div>
+      <div class="types">
+        <div>
+          <ul class="tl" role="tablist" aria-label="Building types">
+          <li role="presentation"><button type="button" role="tab" id="tt-factory" aria-controls="tp-factory" aria-selected="true">Factory<span class="ar" aria-hidden="true">→</span></button></li>
+          <li role="presentation"><button type="button" role="tab" id="tt-warehouse" aria-controls="tp-warehouse" aria-selected="false" tabindex="-1">Warehouse &amp; Logistics<span class="ar" aria-hidden="true">→</span></button></li>
+          <li role="presentation"><button type="button" role="tab" id="tt-datacenter" aria-controls="tp-datacenter" aria-selected="false" tabindex="-1">Data Center<span class="ar" aria-hidden="true">→</span></button></li>
+          <li role="presentation"><button type="button" role="tab" id="tt-office" aria-controls="tp-office" aria-selected="false" tabindex="-1">Office<span class="ar" aria-hidden="true">→</span></button></li>
+          <li role="presentation"><button type="button" role="tab" id="tt-hotel" aria-controls="tp-hotel" aria-selected="false" tabindex="-1">Hotel<span class="ar" aria-hidden="true">→</span></button></li>
+          <li role="presentation"><button type="button" role="tab" id="tt-residence" aria-controls="tp-residence" aria-selected="false" tabindex="-1">Residence<span class="ar" aria-hidden="true">→</span></button></li>
+          </ul>
+          <a class="btn all" href="#organisms">View all projects <span class="ar">→</span></a>
+        </div>
+        <div>
+        <div class="tp" role="tabpanel" id="tp-factory" aria-labelledby="tt-factory">
+          <a class="ph" href="#organisms" tabindex="-1"><img src="../assets/img/proyek-sumitomo-factory.jpg" alt="Sumitomo SHI Construction Machinery Factory" loading="lazy" width="800" height="391"></a>
+          <div class="bd">
+            <div><span class="label">Factory</span><h3><a href="#organisms">Sumitomo SHI Construction Machinery Factory</a></h3><p class="meta">KIIC Industrial Park, Karawang · 2011</p></div>
+            <a class="link-play sm" href="#organisms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></a>
+            <p class="also">Also: <a href="#organisms">Yamazaki Indonesia 2nd Factory</a> · <a href="#organisms">Unicharm Indonesia 3rd Factory</a> · <a href="#organisms">Mandom New Factory</a></p>
+          </div>
+        </div>
+        <div class="tp" role="tabpanel" id="tp-warehouse" aria-labelledby="tt-warehouse" hidden>
+          <a class="ph" href="#organisms" tabindex="-1"><img src="../assets/img/proyek-mitsui-soko-warehouse.jpg" alt="Mitsui NIP New Warehouse" loading="lazy" width="800" height="391"></a>
+          <div class="bd">
+            <div><span class="label">Warehouse &amp; Logistics</span><h3><a href="#organisms">Mitsui NIP New Warehouse</a></h3><p class="meta">Ngoro Industrial Park, Mojokerto · 2016</p></div>
+            <a class="link-play sm" href="#organisms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></a>
+            <p class="also">Also: <a href="#organisms">Takasago International Indonesia</a></p>
+          </div>
+        </div>
+        <div class="tp" role="tabpanel" id="tp-datacenter" aria-labelledby="tt-datacenter" hidden>
+          <a class="ph" href="#organisms" tabindex="-1"><img src="../assets/img/proyek-data-center-gtn.jpg" alt="Data Center Graha Teknologi Nusantara" loading="lazy" width="800" height="391"></a>
+          <div class="bd">
+            <div><span class="label">Data Center</span><h3><a href="#organisms">Data Center Graha Teknologi Nusantara</a></h3><p class="meta">Cikarang, West Java · 2016</p></div>
+            <a class="link-play sm" href="#organisms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></a>
+          </div>
+        </div>
+        <div class="tp" role="tabpanel" id="tp-office" aria-labelledby="tt-office" hidden>
+          <a class="ph" href="#organisms" tabindex="-1"><img src="../assets/img/proyek-senayan-office-tower.jpg" alt="Senayan Office Tower" loading="lazy" width="800" height="391"></a>
+          <div class="bd">
+            <div><span class="label">Office</span><h3><a href="#organisms">Senayan Office Tower</a></h3><p class="meta">Senayan, Jakarta · 2010</p></div>
+            <a class="link-play sm" href="#organisms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></a>
+            <p class="also">Also: <a href="#organisms">BAF Home Development Project</a></p>
+          </div>
+        </div>
+        <div class="tp" role="tabpanel" id="tp-hotel" aria-labelledby="tt-hotel" hidden>
+          <a class="ph" href="#organisms" tabindex="-1"><img src="../assets/img/proyek-fairmont-hotel.jpg" alt="Fairmont Hotel Senayan" loading="lazy" width="800" height="391"></a>
+          <div class="bd">
+            <div><span class="label">Hotel</span><h3><a href="#organisms">Fairmont Hotel Senayan</a></h3><p class="meta">Senayan, Jakarta · 2015</p></div>
+            <a class="link-play sm" href="#organisms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></a>
+          </div>
+        </div>
+        <div class="tp" role="tabpanel" id="tp-residence" aria-labelledby="tt-residence" hidden>
+          <a class="ph" href="#organisms" tabindex="-1"><img src="../assets/img/proyek-senayan-apartment.jpg" alt="Senayan Apartment C&amp;D" loading="lazy" width="800" height="391"></a>
+          <div class="bd">
+            <div><span class="label">Residence</span><h3><a href="#organisms">Senayan Apartment C&amp;D</a></h3><p class="meta">Senayan, Jakarta · 2012</p></div>
+            <a class="link-play sm" href="#organisms"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div></div>
+      <div class="ds-sub"><h3>Page hero (inner pages)</h3><p>One layout for every inner page: full-bleed photo, breadcrumb + H1 bottom-left, one line of intro bottom-right, then the sub-navigation.</p>
+        <div class="ds-frame"><section class="pg-hero"><img src="../assets/img/hero-senayan-square.jpg" alt=""><div class="wrap in"><div><nav class="crumbs" aria-label="Breadcrumb hero"><a href="#organisms">Home</a><span aria-hidden="true">/</span><a href="#organisms">About us</a><span aria-hidden="true">/</span><span>History</span></nav><h1>History &amp; Principal Projects</h1></div><p class="intro">Kajima in Indonesia since 1959, and Kajima Corporation since 1840.</p></div></section>
+          <nav class="subnav" aria-label="Sub-navigation hero"><div class="wrap"><ul><li><a href="#organisms">Corporate Profile</a></li><li><a class="on" href="#organisms">History</a></li><li><a href="#organisms">OHSEQ ABMS Policy</a></li><li><a href="#organisms">Code of Conduct</a></li></ul></div></nav></div></div>
+
+      <div class="ds-sub"><h3>Counter + client logos <span class="ds-new">V2</span></h3><p>Each number sits under its illustration with the line–dot–line divider. All numbers in Ink. Hover a cell.</p>
+        <div class="ds-frame"><section class="proof" aria-label="Key facts">
+    <div class="wrap"><div class="row">
+      <div><img class="il" src="../assets/img/numbers-fuji.svg" alt="" aria-hidden="true" width="128" height="66"><b>1840</b><i class="lb" aria-hidden="true"></i><span>Kajima Group, founded in Tokyo</span></div>
+      <div><img class="il" src="../assets/img/numbers-indonesia.png" alt="" aria-hidden="true" width="128" height="128"><b>1975</b><i class="lb" aria-hidden="true"></i><span>In Indonesia since</span></div>
+      <div><img class="il" src="../assets/img/numbers-corporate.svg" alt="" aria-hidden="true" width="178" height="100"><b><span class="cnt" data-to="210">210</span><sup>+</sup></b><i class="lb" aria-hidden="true"></i><span>Projects completed in Indonesia</span></div>
+    </div></div>
+  </section>
+          <section class="logos"><div class="wrap"><p class="label">Trusted by leading manufacturers and developers</p></div><div class="marquee"><div class="track"><img src="../assets/logoipsum/logo-1.svg" alt=""><img src="../assets/logoipsum/logo-2.svg" alt=""><img src="../assets/logoipsum/logo-3.svg" alt=""><img src="../assets/logoipsum/logo-4.svg" alt=""><img src="../assets/logoipsum/logo-5.svg" alt=""><img src="../assets/logoipsum/logo-6.svg" alt=""><img src="../assets/logoipsum/logo-1.svg" alt=""><img src="../assets/logoipsum/logo-2.svg" alt=""><img src="../assets/logoipsum/logo-3.svg" alt=""><img src="../assets/logoipsum/logo-4.svg" alt=""><img src="../assets/logoipsum/logo-5.svg" alt=""><img src="../assets/logoipsum/logo-6.svg" alt=""></div></div></section></div></div>
+
+      <div class="ds-sub"><h3>Careers <span class="ds-new">V2</span></h3><p>Section head like every other section (heading, then the intro under it). Below: a contained photo (never a full-width background) beside four job cards in a 2×2 grid; "View positions" and the CV email sit under the cards.</p>
+        <div class="ds-frame">  <section class="sec mist career" aria-label="Careers">
+    <div class="wrap">
+      <div class="head solo">
+        <div><span class="label eyebrow">Careers</span><h2 class="disp">We are hiring</h2><p class="lead full">We develop engineers who build with care, guided by Japanese standards in safety, quality and craft.</p></div>
+      </div>
+      <div class="cr2">
+        <div class="ph"><img src="../assets/img/careers-pekerja-kajima.jpg" alt="Kajima engineer in a hard hat and KAJIMA safety vest overlooking a building under construction" loading="lazy" width="1440" height="722"></div>
+        <ul class="jobs" aria-label="Open positions">
+          <li><a href="#organisms"><span class="m">Site Project</span><span class="t">Project Manager</span><span class="link-play"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></a></li>
+          <li><a href="#organisms"><span class="m">Head Office, Jakarta</span><span class="t">Architectural Designer (BIM)</span><span class="link-play"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></a></li>
+          <li><a href="#organisms"><span class="m">Site Project</span><span class="t">Senior M&amp;E Engineer</span><span class="link-play"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></a></li>
+          <li><a href="#organisms"><span class="m">Jakarta / Cikarang Office</span><span class="t">Senior Drafter</span><span class="link-play"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></a></li>
+        </ul>
+        <div class="acts"><a class="btn line" href="#organisms">View positions <span class="ar">→</span></a><span class="mail">Or send your CV to <a href="mailto:career@kajima.co.id">career@kajima.co.id</a></span></div>
+      </div>
+    </div>
+  </section>
+</div></div>
+
+      <div class="ds-sub"><h3>CTA + footer</h3><p>Sunset sky, centred heading + one red button, Jakarta skyline cut cleanly at the bottom; then the footer. On the site the CTA and footer slide up over the section above (Step 6).</p>
+        <div class="ds-frame"><section class="sky" aria-label="CTA example"><img class="photo" src="../assets/img/cta-jakarta-railway.jpg" alt="" width="2000" height="2667"><div class="copy"><h2 class="disp">Together, we build a better Indonesia</h2><p>Tell us about your next factory, office or facility. Our team will get back to you.</p><div class="acts"><a class="btn" href="#organisms">Discuss a Project <span class="ar">→</span></a></div></div></section>
+          <div class="ftr"><div class="wrap"><div class="cols">
+            <div><img class="logo" src="../assets/logo-2026.png" alt="Kajima Indonesia" width="136" height="36"><p>PT Kajima Indonesia<br>Sentral Senayan I, 4th Floor<br>Jl. Asia Afrika No. 8, Jakarta 10270, Indonesia</p><div class="verify"><b>Official emails always end in @kajima.co.id.</b> Verify any request made in our name.</div></div>
+            <div><h4>Company</h4><ul><li><a href="#organisms">Corporate Profile</a></li><li><a href="#organisms">History</a></li><li><a href="#organisms">Global Network</a></li><li><a href="#organisms">Projects</a></li><li><a href="#organisms">Careers</a></li></ul></div>
+            <div><h4>Contact</h4><ul><li><a href="#organisms">+62 21 5724477</a></li><li><a href="#organisms">marketing@kajima.co.id</a></li><li><a href="#organisms">career@kajima.co.id</a></li></ul></div>
+            <div><h4>Whistle Blowing System</h4><p style="margin-bottom:10px">Report bribery, gratification or conflicts of interest to our FKAP team.</p><ul><li><a href="#organisms">lapor@kajima.co.id</a></li><li><a href="#organisms">+62 811 1996 0092</a></li></ul></div>
+          </div><div class="base"><span>© 2026 PT Kajima Indonesia. All rights reserved.</span><span>OHSEQ ABMS Policy · Code of Conduct · Privacy Notice · Kajima Corporation</span></div></div></div></div></div>
+
+      <div class="ds-sub"><h3>Enquiry modal</h3><p>Opens from every "Discuss a Project" button: two-column form, inline validation, consent, success state.</p>
+        <div class="ds-frame"><div class="modal open" role="dialog" aria-label="Enquiry example"><div class="bk"></div><div class="box">
+          <span class="label eyebrow" style="color:var(--c-red-dk);margin-bottom:12px">Project enquiry</span><h2 class="disp">Discuss a project</h2><p class="lead">Share a few details and our team will contact you within two working days.</p>
+          <div class="fgrid"><div class="fld"><label for="e1">Enquiry type</label><select id="e1"><option>New project</option></select></div><div class="fld"><label for="e2">Building type</label><select id="e2"><option>Factory</option></select></div><div class="fld bad"><label for="e3">Project location</label><input id="e3"><span class="err">Please add the project location.</span></div><div class="fld"><label for="e4">Estimated floor area (optional)</label><input id="e4" placeholder="e.g. 20,000 m²"></div>
+            <div class="fld full"><label class="ds-check" for="e5"><input type="checkbox" id="e5"><i></i>I agree that Kajima Indonesia may use these details to respond to my enquiry.</label></div></div>
+          <button class="btn send" type="button">Send Enquiry <span class="ar">→</span></button></div></div></div></div>
+    </section>
+
+    <!-- =================== INTERACTIVE =================== -->
+    <section class="ds-sec" id="interactive">
+      <span class="ds-k">Components · 04</span>
+      <h2>Interactive</h2>
+      <p class="ds-lead">Every control has a 44px touch target, a visible keyboard focus (2px Kajima Red, offset 3px) and a disabled state.</p>
+
+      <div class="ds-sub"><h3>Buttons: variants × states</h3><p>Two families. <b>Box buttons</b> (Primary, Line, Dark, Light) carry a plain "→" and never a ring: one red Primary per section, Line for the secondary action, Light on photos, Dark inside neutral content. <b>Service buttons</b> (ring + play) are for text links and buttons inside cards, in three sizes. "↗" opens an external site.</p>
+        <table class="ds-table"><thead><tr><th>Variant</th><th>Default</th><th>Hover</th><th>Focus</th><th>Disabled</th><th>Loading</th></tr></thead><tbody>
+          <tr><td>Primary</td><td><span class="btn">Send <span class="ar">→</span></span></td><td><span class="btn" style="background:var(--c-red-dk);border-color:var(--c-red-dk)">Send <span class="ar" style="transform:translateX(4px)">→</span></span></td><td><span class="btn is-focus">Send <span class="ar">→</span></span></td><td><span class="btn is-disabled">Send <span class="ar">→</span></span></td><td><span class="btn is-loading">Send</span></td></tr>
+          <tr><td>Line</td><td><span class="btn line">View Projects</span></td><td><span class="btn line">View Projects</span><br><span class="ds-cap">white fill</span></td><td><span class="btn line is-focus">View Projects</span></td><td><span class="btn line is-disabled">View Projects</span></td><td><span class="btn line is-loading">View</span></td></tr>
+          <tr><td>Dark</td><td><span class="btn dark">Apply now</span></td><td><span class="btn dark" style="background:#000">Apply now</span></td><td><span class="btn dark is-focus">Apply now</span></td><td><span class="btn dark is-disabled">Apply now</span></td><td><span class="btn dark is-loading">Apply</span></td></tr>
+          <tr class="ds-photo"><td style="color:#fff;padding-left:12px">Light</td><td><span class="btn light">View Positions</span></td><td><span class="btn light" style="background:#fff;color:var(--c-ink)">View Positions</span></td><td><span class="btn light is-focus">View Positions</span></td><td><span class="btn light is-disabled">View Positions</span></td><td><span class="btn light is-loading">View</span></td></tr>
+          <tr><td>Service · large <span class="ds-new">V2</span></td><td><span class="link-play"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">Explore</span></span></td><td><span class="link-play is-hover"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">Explore</span></span><br><span class="ds-cap">ring closes, turns</span></td><td><span class="link-play is-focus"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">Explore</span></span></td><td><span class="link-play is-disabled"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">Explore</span></span></td><td>—</td></tr>
+          <tr><td>Service · small <span class="ds-new">V2</span></td><td><span class="link-play sm"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></span></td><td><span class="link-play sm is-hover"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></span></td><td><span class="link-play sm is-focus"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></span></td><td><span class="link-play sm is-disabled"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View project</span></span></td><td>—</td></tr>
+          <tr><td>Service · card <span class="ds-new">V2</span></td><td><span class="link-play xs"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></td><td><span class="link-play xs is-hover"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></td><td><span class="link-play xs is-focus"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></td><td><span class="link-play xs is-disabled"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M28 24.5l9.5 7.5-9.5 7.5z"/></svg></span><span class="tx">View position</span></span></td><td>—</td></tr>
+          <tr><td>Text link</td><td><span class="link">Explore Design <span class="ar">→</span></span></td><td><span class="link" style="color:var(--c-red);border-color:var(--c-red)">Explore Design <span class="ar" style="transform:translateX(4px)">→</span></span></td><td><span class="link" style="outline:var(--focus);outline-offset:3px">Explore Design <span class="ar">→</span></span></td><td><span class="link" style="opacity:.4">Explore Design <span class="ar">→</span></span></td><td>—</td></tr>
+        </tbody></table></div>
+
+      <div class="ds-g3 ds-sub">
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:12px">Checkbox (new)</h3><div style="display:grid"><label class="ds-check"><input type="checkbox"><i></i>Unchecked</label><label class="ds-check"><input type="checkbox" checked><i></i>Checked</label><label class="ds-check"><input type="checkbox" disabled><i></i>Disabled</label><label class="ds-check"><input type="checkbox" checked disabled><i></i>Checked, disabled</label></div></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:12px">Radio (new)</h3><div style="display:grid" role="radiogroup" aria-label="Enquiry"><label class="ds-radio"><input type="radio" name="rq" checked><i></i>Construction project</label><label class="ds-radio"><input type="radio" name="rq"><i></i>Others</label><label class="ds-radio"><input type="radio" name="rq2" disabled><i></i>Disabled</label></div></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:12px">Switch (new)</h3><div style="display:grid"><label class="switch"><input type="checkbox" checked><i></i>Email me new vacancies</label><label class="switch"><input type="checkbox"><i></i>Bahasa Indonesia</label><label class="switch"><input type="checkbox" disabled><i></i>Disabled</label></div><p class="ds-cap">For settings that apply immediately. Use a checkbox inside forms.</p></div>
+      </div>
+
+      <div class="ds-g3 ds-sub">
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:12px">Menu / dropdown</h3><ul class="menu"><li><a href="#interactive">Corporate Profile</a></li><li><a class="on" href="#interactive">History</a></li><li><a href="#interactive">OHSEQ ABMS Policy</a></li><li><hr></li><li><a href="#interactive">Code of Conduct</a></li></ul><p class="ds-cap">Same as the header dropdown: opens on hover and keyboard focus, items cascade in.</p></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:12px">Select</h3><div class="fld"><label for="s1">Building type</label><select id="s1"><option>Factory</option><option>Warehouse / Logistics</option><option>Data center</option><option>Office</option><option>Hotel / Residence</option><option>Other</option></select></div><div class="fld" style="margin-top:16px"><label for="s2">Attach your CV</label><div class="file"><svg class="ic"><use href="#i-download"/></svg>Choose files or drag them here · PDF, JPG</div></div></div>
+        <div><h3 style="font-size:22px;font-weight:400;margin-bottom:12px">Live: tabs, chips, accordion</h3><p class="ds-cap" style="margin:0 0 12px">The tabs and chips in Molecules and the accordion above are interactive.</p><button class="icon-btn" type="button" aria-label="Search"><svg class="ic"><use href="#i-search"/></svg></button></div>
+      </div>
+    </section>
+
+    <!-- =================== RULES =================== -->
+    <section class="ds-sec" id="rules">
+      <span class="ds-k">Guidance</span>
+      <h2>Do &amp; don't</h2>
+      <p class="ds-lead">Decisions from the client and art-director feedback in Steps 2–6, updated with the final design rounds (v2).</p>
+      <div class="ds-g2">
+        <div class="ds-do"><h4>Do</h4><ul>
+          <li>Lead with "Design &amp; Build in Indonesia since 1975" in the hero (v2).</li>
+          <li>Keep the existing site's character: counter illustrations, line–dot–line, the Kajima mark on the map, the ring "play" button.</li>
+          <li>Use white space, hairlines and Light headings; one red Primary button per section.</li>
+          <li>Box buttons with a plain arrow; the ring for text links and card buttons, sized below the card title (36px in small cards).</li>
+          <li>Keep every number in a row the same colour, the "+" included.</li>
+          <li>Keep body text always visible: steps, strengths and descriptions are never hover-to-reveal.</li>
+          <li>Give icons and illustrations a short one-shot hover animation that fits their meaning.</li>
+          <li>Show real Kajima projects and people; real numbers from the client.</li>
+          <li>Keep every inner-page hero the same layout; the homepage is the north star.</li>
+          <li>Let numbers count up from 0; keep motion calm, once, and off for "reduce motion"; pause the globe while the page scrolls.</li>
+          <li>Give errors and status an icon and a message, not only colour.</li>
+        </ul></div>
+        <div class="ds-dont"><h4>Don't</h4><ul>
+          <li>Put a ring inside a box button, or a 64px ring in a small card (it breaks the hierarchy).</li>
+          <li>Use a full-width background photo for Careers.</li>
+          <li>Let markers or hotspots pop in or jump size; ease them in and between states.</li>
+          <li>Use dark, heavy "industrial" pages: the client prefers light and clean.</li>
+          <li>Fill large areas with red, or use Kajima Red for small text (use Red Deep).</li>
+          <li>Use the "THAI KAJIMA" logo or vest photos from the old server.</li>
+          <li>Add arrowheads to the globe lines, or effects that are not in the mockups.</li>
+          <li>Use generic two-column tables for company profiles.</li>
+          <li>Add a second font family or a serif; round the corners of buttons, cards or photos.</li>
+          <li>Put long headings in a half-width column: run them full width, max 2–3 lines.</li>
+        </ul></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(() => {
+  const css = getComputedStyle(document.documentElement), v = n => css.getPropertyValue(n).trim();
+  // ---- colour swatches ----
+  const SW = {
+    brand: [['Kajima Red', '--c-red', 'Primary: main buttons, active lines, service rings, map hotspots'], ['Red Deep', '--c-red-dk', 'Hover, small red text, error'], ['Red Tint', '--c-red-50', 'Error background']],
+    neutral: [['Ink', '--c-ink', 'Secondary: text, dark buttons, active tabs'], ['Charcoal', '--c-ink-2', 'Dark photo bands'], ['Slate', '--c-slate', 'Secondary text, labels'], ['Stone', '--c-stone', 'Inactive markers, icons'], ['Line Strong', '--c-line-2', 'Process rules, input hover'], ['Line', '--c-line', 'Hairlines, borders'], ['Mist', '--c-mist', 'Alternate sections, alert bar'], ['White', '--c-white', 'Page background']],
+    photo: [['Dusk', '--c-dusk', 'Sky overlay base'], ['Sunset', '--c-sunset', 'CTA sky fallback']],
+    status: [['Success', '--c-success', 'bg --c-success-bg'], ['Warning', '--c-warning', 'mark --c-warning-mark · bg --c-warning-bg'], ['Error', '--c-error', 'bg --c-error-bg'], ['Info', '--c-info', 'bg --c-info-bg']]
+  };
+  document.querySelectorAll('[data-sw]').forEach(g => {
+    g.innerHTML = SW[g.dataset.sw].map(([n, t, u]) => `<div class="sw"><div class="chip-c" style="background:var(${t})"></div><div class="meta"><b>${n}</b><span class="ds-code">${t} · ${v(t).toUpperCase()}</span><span>${u}</span></div></div>`).join('');
+  });
+  // ---- contrast ----
+  const hex = h => { h = h.replace('#', ''); if (h.length === 3) h = [...h].map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16) / 255); };
+  const lum = h => { const [r, g, b] = hex(h).map(c => c <= .03928 ? c / 12.92 : Math.pow((c + .055) / 1.055, 2.4)); return .2126 * r + .7152 * g + .0722 * b; };
+  const ratio = (a, b) => { const [l1, l2] = [lum(a), lum(b)].sort((x, y) => y - x); return (l1 + .05) / (l2 + .05); };
+  const P = [['--c-ink', '--c-white', 'Body text'], ['--c-slate', '--c-white', 'Secondary text'], ['--c-slate', '--c-mist', 'Secondary text on Mist'], ['--c-white', '--c-red', 'Primary button label (15px 500)'], ['--c-white', '--c-red-dk', 'Primary button hover'], ['--c-red-dk', '--c-white', 'Tags, small red text'], ['--c-red', '--c-white', 'Passes AA; by brand rule kept for large text, icons, lines'], ['--c-stone', '--c-white', 'Passes AA; kept for markers and icons, not body text'], ['--c-white', '--c-ink', 'Text on dark buttons'], ['--c-success', '--c-success-bg', 'Success notice'], ['--c-warning', '--c-warning-bg', 'Warning notice'], ['--c-error', '--c-error-bg', 'Error notice'], ['--c-info', '--c-info-bg', 'Info notice']];
+  document.querySelector('#contrast tbody').innerHTML = P.map(([f, b, u]) => {
+    const r = ratio(v(f), v(b)), res = r >= 7 ? '<span class="pass">AAA</span>' : r >= 4.5 ? '<span class="pass">AA</span>' : r >= 3 ? '<span class="fail">AA large only</span>' : '<span class="fail">Fail</span>';
+    return `<tr><td class="ds-code">${f}</td><td class="ds-code">${b}</td><td><span style="display:inline-block;padding:6px 12px;background:var(${b});color:var(${f});border:1px solid var(--c-line)">Kajima 1975</span></td><td>${r.toFixed(2)}:1</td><td>${res}</td><td>${u}</td></tr>`;
+  }).join('');
+  // ---- spacing ----
+  document.getElementById('spacing').insertAdjacentHTML('beforeend', Array.from({ length: 15 }, (_, i) => `--sp-${i + 1}`).map(t => `<div class="sp"><span class="ds-code">${t}</span><span>${v(t)}</span><i style="width:${v(t)}"></i></div>`).join(''));
+  // ---- icons ----
+  document.getElementById('iconGrid').innerHTML = ['arrow-right', 'arrow-left', 'external', 'chevron', 'close', 'menu', 'plus', 'minus', 'phone', 'mail', 'pin', 'message', 'globe', 'download', 'search', 'check', 'info', 'alert', 'shield', 'building']
+    .map(n => `<div class="ico"><svg class="ic"><use href="#i-${n}"/></svg>${n}</div>`).join('');
+  // ---- motion demo ----
+  const tracks = document.querySelectorAll('.mv-track');
+  tracks.forEach(t => { t.querySelector('.mv').style.transition = `left .9s ${t.dataset.ease}`; });
+  document.getElementById('playMv').addEventListener('click', () => tracks.forEach(t => t.classList.toggle('go')));
+  // projects: building-type tabs
+  const tabs = [...document.querySelectorAll('.types [role="tab"]')];
+  const pick = t => tabs.forEach(b => { const on = b === t; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; document.getElementById(b.getAttribute('aria-controls')).hidden = !on; });
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => pick(t));
+    t.addEventListener('keydown', e => {
+      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key]; if (!d) return;
+      e.preventDefault(); const n = tabs[(i + d + tabs.length) % tabs.length]; pick(n); n.focus();
+    });
+  });
+  // ---- live tabs / chips ----
+  document.querySelectorAll('[data-demo-tabs] button, [data-demo-chips] button').forEach(b => b.addEventListener('click', () => {
+    b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  }));
+})();
+</script>
+</body>
+</html>

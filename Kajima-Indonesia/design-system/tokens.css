@@ -1,0 +1,108 @@
+/* Kajima Indonesia · Design System v2 · tokens
+   Derived from the final homepage (v1: Step 5 v21; v2: homepage v28, animated v11), then rounded to a standard scale.
+   Values marked (site) are used as-is on the website; (new) are added by the design system. */
+:root {
+  /* ---------- colour: brand ---------- */
+  --c-red: #E6002D;          /* Kajima Red (logo 2026). Primary: main buttons, accent marks, active lines (site) */
+  --c-red-dk: #B8001F;       /* Red Deep: button hover, small red text on light backgrounds (site) */
+  --c-red-50: #FDECEF;       /* red tint: error background (new) */
+
+  /* ---------- colour: secondary / neutrals ---------- */
+  --c-ink: #16181B;          /* Ink: text, dark buttons, active states. Secondary colour (site) */
+  --c-ink-2: #2A2D31;        /* Charcoal: dark photo bands before the image loads (site) */
+  --c-slate: #5B5F66;        /* Slate: secondary text, labels (site) */
+  --c-stone: #6F7378;        /* Stone: inactive markers and icons, never body text (site) */
+  --c-line-2: #CFCFCA;       /* Line Strong: process rules, input hover (site) */
+  --c-line: #E2E2DE;         /* Line: hairlines, card and field borders (site) */
+  --c-mist: #F4F4F2;         /* Mist: alternate section background, alert bar (site) */
+  --c-white: #FFFFFF;
+
+  /* ---------- colour: photo accents (used only as overlays / fallbacks behind photography) ---------- */
+  --c-dusk: #1C283A;         /* sky overlay base, rgba(28,40,58,x) (site) */
+  --c-sunset: #E39A4A;       /* CTA sky fallback while the photo loads (site) */
+
+  /* ---------- colour: status (new) ---------- */
+  --c-success: #1F7A4D;  --c-success-bg: #E8F4EE;
+  --c-warning: #8A5A00;  --c-warning-mark: #E0A100;  --c-warning-bg: #FFF5DC;
+  --c-error: #B8001F;    --c-error-bg: #FDECEF;     /* same hue as Red Deep: always pair with an icon + message */
+  --c-info: #2457C5;     --c-info-bg: #EEF3FC;
+
+  /* ---------- typography ---------- */
+  --font: "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fw-light: 300; --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600;
+  /* size / line-height / letter-spacing per style */
+  --fs-display: clamp(48px, 5.6vw, 84px);  --lh-display: 1.02; --ls-display: -.025em;  /* hero H1, CTA */
+  --fs-h1: clamp(44px, 5.4vw, 80px);       --lh-h1: 1.04;      --ls-h1: -.025em;       /* inner page H1 */
+  --fs-h2: clamp(40px, 4.4vw, 60px);       --lh-h2: 1.04;      --ls-h2: -.025em;       /* section heading */
+  --fs-h3: 32px;  --lh-h3: 1.1;  --ls-h3: -.02em;                                        /* card heading (light) */
+  --fs-h4: 24px;  --lh-h4: 1.2;  --ls-h4: -.015em;                                       /* small card / row title */
+  --fs-h5: 20px;  --lh-h5: 1.3;  --ls-h5: -.01em;
+  --fs-lead: 20px; --lh-lead: 1.5;                                                       /* hero sub, lead text */
+  --fs-body: 17px; --lh-body: 1.6;                                                       /* 16px on mobile */
+  --fs-body-s: 15px; --lh-body-s: 1.55;                                                  /* buttons, links, footer */
+  --fs-small: 14px; --lh-small: 1.5;                                                     /* captions, stat labels */
+  --fs-xs: 13px;                                                                         /* alert, legal line */
+  --fs-eyebrow: 12px; --ls-eyebrow: .16em;                                               /* uppercase, 500 */
+  --fs-tag: 11px; --ls-tag: .14em;                                                       /* uppercase, 500 */
+  --fs-stat: 48px; --lh-stat: 1; --ls-stat: -.03em;                                      /* big numbers, 300 */
+
+  /* ---------- spacing (base 8, half steps of 4) ---------- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px;
+  --sp-7: 32px; --sp-8: 40px; --sp-9: 48px; --sp-10: 56px; --sp-11: 64px; --sp-12: 80px;
+  --sp-13: 96px; --sp-14: 112px; --sp-15: 128px;
+  --section: 128px; --section-m: 88px;          /* section padding desktop / mobile */
+  --head-gap: 64px;                             /* section head → content */
+
+  /* ---------- grid & layout ---------- */
+  --max: 1280px;                                /* container incl. side padding */
+  --pad: 48px;                                  /* side padding: 48 desktop · 32 tablet · 20 mobile */
+  --cols: 12; --gutter: 32px;
+  --edge: max(var(--pad), calc((100vw - var(--max)) / 2 + var(--pad)));
+  --bp-tablet: 1080px; --bp-mobile: 720px;      /* reference only (media queries cannot read variables) */
+
+  /* ---------- radius ---------- */
+  --r-0: 0;          /* buttons, cards, photos, modal: sharp, precise edges (site) */
+  --r-1: 2px;        /* form fields (site) */
+  --r-pill: 999px;   /* chips, filters (new on hi-fi) */
+  --r-round: 50%;    /* dots, markers, arrow circles (site) */
+
+  /* ---------- shadow (resting cards use a 1px line, not a shadow) ---------- */
+  --sh-1: 0 1px 2px rgba(22,24,27,.06);                   /* pressed chip / switch thumb (new) */
+  --sh-2: 0 24px 48px -32px rgba(0,0,0,.35);              /* card hover (site) */
+  --sh-3: 0 24px 48px -28px rgba(0,0,0,.30);              /* dropdown, toast (site) */
+  --sh-4: 0 40px 80px -40px rgba(0,0,0,.45);              /* floating photo, modal (site) */
+  --sh-cover: 0 -40px 80px -40px rgba(14,16,18,.45);      /* CTA sliding over a section (Step 6) */
+
+  /* ---------- opacity ---------- */
+  --o-hairline-dark: .22;   /* hairlines on photos / dark (site) */
+  --o-text-dark: .92;       /* body text on photos (site) */
+  --o-text-dark-2: .75;     /* secondary text on photos (site) */
+  --o-logos: .38;           /* client logos, greyscale (site) */
+  --o-glass: .92;           /* sticky header background + blur 12px (site) */
+  --o-scrim: .55;           /* modal backdrop, Ink + blur 4px (site) */
+  --o-disabled: .4;         /* disabled controls (new) */
+
+  /* ---------- focus ---------- */
+  --focus: 2px solid var(--c-red);  --focus-offset: 3px;
+
+  /* ---------- motion (Step 6 v3) ---------- */
+  --m-out: cubic-bezier(.2,.8,.2,1);     /* entrances, reveals */
+  --m-std: cubic-bezier(.4,0,.2,1);      /* hover, state changes */
+  --m-pop: cubic-bezier(.34,1.4,.64,1);  /* dots, small pops */
+  --d-hover: 250ms; --d-ui: 450ms; --d-reveal: 900ms; --d-photo: 1600ms;
+  --stagger-word: 55ms; --stagger-item: 75ms;
+  /* smooth scroll: Lenis lerp .085, wheelMultiplier .9 */
+}
+
+/* ---------- v2 (2 Nov 2026): service button + hover micro-animations ---------- */
+:root {
+  --ring-lg: 64px;     /* service card button (site) */
+  --ring-md: 56px;     /* service card button on mobile (site) */
+  --ring-sm: 44px;     /* text links: View project, View Global Network, Explore Core Strengths (site) */
+  --ring-xs: 36px;     /* buttons inside small cards: career cards (site). Keep it below the card title */
+  --ring-stroke: 1.5px;
+  --ring-rest: 32%;    /* each of the two arcs shows ~1/3 of the circle at rest; 50% each (closed) on hover */
+  --d-ring: 700ms;     /* ring closes (stroke-dashoffset) */
+  --d-ring-turn: 900ms;/* ring turns half a circle */
+  --d-hover-anim: 600ms; /* one-shot hover micro-animations: icons, illustrations (600–1000ms) */
+}
