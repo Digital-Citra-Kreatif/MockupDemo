@@ -1,6 +1,6 @@
 /* Kajima Indonesia · Step 6 Animate v1 — micro animation layer
    Shared by the homepage (index.html) and every inner page.
-   v2: hero heading stays while the sky/skyline/sections cover it; CTA + footer slide up over the last section.
+   v2: hero heading stays while the sky/skyline/sections cover it.
    v3: smooth scrolling (Lenis, see motion.js) and GPU layers for the large images.
    Everything is scoped to html.motion (added by motion.js only when the visitor has not asked for reduced motion),
    so without JS, or with "reduce motion", the page renders exactly as the Step 5 design.
@@ -58,10 +58,6 @@
 /* v3: keep the big masked images on their own GPU layers so scrolling never repaints them */
 .motion .hero .h-sky, .motion .hero .h-city, .motion .sky .photo, .motion .career > img { will-change: transform; backface-visibility: hidden; }
 .motion .hero.m-stay .h-title, .motion .pg-hero > .in { backface-visibility: hidden; }
-
-/* v2 footer cover: the last section holds still (motion.js) while the CTA + footer slide over it */
-.motion .m-under { position: relative; z-index: 0; will-change: transform; }
-.motion .m-over { position: relative; z-index: 5; box-shadow: 0 -40px 80px -40px rgba(14,16,18,.45); }
 
 /* inner page hero: banner settles, text follows the headline */
 .motion .pg-hero > .ph { animation: m-sky 1.8s var(--m-out) both; }

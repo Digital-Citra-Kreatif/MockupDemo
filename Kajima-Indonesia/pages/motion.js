@@ -1,6 +1,5 @@
 // Kajima Indonesia · Step 6 Animate v3 — micro animation layer.
-// v2: counters start from 0 (years too); hero heading is covered by the sky/skyline/sections on scroll;
-// CTA + footer slide up over the last section on every page that has the CTA.
+// v2: counters start from 0 (years too); hero heading is covered by the sky/skyline/sections on scroll.
 // v3: smooth scrolling with Lenis (loaded before this file); scroll-linked effects update in the same
 // frame as the scroll so the hero and the footer cover glide instead of stepping.
 // Shared by the homepage (index.html) and every inner page. Load after the page's own scripts.
@@ -162,26 +161,16 @@
   // Inner pages do the same with their banner title, so every hero behaves alike.
   const hero = document.querySelector('.hero, .pg-hero'),   // v13: homepage hero parallax back (feedback)
         heroTitle = hero && hero.querySelector('.h-title, .pg-hero > .in');
-  // CTA + footer slide up over the last section (pages that have the CTA only): the section holds
-  // still once its bottom meets the bottom of the screen, and the footer covers it.
-  const foot = document.querySelector('body > footer'), main = document.querySelector('main');
-  const under = null;   // v13: CTA + footer no longer slide over the last section (feedback); Lenis keeps scrolling smooth
-  if (heroTitle) hero.classList.add('m-stay');
-  if (under) { under.classList.add('m-under'); foot.classList.add('m-over'); }
-  const onCover = () => {
-    if (heroTitle) {
+  if (heroTitle) {
+    hero.classList.add('m-stay');
+    const onCover = () => {
       const y = Math.min(Math.max(-hero.getBoundingClientRect().top, 0), hero.offsetHeight);
       heroTitle.style.transform = y ? `translate3d(0,${y.toFixed(1)}px,0)` : '';
-    }
-    if (under) {
-      const t = Math.min(Math.max(innerHeight - foot.getBoundingClientRect().top, 0), foot.offsetHeight);
-      under.style.transform = t ? `translate3d(0,${t.toFixed(1)}px,0)` : '';
-    }
-  };
-  if (heroTitle || under) {
+    };
     onScrollFrame(onCover);
     addEventListener('resize', onCover); onCover();
   }
+  // CTA + footer: no slide-over / shadow effect on scroll (removed).
 
   // ---------- 8. small details ----------
   $$('.drawer > *').forEach((el, i) => el.style.setProperty('--i', i));
