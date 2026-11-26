@@ -106,7 +106,7 @@
   .drawer .btn { margin-top: 28px; }
 
   /* hero: sunset sky, centred text, Jakarta skyline cropped at the bottom edge (no fade) */
-  .hero { position: relative; --h-top: clamp(190px, 17.2vw, 260px); height: calc(var(--h-top) + max(100vw, 1300px) * .75 - 2px); min-height: 0; max-height: none; margin-top: -81px; overflow: hidden; background: #3E5B7E; color: var(--white); }
+  .hero { position: relative; --h-top: clamp(190px, 17.2vw, 260px); height: calc(var(--h-top) + max(100vw, 1300px) * .525 - 2px);   /* v15: hero ends at 70% of the skyline photo (keeps the towers and LRT station, crops the road) */ min-height: 0; max-height: none; margin-top: -81px; overflow: hidden; background: #3E5B7E; color: var(--white); }
   .hero .h-sky { position: absolute; inset: 0; background: url("../assets/img/hero-sky-sunset.jpg") 50% 70% / cover no-repeat; }
   .hero .h-sky::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,40,58,.55) 0%, rgba(28,40,58,.38) 45%, rgba(28,40,58,.12) 75%, rgba(28,40,58,0) 100%); }
   .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 42%; z-index: 3; pointer-events: none; background: linear-gradient(180deg, rgba(28,40,58,0) 0%, rgba(28,40,58,.28) 40%, rgba(22,24,27,.62) 78%, rgba(22,24,27,.82) 100%); }   /* v29: the photo runs to the ground under a bottom gradient (reference) */
@@ -381,7 +381,7 @@
     .alert { padding: 8px 48px 8px 16px; text-align: left; font-size: 12.5px; }
     .hdr .in { height: 68px; }
     .hdr .logo img { height: 28px; }
-    .hero { margin-top: -69px; --h-top: 280px; height: calc(var(--h-top) + 195vw - 2px); min-height: 0; max-height: none; }
+    .hero { margin-top: -69px; --h-top: 280px; height: calc(var(--h-top) + 136vw - 2px); min-height: 0; max-height: none; }
     .hero .h-title { top: 118px; }
     .hero h1 { font-size: clamp(38px, 10vw, 50px); }
     .hero .sub { font-size: 16px; margin-top: 18px; }
