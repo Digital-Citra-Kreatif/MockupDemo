@@ -248,7 +248,7 @@
   .jobs a:hover .link-play .tri { transform: translate(2px, -2px); }
   .jobs a:hover .link-play .tx::after { transform: scaleX(1); }  /* CTA + footer (sky) */
   /* CTA: full skyline against the sky, text row below (heading left, body + buttons right) */
-  .sky { position: relative; overflow: hidden; aspect-ratio: 1030 / 608; max-width: 100%; max-height: 1000px; min-height: 640px; background: #E39A4A; color: var(--white); }
+  .sky { position: relative; overflow: hidden; aspect-ratio: 1030 / 608; width: 100%; max-height: 1000px; min-height: 640px; background: #E39A4A; color: var(--white); }
   .sky::before { content: ""; position: absolute; inset: 0; background: url("assets/img/hero-sky-sunset.jpg") 50% 100% / cover no-repeat; }
   .sky::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,40,58,.5) 0%, rgba(28,40,58,.32) 40%, rgba(28,40,58,.1) 65%, rgba(28,40,58,0) 80%); pointer-events: none; }
   .sky .photo { position: absolute; z-index: 1; left: 0; top: 6.5%; width: 100%; height: auto; max-width: none; -webkit-mask-image: var(--cta-rail-mask); -webkit-mask-size: 100% 100%; mask-image: var(--cta-rail-mask); mask-size: 100% 100%; }
