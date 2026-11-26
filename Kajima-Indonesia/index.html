@@ -248,7 +248,7 @@
   .jobs a:hover .link-play .tri { transform: translate(2px, -2px); }
   .jobs a:hover .link-play .tx::after { transform: scaleX(1); }  /* CTA + footer (sky) */
   /* CTA: full skyline against the sky, text row below (heading left, body + buttons right) */
-  .sky { position: relative; overflow: hidden; aspect-ratio: 1030 / 608; max-height: 1000px; min-height: 640px; background: #E39A4A; color: var(--white); }
+  .sky { position: relative; overflow: hidden; aspect-ratio: 1030 / 608; max-width: 100%; max-height: 1000px; min-height: 640px; background: #E39A4A; color: var(--white); }
   .sky::before { content: ""; position: absolute; inset: 0; background: url("assets/img/hero-sky-sunset.jpg") 50% 100% / cover no-repeat; }
   .sky::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,40,58,.5) 0%, rgba(28,40,58,.32) 40%, rgba(28,40,58,.1) 65%, rgba(28,40,58,0) 80%); pointer-events: none; }
   .sky .photo { position: absolute; z-index: 1; left: 0; top: 6.5%; width: 100%; height: auto; max-width: none; -webkit-mask-image: var(--cta-rail-mask); -webkit-mask-size: 100% 100%; mask-image: var(--cta-rail-mask); mask-size: 100% 100%; }
@@ -401,6 +401,7 @@
     .proof .row > div:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--line); }
     .proof b { font-size: 38px; }
     .sec { padding: 88px 0; }
+    .head p { display: block; -webkit-line-clamp: unset; overflow: visible; }   /* 2-line clamp is for desktop; on phones it cut the sentence off */
     .gstats > div, .gstats > div + div { padding: 18px 10px 0 0; border-left: 0; }
     .gstats b { font-size: 32px; }
     .globe-wrap { aspect-ratio: 1 / .92; }
@@ -491,7 +492,7 @@
     <img class="h-city" src="assets/img/hero-jakarta-skyline-lrt.jpg" alt="Jakarta skyline at dusk" width="2400" height="1800">
     <div class="h-title">
       <h1 class="disp rv d1">Design &amp; Build in Indonesia since 1975</h1>
-      <p class="sub rv d2">Factories, warehouses, data centers, offices and hotels, designed and built by one accountable team to Japanese standards of safety and quality.</p>
+      <p class="sub rv d2">Factories, warehouses, data centers, offices and hotels, designed and built by one team to Japanese standards of safety and quality.</p>
       <div class="ctas rv d3">
         <button class="btn" type="button" data-open-enquiry>Discuss a Project <span class="ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 8h8.5M8.5 4l4 4-4 4"/></svg></span></button>
         <a class="btn light" href="#projects">View Projects <span class="ar" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 8h8.5M8.5 4l4 4-4 4"/></svg></span></a>
@@ -612,7 +613,7 @@
     <div class="wrap">
       <div class="head">
         <div><span class="label eyebrow rv">Our Services</span><h2 class="disp rv d1">From first sketch to handover</h2></div>
-        <p class="rv d2">We help clients reach their building goals, with design, engineering and construction under one accountable team.</p>
+        <p class="rv d2">Design, engineering and construction under one roof, with one team responsible from start to finish.</p>
       </div>
       <div class="svc">
         <article class="svc-card rv">
@@ -629,7 +630,7 @@
           <div class="bd">
             <span class="label">Premium Quality Work · Perfect Resolution · High Safety</span>
             <h3>Construction</h3>
-            <p>Experienced site teams, reliable subcontractors and licensed ANZEN Leaders deliver quality work on schedule, safely.</p>
+            <p>Experienced site teams, trusted subcontractors and licensed ANZEN Leaders keep every job safe, on schedule and built right.</p>
             <a class="link-play" href="pages/construction.html"><span class="ring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle class="o1" cx="32" cy="32" r="30"/><circle class="o2" cx="32" cy="32" r="30"/><path class="tri" d="M27.5 36.5l9-9M29.5 27.5h7v7"/></svg></span><span class="tx">Explore Construction</span></a>
           </div>
         </article>
@@ -650,7 +651,7 @@
   <section class="sec mist career" id="careers" aria-label="Careers">
     <div class="wrap">
       <div class="head solo">
-        <div><span class="label eyebrow rv">Careers</span><h2 class="disp rv d1">We are hiring</h2><p class="lead full rv d2">We develop engineers who build with care, guided by Japanese standards in safety, quality and craft.</p></div>
+        <div><span class="label eyebrow rv">Careers</span><h2 class="disp rv d1">We are hiring</h2><p class="lead full rv d2">Learn from experienced engineers and build the way we do: safely, carefully and to Japanese standards.</p></div>
       </div>
       <div class="cr2">
         <div class="ph rv"><img src="assets/img/careers-pekerja-kajima.jpg" alt="Kajima engineer in a hard hat and KAJIMA safety vest overlooking a building under construction" loading="lazy" width="1440" height="722"></div>
@@ -770,6 +771,8 @@
   const setDrawer = open => { burger.setAttribute('aria-expanded', open); drawer.classList.toggle('open', open); drawer.setAttribute('aria-hidden', !open); document.body.style.overflow = open ? 'hidden' : ''; document.body.classList.toggle('drawer-open', open); };
   burger.addEventListener('click', () => setDrawer(burger.getAttribute('aria-expanded') !== 'true'));
   drawer.querySelectorAll('a,button').forEach(a => a.addEventListener('click', () => setDrawer(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && drawer.classList.contains('open')) { setDrawer(false); burger.focus(); } });
+  matchMedia('(min-width: 1081px)').addEventListener('change', e => { if (e.matches) setDrawer(false); });   // burger is hidden on desktop, so an open drawer could not be closed
 
   // hero: static (no parallax)
   // projects: building-type tabs
@@ -802,7 +805,7 @@
   let lastFocus = null;
   const focusables = () => [...modal.querySelectorAll('button, input, select, textarea, a[href]')].filter(el => el.offsetParent !== null);
   const openM = () => { lastFocus = document.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; setTimeout(() => (modal.querySelector('select, input') || modal.querySelector('.close')).focus(), 50); };
-  const closeM = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; form.hidden = false; done.classList.remove('show'); lastFocus && lastFocus.focus(); };
+  const closeM = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; form.hidden = false; done.classList.remove('show'); const back = lastFocus && lastFocus.closest('#drawer') ? burger : lastFocus; back && back.focus(); };
   document.querySelectorAll('[data-open-enquiry]').forEach(b => b.addEventListener('click', openM));
   modal.querySelectorAll('[data-close-modal]').forEach(b => b.addEventListener('click', closeM));
   modal.addEventListener('keydown', e => {

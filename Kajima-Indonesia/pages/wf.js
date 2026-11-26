@@ -84,6 +84,8 @@
   const setDrawer = open => { burger.setAttribute('aria-expanded', open); drawer.classList.toggle('open', open); drawer.setAttribute('aria-hidden', !open); document.body.style.overflow = open ? 'hidden' : ''; document.body.classList.toggle('drawer-open', open); };
   burger.addEventListener('click', () => setDrawer(burger.getAttribute('aria-expanded') !== 'true'));
   drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setDrawer(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && drawer.classList.contains('open')) { setDrawer(false); burger.focus(); } });
+  matchMedia('(min-width: 1081px)').addEventListener('change', e => { if (e.matches) setDrawer(false); });   // burger is hidden on desktop, so an open drawer could not be closed
 
   // tabs: <div data-tabs> buttons[data-tab] + panels[data-panel]
   document.querySelectorAll('[data-tabs]').forEach(box => {
@@ -106,6 +108,10 @@
     chips.forEach(c => c.addEventListener('click', () => {
       chips.forEach(x => x.classList.toggle('on', x === c));
       cards.forEach(k => { k.hidden = c.dataset.filter !== 'all' && !k.dataset.cat.split(' ').includes(c.dataset.filter); });
+      // categories without projects (e.g. Commercials, R&D) used to show an empty grid
+      let empty = document.getElementById('pEmpty');
+      if (!empty && cards.length) { empty = document.createElement('p'); empty.id = 'pEmpty'; empty.className = 'muted'; empty.setAttribute('role', 'status'); empty.textContent = 'No projects in this category yet.'; cards[0].parentElement.after(empty); }
+      if (empty) empty.hidden = [...cards].some(k => !k.hidden);
     }));
   });
 })();
