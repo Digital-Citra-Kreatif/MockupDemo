@@ -163,9 +163,21 @@
         heroTitle = hero && hero.querySelector('.h-title, .pg-hero > .in');
   if (heroTitle) {
     hero.classList.add('m-stay');
+    // v14: headline, description and buttons fade out while the page covers them, bottom item first.
+    // filter: opacity() is used because the items' own entrance reveal already drives `opacity`
+    // (a transition or a fill-forwards animation), which would delay or override an inline opacity.
+    const fadeItems = [...heroTitle.children].reverse();
+    const smooth = k => k * k * (3 - 2 * k);
     const onCover = () => {
       const y = Math.min(Math.max(-hero.getBoundingClientRect().top, 0), hero.offsetHeight);
       heroTitle.style.transform = y ? `translate3d(0,${y.toFixed(1)}px,0)` : '';
+      const span = Math.max(Math.min(innerHeight * .55, hero.offsetHeight * .5), 1);   // scroll distance for the whole fade
+      const win = span * .6, step = fadeItems.length > 1 ? (span - win) / (fadeItems.length - 1) : 0;
+      fadeItems.forEach((el, i) => {
+        const k = Math.min(Math.max((y - i * step) / win, 0), 1);
+        el.style.filter = k ? `opacity(${(1 - smooth(k)).toFixed(3)})` : '';
+        if (el.matches('.ctas')) el.style.visibility = k >= 1 ? 'hidden' : '';   // invisible buttons should not be clickable (headings stay for screen readers)
+      });
     };
     onScrollFrame(onCover);
     addEventListener('resize', onCover); onCover();

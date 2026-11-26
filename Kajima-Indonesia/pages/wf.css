@@ -349,10 +349,10 @@ a.card:hover .arr { background: var(--ink); border-color: var(--ink); color: var
 .note::before { content: attr(data-n); flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--note); color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
 
 /* ---------- CTA + footer (homepage) ---------- */
-.sky { position: relative; overflow: hidden; aspect-ratio: 1030 / 608; width: 100%; max-height: 1000px; min-height: 640px; background: #E39A4A; color: var(--white); }
+.sky { position: relative; overflow: hidden; container-type: inline-size; aspect-ratio: 1030 / 530; width: 100%; max-height: 820px; min-height: 560px; background: #E39A4A; color: var(--white); }
 .sky::before { content: ""; position: absolute; inset: 0; background: url("../assets/img/hero-sky-sunset.jpg") 50% 100% / cover no-repeat; }
 .sky::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,40,58,.5) 0%, rgba(28,40,58,.32) 40%, rgba(28,40,58,.1) 65%, rgba(28,40,58,0) 80%); pointer-events: none; }
-.sky .photo { position: absolute; z-index: 1; left: 0; top: 13.6%; width: 100%; height: auto; max-width: none; -webkit-mask-image: var(--cta-rail-mask); -webkit-mask-size: 100% 100%; mask-image: var(--cta-rail-mask); mask-size: 100% 100%; }
+.sky .photo { position: absolute; z-index: 1; left: 0; top: max(100% - 49cqw, 11% + 340px - 26cqw); width: 100%; height: auto; max-width: none; -webkit-mask-image: var(--cta-rail-mask); -webkit-mask-size: 100% 100%; mask-image: var(--cta-rail-mask); mask-size: 100% 100%; }
 .sky .copy { position: absolute; left: 0; right: 0; top: 11%; z-index: 2; text-align: center; padding: 0 var(--pad); }
 .sky .copy h2 { font-size: clamp(44px, 5.8vw, 86px); line-height: 1; max-width: 900px; margin: 0 auto; }
 .sky .copy p { color: rgba(255,255,255,.92); max-width: 720px; margin: 22px auto 34px; text-wrap: balance; }
